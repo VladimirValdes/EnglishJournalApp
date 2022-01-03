@@ -1,0 +1,104 @@
+
+
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// colors
+
+$primary: $indigo;
+
+
+// typography
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$font-family-monospace: 'Open Sans', sans-serif;
+$font-weight-bold: 400;
+$font-weight-bolder: 600;
+
+
+//forms
+
+$input-font-size: 1.5rem;
+$input-padding-y: 15px; 
+$input-padding-x: 8px;
+$input-bg: #edf2f7;
+$input-focus-bg:#edf2f7;
+$input-border-radius: 5px;
+$input-border-color:  transparent;
+$input-focus-border-color: $indigo;
+$input-border-width: 1px;
+$input-focus-bg: none;
+$input-focus-box-shadow: none;
+
+// btns
+$btn-font-size: 1.5rem;
+$btn-padding-y: 15px;           
+$btn-padding-x: 8px;
+$btn-focus-box-shadow:none; 
+$btn-active-box-shadow:none;
+$btn-box-shadow: none;
+
+
+.custombtn {
+  font-size: 1.5rem;
+  color: white;
+  background-color: $indigo;
+
+  padding: 15px 8px;
+  border: none;
+  border-radius: 25px;
+
+  &:hover {
+    background-color: #8540f5;
+
+
+  }
+}
+
+.loginImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+$theme-colors: (
+  "primary":    $primary,
+);
+
+
+
+html {
+  font-size: 65.5%;
+  
+}
+
+.ls{
+  letter-spacing: 1px;
+}
+
+.bg {
+  background-color: #edf2f7;
+}
+
+// .input {
+//   padding: 8px 5px;
+//   border-radius: 3px;
+//   border: none;
+// }
+
+
+
+
+.border-debug {
+  border: 1px solid red;
+}
+
+.borderdebug {
+  border: 1px solid blue;
+}
+
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+
