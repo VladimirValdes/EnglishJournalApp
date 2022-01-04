@@ -8,10 +8,9 @@ import { Component, OnInit } from '@angular/core';
         English Journal
     </a>
     <hr class="text-white">
-    <h3 class="text-white fs-5 mt-5 mb-2">Dashboard</h3>
 
     <ul class="d-flex flex-column nav nav-pills">
-        <li class="nav-item mb-3"
+        <li class="nav-item mb-2"
             *ngFor="let opt of opts">
           <a class="nav-link  text-white fs-4 fw-bold" href="#">{{ opt }}</a>
         </li>
@@ -23,6 +22,7 @@ import { Component, OnInit } from '@angular/core';
 export class SidebarComponent implements OnInit {
 
   opts = [
+    'Dashboard',
     'Verbs',
     'Phrasal Verbs',
     'Adjectives',
