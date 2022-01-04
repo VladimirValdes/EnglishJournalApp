@@ -1,13 +1,16 @@
-
-
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
+// @import "../../node_modules/bootstrap/scss/utilities";
 @import "../../node_modules/bootstrap/scss/mixins";
 @import "../../node_modules/bootstrap/scss/root";
+
+
+
 
 // colors
 
 $primary: $indigo;
+$gray-900: #151515;
 
 
 // typography
@@ -32,13 +35,23 @@ $input-focus-bg: none;
 $input-focus-box-shadow: none;
 
 // btns
-$btn-font-size: 1.5rem;
-$btn-padding-y: 15px;           
-$btn-padding-x: 8px;
-$btn-focus-box-shadow:none; 
-$btn-active-box-shadow:none;
-$btn-box-shadow: none;
+// $btn-font-size: 1.5rem;
+// $btn-padding-y: 15px;           
+// $btn-padding-x: 8px;
+// $btn-focus-box-shadow:none; 
+// $btn-active-box-shadow:none;
+// $btn-box-shadow: none;
 
+// navbar
+
+$nav-link-padding-y: 12px;              
+$nav-link-padding-x: 8px;         
+$nav-pills-border-radius: 10px;
+$nav-pills-link-active-bg: #454545;
+
+.nav .nav-link:hover {
+  background-color: #454545;
+} 
 
 .custombtn {
   font-size: 1.5rem;
@@ -56,6 +69,8 @@ $btn-box-shadow: none;
   }
 }
 
+
+
 .loginImage {
   width: 100%;
   height: auto;
@@ -64,7 +79,8 @@ $btn-box-shadow: none;
 }
 
 $theme-colors: (
-  "primary":    $primary,
+  "primary": $primary,
+  "dark": $gray-900
 );
 
 
@@ -82,6 +98,10 @@ html {
   background-color: #edf2f7;
 }
 
+.icon {
+  width: 30px;
+  height: 30px;
+}
 // .input {
 //   padding: 8px 5px;
 //   border-radius: 3px;
@@ -89,7 +109,50 @@ html {
 // }
 
 
+.icon-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65px;
+  padding: 16px;
+  background-color: transparent;
+  border: none;
 
+  cursor: pointer;
+
+  &__bar {
+    
+  position: relative;
+
+  width: 35px;
+  height: 4px;
+  
+  border-radius: 2px;
+
+  background-color: #151515;
+
+    &:before, &:after {
+        
+        content: '';
+
+        position: absolute;
+        bottom: .6em;
+
+        display: block; 
+        width: 35px;
+        height: 4px;
+
+        background-color: #151515;
+        border-radius: 2px;
+        
+        transition: transform .2s;
+    } 
+
+    &:after {
+      top: 0.6em;
+    }
+  }   
+}
 
 .border-debug {
   border: 1px solid red;
