@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
+import { CardtotalModule } from '../components/cardtotal/cardtotal.module';
 
 
 
@@ -11,7 +12,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    CardtotalModule
   ],
   exports: [
     PagesComponent
