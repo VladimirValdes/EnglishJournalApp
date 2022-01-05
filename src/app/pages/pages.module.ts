@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
 import { CardtotalModule } from '../components/cardtotal/cardtotal.module';
+import { VerbsModule } from './verbs/verbs.module';
 
 
 
@@ -13,7 +14,8 @@ import { CardtotalModule } from '../components/cardtotal/cardtotal.module';
   imports: [
     CommonModule,
     SharedModule,
-    CardtotalModule
+    CardtotalModule,
+    VerbsModule
   ],
   exports: [
     PagesComponent

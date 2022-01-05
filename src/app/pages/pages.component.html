@@ -1,26 +1,15 @@
-    
-    <div class="container-fluid" style="background-color: #edf2f7;">
-        <div class="row min-vh-100">
-            <div class="col d-none d-sm-block col-sm-auto gx-0">
-               <app-sidebar></app-sidebar>
-            </div>
-            <div class="col fs-3">
-                <div class="row">
-                    <div class="col-12 gx-0">
-                        <app-header></app-header>
-                    </div>
-                </div>
-                <div class="row mx-5 mt-5">
-                    <div class="col-12 gx-0 d-flex flex-wrap justify-content-evenly align-items-center gap-3">
-                        <app-cardtotal [name]="'Verbs'" [number]="'30'" [color]="'#3b82f6'"></app-cardtotal>
-                        <app-cardtotal [name]="'Phrasal Verbs'" [number]="'100'" [color]="'#ef4444'"></app-cardtotal>
-                        <app-cardtotal [name]="'Adjectives'" [number]="'20'" [color]="'#f59e0b'"></app-cardtotal>
-                        <app-cardtotal [name]="'Prepositions'" [number]="'75'" [color]="'#22c55e'"></app-cardtotal>
-                        <app-cardtotal [name]="'Connectors'" [number]="'205'" [color]="'#3730a3'"></app-cardtotal>
 
-                    </div>
-                </div>
+
+    <div class="d-flex align-items-stretch min-vh-100 position-relative"
+         style="background-color: #f1f5f9;">
+        <app-sidebar> 
+        </app-sidebar>
+        <!-- Add position absoluto to app sidebar en z-index also add collapse class -->
+        <main class="w-100">
+            <app-header ></app-header>
+            <div class="mx-3">
+                <app-verbs></app-verbs>
+
             </div>
-    
-        </div>
+        </main>
     </div>

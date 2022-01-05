@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
   template:`
-  <aside class="h-100 bg-dark  boderdebug p-3 d-flex flex-column" style="width: 250px;">
+  <aside class="h-100  boderdebug p-3 d-flex flex-column" style="width: 250px; background-color: #0f172a;">
     <a href="#" class="fs-2 fw-bolder mt-4 mb-2 text-decoration-none text-white">
         English Journal
     </a>
