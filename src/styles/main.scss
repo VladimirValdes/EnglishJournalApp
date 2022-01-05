@@ -107,6 +107,9 @@ $card-border-radius: 5px;
   padding: 8px 1.5rem;
   border: 1px solid #94a3b8;
   border-radius: 25px;
+  width: 100%;
+  max-width: 260px;
+  min-width: 100px;
 
   &:focus-within {
     border-color: #4f46e5;
@@ -117,6 +120,7 @@ $card-border-radius: 5px;
   }
 
   &__input {
+    width: 100%;
     border: none;
     background: none;
     outline: none;
@@ -136,7 +140,6 @@ $theme-colors: (
   "primary": $primary,
   "dark": $gray-900
 );
-
 
 
 html {

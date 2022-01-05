@@ -2,11 +2,11 @@
 
     <div class="d-flex align-items-stretch min-vh-100 position-relative"
          style="background-color: #f1f5f9;">
-        <app-sidebar> 
+        <app-sidebar [ngClass]="{'collapse': menuActive}"> 
         </app-sidebar>
         <!-- Add position absoluto to app sidebar en z-index also add collapse class -->
         <main class="w-100">
-            <app-header ></app-header>
+            <app-header (active)="menuActive = $event"></app-header>
             <div class="mx-3">
                 <app-verbs></app-verbs>
 
