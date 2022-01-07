@@ -7,10 +7,12 @@ import { VerbsModule } from './verbs/verbs.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginModule } from '../auth/login/login.module';
+import { PhrasalVerbsComponent } from './phrasalVerbs/phrasal-verbs/phrasal-verbs.component';
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
+    PhrasalVerbsComponent
   ],
   imports: [
     CommonModule,
