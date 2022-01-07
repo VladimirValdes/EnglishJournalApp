@@ -6,6 +6,7 @@ import { CardtotalModule } from '../components/cardtotal/cardtotal.module';
 import { VerbsModule } from './verbs/verbs.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginModule } from '../auth/login/login.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     CardtotalModule,
     VerbsModule,
+    // LoginModule,
     BrowserAnimationsModule
   ],
   exports: [

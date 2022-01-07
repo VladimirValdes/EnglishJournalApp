@@ -1,19 +1,32 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col d-flex flex-wrap flex-row align-items-center">
+        <div class="col d-flex align-items-center">
             <h2 class="fw-bolder me-5 mt-4" style="font-size: 4rem;">Verbs</h2>
-            <div
-                class="d-flex flex-grow-1 justify-content-between justify-content-sm-end justify-content-md-end align-items-center ms-lg-auto mt-4">
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex align-items-center mt-4">
+            <div class="d-flex align-items-center me-3">
                 <div class="searchbar  ">
                     <input type="search" class="searchbar__input fs-4" placeholder="Search verbs...">
                     <img src="/assets/icons/search.svg" alt="" class="searchbar__icon">
                 </div>
-                <button class="custombtn custombtn--add fw-bolder d-flex align-items-center ms-3 ms-md-5">
-                    <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
-                    Add
-                </button>
+                <div class="dropdown ms-3">
+                    <button class="btnicon btnfilter fs-4 fw-bolder" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/assets/icons/filter.svg" alt="filter">
+                      Filter
+                    </button>
+                    <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </div>
             </div>
+            <button class="custombtn custombtn--add fw-bolder d-flex align-items-center  ms-auto">
+                <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
+                Add 
+            </button>
         </div>
     </div>
     <div class="row mt-5">

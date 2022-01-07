@@ -14,6 +14,36 @@ $table-cell-padding-x:        1rem;
 
 $table-group-separator-color: transparent;
 
+// dropdows
+// $dropdown-min-width:                10rem;
+// $dropdown-padding-x:                0;
+// $dropdown-padding-y:                .5rem;
+// $dropdown-spacer:                   .125rem;
+// $dropdown-font-size:                $font-size-base;
+// $dropdown-color:                    $body-color;
+// $dropdown-bg:                       $white;
+// $dropdown-border-color:             red;
+// $dropdown-border-radius:            5px;
+// $dropdown-border-width:             none;
+// $dropdown-inner-border-radius:      subtract($dropdown-border-radius, $dropdown-border-width);
+// $dropdown-divider-bg:               $dropdown-border-color;
+// $dropdown-divider-margin-y:         $spacer * .5;
+// $dropdown-box-shadow:               none;
+
+// $dropdown-link-color:               $gray-900;
+// $dropdown-link-hover-color:         red;
+// $dropdown-link-hover-bg:            $gray-200;
+
+// $dropdown-link-active-color:        $component-active-color;
+// $dropdown-link-active-bg:           $component-active-bg;
+
+// $dropdown-link-disabled-color:      $gray-500;
+
+// $dropdown-item-padding-y:           $spacer * .25;
+// $dropdown-item-padding-x:           $spacer;
+
+// $dropdown-header-color:             $gray-600;
+// $dropdown-header-padding:           $dropdown-padding-y $dropdown-item-padding-x;
 
 
 
@@ -75,6 +105,23 @@ $card-border-radius: 5px;
   border: none;
 }
 
+.btnfilter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 1.5rem;
+  border: 1px solid #94a3b8;
+  border-radius: 5px;
+  color: #212529;
+  // width: 100%;
+  // // max-width: 260px;
+  min-width: 100px;
+
+  &:focus-within {
+    border-color: #4f46e5;
+  }
+}
+
 .custombtn {
   font-size: 1.5rem;
   color: white;
@@ -82,7 +129,7 @@ $card-border-radius: 5px;
 
   padding: 15px 8px;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
 
   &--add {
     padding: 10px 1.5rem;
@@ -216,8 +263,9 @@ html {
   border: 1px solid red;
 }
 
-.borderdebug {
-  border: 1px solid blue;
+.border {
+  border: 2px solid #94a3b8;
+  border-radius: 5px;
 }
 
 .collapse-sidebar {
