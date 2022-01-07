@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
   template:`
-  <aside class="h-100  boderdebug p-3 d-flex flex-column sidebar">
+<aside
+  class="min-vh-100  boderdebug p-3 d-flex flex-column sidebar ">
     <a href="#" class="fs-2 fw-bolder mt-4 mb-2 text-decoration-none text-white">
         English Journal
     </a>
@@ -28,7 +29,9 @@ export class SidebarComponent implements OnInit {
     'Adjectives',
     'Prepositions',
     'Connectors'
-  ]
+  ];
+
+
 
   constructor() { }
 

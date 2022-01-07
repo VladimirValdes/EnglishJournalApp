@@ -1,8 +1,10 @@
 
 
-    <div class="d-flex align-items-stretch min-vh-100 position-relative"
+    <div class="d-flex align-items-stretch min-vh-100"
          style="background-color: #f1f5f9;">
-        <app-sidebar [ngClass]="{'collapse': menuActive}"> 
+        <app-sidebar
+            *ngIf="!menuActive"
+            [@enterAnimation]>
         </app-sidebar>
         <!-- Add position absoluto to app sidebar en z-index also add collapse class -->
         <main class="w-100">

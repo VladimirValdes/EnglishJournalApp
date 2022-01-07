@@ -220,6 +220,17 @@ html {
   border: 1px solid blue;
 }
 
+.collapse-sidebar {
+  // // position: relative;
+  // opacity: 0;
+  // visibility: hidden;
+  transform: translateX(-100%);
+  transition: 0.3s ease-out;
+  // width: 0;
+}
+
+
+
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 

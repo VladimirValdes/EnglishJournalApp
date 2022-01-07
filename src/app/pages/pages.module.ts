@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CardtotalModule } from '../components/cardtotal/cardtotal.module';
 import { VerbsModule } from './verbs/verbs.module';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { VerbsModule } from './verbs/verbs.module';
     CommonModule,
     SharedModule,
     CardtotalModule,
-    VerbsModule
+    VerbsModule,
+    BrowserAnimationsModule
   ],
   exports: [
     PagesComponent
