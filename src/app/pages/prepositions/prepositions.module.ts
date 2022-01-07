@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrepositionsComponent } from './prepositions.component';
+import { prepositionRouting } from './prepositionRouting.module';
 
 
 
@@ -9,7 +10,8 @@ import { PrepositionsComponent } from './prepositions.component';
     PrepositionsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    prepositionRouting
   ]
 })
 export class PrepositionsModule { }

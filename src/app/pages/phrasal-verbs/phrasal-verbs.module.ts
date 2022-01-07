@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PhrasalVerbsComponent } from './phrasal-verbs/phrasal-verbs.component';
+import { PhrasalVerbsComponent } from './phrasal-verbs.component';
+import { PhrasalVerbRouting } from './phrasalRouting.module';
 
 
 
@@ -9,7 +10,8 @@ import { PhrasalVerbsComponent } from './phrasal-verbs/phrasal-verbs.component';
     PhrasalVerbsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PhrasalVerbRouting
   ]
 })
 export class PhrasalVerbsModule { }
