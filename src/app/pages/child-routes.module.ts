@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 
 const routes: Routes = [
-    { path: '', loadChildren: () => 
+    { path: 'home', loadChildren: () => 
             import('./dashboard/dashboard.module').then( m => m.DashboardModule) 
     },
     { path: 'verbs', loadChildren: () => 
@@ -19,13 +19,14 @@ const routes: Routes = [
               import('./adjectives/adjectives.module').then( m => m.AdjectivesModule )
     },
     {
-        path: 'preposition', loadChildren: () => 
+        path: 'prepositions', loadChildren: () => 
               import('./prepositions/prepositions.module').then( m => m.PrepositionsModule )
     },
     {
         path: 'connectors', loadChildren: () => 
               import('./connectors/connectors.module').then( m => m.ConnectorsModule )
     },
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
    
 ];
 

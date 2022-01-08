@@ -6,12 +6,11 @@
             *ngIf="!menuActive"
             [@enterAnimation]>
         </app-sidebar>
-        <!-- Add position absoluto to app sidebar en z-index also add collapse class -->
         <main class="w-100">
             <app-header (active)="menuActive = $event"></app-header>
             <div class="mx-3">
-                <!-- <app-verbs></app-verbs> -->
                 
+                <router-outlet></router-outlet>
 
             </div>
         </main>

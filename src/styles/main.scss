@@ -69,7 +69,7 @@ $input-bg: #edf2f7;
 $input-focus-bg:#edf2f7;
 $input-border-radius: 5px;
 $input-border-color:  transparent;
-$input-focus-border-color: $indigo;
+$input-focus-border-color: #4f46e5;
 $input-border-width: 1px;
 $input-focus-bg: none;
 $input-focus-box-shadow: none;
@@ -96,7 +96,19 @@ $card-border-radius: 5px;
 
 .nav .nav-link:hover {
   background-color: #2c3344;
-} 
+}
+
+// .nav .nav-link.active {
+//   background-color: #2c3344;
+
+// }
+$nav-pills-link-active-bg: #2c3344;
+// $navbar-dark-hover-color:#2c3344;
+// $navbar-light-active-color: red;
+
+// .active {
+
+// }
 
 
 .btnicon {

@@ -5,15 +5,22 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   template:`
 <aside
   class="min-vh-100  boderdebug p-3 d-flex flex-column sidebar ">
-    <a href="#" class="fs-2 fw-bolder mt-4 mb-2 text-decoration-none text-white">
+    <a
+      routerLink="/"
+      class="fs-2 fw-bolder mt-4 mb-2 text-decoration-none text-white">
         English Journal
     </a>
     <hr class="text-white">
 
     <ul class="d-flex flex-column nav nav-pills">
         <li class="nav-item mb-2"
-            *ngFor="let opt of opts">
-          <a class="nav-link  text-white fs-4 fw-bold" href="#">{{ opt }}</a>
+            *ngFor="let opt of menu">
+         <a
+            [routerLink]='opt.url'
+            routerLinkActive="active"
+            class="nav-link  text-white fs-4 fw-bold">{{
+            opt.title
+            }}</a>
         </li>
     </ul>
 </aside>
@@ -22,13 +29,32 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  opts = [
-    'Dashboard',
-    'Verbs',
-    'Phrasal Verbs',
-    'Adjectives',
-    'Prepositions',
-    'Connectors'
+  menu = [
+
+    {
+      title: 'Dashboard',
+      url: 'home'
+    },
+    {
+      title: 'Verbs',
+      url: 'verbs'
+    },
+    {
+      title: 'Phrasal Verbs',
+      url: 'phrasalverbs'
+    },
+    {
+      title: 'Adjectives',
+      url: 'adjectives'
+    },
+    {
+      title: 'Prepositions',
+      url: 'prepositions'
+    },
+    {
+      title: 'Connectors',
+      url: 'connectors'
+    }
   ];
 
 

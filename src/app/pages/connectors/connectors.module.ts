@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConnectorsComponent } from './connectors.component';
+import { ConnectorsRouting } from './connectorsRouting.module';
 
 
 
@@ -9,7 +10,8 @@ import { ConnectorsComponent } from './connectors.component';
     ConnectorsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ConnectorsRouting
   ]
 })
 export class ConnectorsModule { }
