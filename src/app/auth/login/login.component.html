@@ -13,8 +13,13 @@
 
                 <form class="col px-4 col-sm-9">
                     <section>
-                        <h1 class="fw-bolder  my-3 ls">Login </h1>
-                        <p class=" mb-5 ls fs-4">Welcome back! Let's go to save your english learning with our app.</p>
+                        <h1 class="fw-bolder  my-3 ls">Login </h1>  
+                        <p
+                        class=" mb-5 ls fs-4">
+                        Welcome back! Let's go to save your English learning with
+                        <span
+                        class="fw-bolder" style="color:#4f46e5">
+                        English Journal app</span>.</p>
                     </section>
                     <div class="mb-3">
                         <label for="email" class="form-label fs-4 ls fw-bolder">Email*</label>
@@ -25,7 +30,10 @@
                         <input type="password" class="form-control" id="inputPassword" placeholder="password">
                       </div>
                     <div class="mt-5  d-grid  gap-2">
-                        <button type="button" class="custombtn ">Login</button>
+                      <button
+                          type="button"
+                          class="custombtn"
+                          routerLink="/dashboard">Login</button>
                     </div>
                 </form>
             </div>
