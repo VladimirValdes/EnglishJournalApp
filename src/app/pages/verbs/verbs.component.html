@@ -23,7 +23,8 @@
                     </ul>
                   </div>
             </div>
-            <button class="custombtn custombtn--add fw-bolder d-flex align-items-center  ms-auto">
+            <button class="custombtn custombtn--add fw-bolder d-flex align-items-center  ms-auto"
+                data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
                 Add 
             </button>
@@ -119,3 +120,24 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-4 fw-bolder" id="exampleModalLabel">Add Verb</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary fs-4" data-bs-dismiss="modal" style="color: red;">Close</button>
+          <button class="custombtn custombtn--add fw-bolder d-flex align-items-center">
+          <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
+          Save 
+      </button>
+        </div>
+      </div>
+    </div>
