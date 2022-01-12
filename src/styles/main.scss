@@ -139,7 +139,7 @@ $nav-pills-link-active-bg: #2c3344;
   color: white;
   background-color: #4f46e5;
 
-  padding: 15px 8px;
+  padding: 8px 15px;
   border: none;
   border-radius: 5px;
 
@@ -148,9 +148,26 @@ $nav-pills-link-active-bg: #2c3344;
 
   }
 
+
+
   &:hover {
     background-color: #473fce;
 
+
+  }
+}
+
+.custombtn-close {
+  font-size: 1.5rem;
+  color: red;
+  border: 1px solid red;
+  background-color: #feecee;
+  padding: 8px 15px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: red;
+    color: white;
 
   }
 }
@@ -218,11 +235,19 @@ html {
   width: 30px;
   height: 30px;
 }
-// .input {
-//   padding: 8px 5px;
-//   border-radius: 3px;
-//   border: none;
-// }
+
+// select
+
+$form-select-padding-y: 15px;
+$form-select-font-size:1.5rem;
+$form-select-bg:#edf2f7;
+$form-select-focus-box-shadow: none;
+$form-select-box-shadow:none;
+$form-select-border-color: transparent;
+$form-select-focus-border-color:#4f46e5;
+$form-select-indicator-color: white;
+// $form-select-padding-x: 8px;
+
 
 
 .icon-menu {

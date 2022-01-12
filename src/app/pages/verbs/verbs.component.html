@@ -130,10 +130,43 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+            <form class="col px-4">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="verb" class="form-label fs-4 ls fw-bolder">Verb</label>
+                        <input type="text" class="form-control" id="verb" placeholder="verb">
+                    </div>
+                   <div class="col-5">
+                    <label for="type" class="form-label fs-4 ls fw-bolder">Type</label>
+                    <select id="type" class="form-select">
+                      <option selected>Choose...</option>
+                      <option value="regular">Regular</option>
+                      <option value="irregular">Irregular</option>
+                    </select>
+                   </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="past" class="form-label fs-4 ls fw-bolder">Simple Past</label>
+                    <input type="text" class="form-control" id="past" placeholder="verb in simple past">
+                  </div>
+                  <div class="mb-3">
+                    <label for="past" class="form-label fs-4 ls fw-bolder">Past Participle</label>
+                    <input type="text" class="form-control" id="past" placeholder="verb in past participle">
+                  </div>
+                  <div class="mb-3">
+                    <label for="past" class="form-label fs-4 ls fw-bolder">N-I-K</label>
+                    <select id="type" class="form-select">
+                        <option selected>Choose...</option>
+                        <option value="N">N ( Neutral Word)</option>
+                        <option value="I">I ( Impact Word)</option>
+                        <option value="K">K ( Know Word)</option>
+
+                      </select>
+                  </div>
+            </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary fs-4" data-bs-dismiss="modal" style="color: red;">Close</button>
+          <button type="button" class="custombtn-close fw-bolder fs-4" data-bs-dismiss="modal">Close</button>
           <button class="custombtn custombtn--add fw-bolder d-flex align-items-center">
           <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
           Save 
