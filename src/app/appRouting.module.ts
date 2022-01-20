@@ -13,7 +13,7 @@ const routes: Routes = [
     //       import('./pages/pages.module').then( m => m.PagesModule) },
     // { path: '', redirectTo: 'login', pathMatch: 'full'},
     // { path: '**', component: Login }
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+    { path: '', redirectTo: '/login', pathMatch: 'full'},
 ];
 
 @NgModule({

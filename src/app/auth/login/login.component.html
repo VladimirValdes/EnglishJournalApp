@@ -11,7 +11,11 @@
             <div class="row mt-5 align-items-center justify-content-center">
            
 
-                <form class="col px-4 col-sm-9">
+               <form
+                  class="col px-4 col-sm-9"
+                  [formGroup]="loginForm"
+                  (ngSubmit)="login()"
+                  #lgForm = ngForm>
                     <section>
                         <h1 class="fw-bolder  my-3 ls">Login </h1>  
                         <p
@@ -23,19 +27,42 @@
                     </section>
                     <div class="mb-3">
                         <label for="email" class="form-label fs-4 ls fw-bolder">Email*</label>
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <input
+                          type="email"
+                          [ngClass]="{'is-invalid': invalidField('email') && lgForm.submitted }"
+                          class="form-control"
+                          id="email"
+                          placeholder="name@example.com"
+                          formControlName="email">
+                          <div class="invalid-feedback" *ngIf="invalidField('email') && lgForm.submitted">
+                            The email is not valid!
+                          </div>
                       </div>
                       <div class="mb-3">
                         <label for="password" class="form-label fs-4 ls fw-bolder">Password*</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="password">
+                        <input
+                          type="password"
+                          class="form-control"
+                          [ngClass]="{'is-invalid': invalidField('password') && lgForm.submitted }"
+                          id="inputPassword"
+                          placeholder="password"
+                          formControlName="password">
+                          <div class="invalid-feedback" *ngIf="invalidField('password') && lgForm.submitted">
+                            Password invalid
+                          </div>
                       </div>
                     <div class="mt-5  d-grid  gap-2">
                       <button
-                          type="button"
-                          class="custombtn"
-                          routerLink="/dashboard">Login</button>
+                          type="submit"
+                          class="custombtn">Login</button>
                     </div>
                 </form>
+
+                <pre>
+                    Email: {{ loginForm.get('email')?.status }}
+                    Password: {{ loginForm.get('password')?.status }}
+
+                </pre>
             </div>
             
         </section>
