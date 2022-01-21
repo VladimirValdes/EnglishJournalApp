@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +21,20 @@ export class LoginComponent implements OnInit {
       updateOn: 'blur'
     });
 
-  constructor( private fb: FormBuilder) { }
+  constructor( private fb: FormBuilder,
+               private authService: AuthService) { }
 
   ngOnInit(): void { }
 
   login() {
 
     if ( this.loginForm.invalid) { return; }
+
+    this.authService.login( this.loginForm.value ).subscribe( resp => {
+          console.log( resp );
+    }, ( error ) => {
+      console.warn( error )
+    })
 
     console.log(this.loginForm.value)
   }
