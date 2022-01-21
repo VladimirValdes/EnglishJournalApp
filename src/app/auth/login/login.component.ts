@@ -15,20 +15,18 @@ export class LoginComponent implements OnInit {
     {
       email: [ '', [ Validators.required, Validators.minLength(3), Validators.email, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       password:[ '', [ Validators.required, Validators.minLength(8)]]
-    })
+    },
+    {
+      updateOn: 'blur'
+    });
 
   constructor( private fb: FormBuilder) { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   login() {
 
-    if ( this.loginForm.invalid) { 
-
-      return;
-     }
+    if ( this.loginForm.invalid) { return; }
 
     console.log(this.loginForm.value)
   }
