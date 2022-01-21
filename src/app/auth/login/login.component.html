@@ -54,10 +54,13 @@
                     <div class="mt-5  d-grid  gap-2">
                       <button
                           type="submit"
-                          class="custombtn">Login</button>
+                          class="custombtn">
+                          <span *ngIf="!loading" class="fw-bolder fs-3">Login</span>
+                          <app-spinner *ngIf="loading"></app-spinner>
+                        
+                        </button>
                     </div>
                 </form>
-                <app-spinner></app-spinner>
 
                 <pre>
                     Email: {{ loginForm.get('email')?.status }}

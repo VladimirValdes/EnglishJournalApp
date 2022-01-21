@@ -4,8 +4,9 @@ import { LoginComponent } from './login.component';
 import { LoginroutingModule } from './loginrouting.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpinnerModule } from 'src/app/shared/spinner/spinner.module';
+import { LoaderinterceptorService } from 'src/app/interceptors/loaderinterceptor.service';
 
 
 

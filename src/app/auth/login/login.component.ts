@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { LoaderinterceptorService } from 'src/app/interceptors/loaderinterceptor.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingServicesService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
 
-  valid = false;
+  loading!: boolean;
 
   public loginForm = this.fb.group(
     {
@@ -22,9 +24,17 @@ export class LoginComponent implements OnInit {
     });
 
   constructor( private fb: FormBuilder,
-               private authService: AuthService) { }
+               private authService: AuthService,
+               private loadingService: LoadingServicesService) { 
+                this.loadingService.loadingSub.subscribe( ( value ) => {
+                  this.loading = value;
+                  console.log('loading', this.loading)
+                })
+               }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  
+  }
 
   login() {
 
