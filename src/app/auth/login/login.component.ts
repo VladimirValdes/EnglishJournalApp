@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { LoaderinterceptorService } from 'src/app/interceptors/loaderinterceptor.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingServicesService } from 'src/app/services/loading.service';
@@ -9,10 +10,11 @@ import { LoadingServicesService } from 'src/app/services/loading.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy{
 
 
   loading!: boolean;
+  private subscription: Subscription = new Subscription();
 
   public loginForm = this.fb.group(
     {
@@ -26,13 +28,20 @@ export class LoginComponent implements OnInit {
   constructor( private fb: FormBuilder,
                private authService: AuthService,
                private loadingService: LoadingServicesService) { 
-                this.loadingService.loadingSub.subscribe( ( value ) => {
-                  this.loading = value;
-                  console.log('loading', this.loading)
-                })
+                
                }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void { 
+
+    this.subscription.add(
+      this.loadingService.loadingSub.subscribe( ( value ) => {
+        this.loading = value;
+        console.log('loading', this.loading)
+      })
+    )
   
   }
 
@@ -40,11 +49,15 @@ export class LoginComponent implements OnInit {
 
     if ( this.loginForm.invalid) { return; }
 
-    this.authService.login( this.loginForm.value ).subscribe( resp => {
-          console.log( resp );
-    }, ( error ) => {
-      console.warn( error )
-    })
+    this.subscription.add(
+      this.authService.login( this.loginForm.value ).subscribe( resp => {
+        console.log( resp );
+      }, ( error ) => {
+        console.warn( error )
+      })
+    )
+
+   
 
     console.log(this.loginForm.value)
   }
