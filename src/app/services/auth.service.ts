@@ -27,6 +27,8 @@ export class AuthService {
                 )
   }
 
+ 
+
   private readToken(): string {
     return ( localStorage.getItem('x-token')) 
             ? this.userToken = localStorage.getItem('x-token') || '' 

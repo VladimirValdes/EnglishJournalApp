@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { appRouting } from './appRouting.module';
 import { LoginModule } from './auth/login/login.module';
+import { errorsInterceptor } from './interceptors/handleErrors.interceptor';
 import { LoaderinterceptorService } from './interceptors/loaderinterceptor.service';
 import { PagesModule } from './pages/pages.module';
 
@@ -24,6 +25,11 @@ import { PagesModule } from './pages/pages.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderinterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: errorsInterceptor,
       multi: true
     }
   ],
