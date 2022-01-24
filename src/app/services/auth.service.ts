@@ -27,9 +27,9 @@ export class AuthService {
     return this.readToken();
   }
 
-  // get uid() {
-  //   return this.user.uid;
-  // }
+  get uid() {
+    return this.user.uid;
+  }
 
   login(formData: LoginForm): Observable<User> {
     return this.http.post<User>(`${BASE_URL}/auth/login`, formData).pipe(
