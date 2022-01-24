@@ -5,6 +5,7 @@ import { LoginForm } from '../interfaces/loginForm.interface';
 import { catchError, map, Observable, of } from 'rxjs';
 import { User } from '../model/user.mode';
 import { RenewToken } from '../interfaces/validateToken.interface';
+import { Router } from '@angular/router';
 
 const BASE_URL = environment.base_url;
 
@@ -16,13 +17,19 @@ export class AuthService {
 
   public user!: User;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router) {
     this.readToken();
   }
 
   get token() {
     return this.readToken();
   }
+
+  // get uid() {
+  //   return this.user.uid;
+  // }
 
   login(formData: LoginForm): Observable<User> {
     return this.http.post<User>(`${BASE_URL}/auth/login`, formData).pipe(
@@ -35,6 +42,7 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem('x-token');
+    this.router.navigateByUrl('/login');
   }
 
   validateToken(): Observable<boolean> {

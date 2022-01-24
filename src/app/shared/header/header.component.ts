@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,24 +17,34 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
         <input type="search" class="searchbar__input fs-4" placeholder="Search ..." aria-describedby="addon-wrapping">
         <img src="/assets/icons/search.svg" alt="" class="searchbar__icon">
     </div>
+    <button class="ms-auto mx-4"
+      (click)="logout()">
+      <img src="assets/icons/logout.svg" alt="logout">
+    </button>
   </header>`,
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-
+  
+  constructor( 
+    private authService: AuthService ) {}
 
   @Output() active = new EventEmitter<boolean>();
+
   menuActive = false;
-  constructor() { }
 
-  ngOnInit(): void {
+
+
+  logout() {
+
+    this.authService.logout();
+
   }
-
+ 
   activeMenu() {
-
-     this.menuActive = !this.menuActive;
-    this.active.emit(this.menuActive)
+    this.menuActive = !this.menuActive;
+    this.active.emit(this.menuActive);
   }
 
 }
