@@ -1,5 +1,5 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cardtotal',
@@ -12,7 +12,7 @@ import { Component, Input, OnInit } from '@angular/core';
       transition(':leave', [
         animate('500ms', style({ opacity: 0, transform: 'translateY(-10px)' })),
       ]),
-    ])
+    ]),
   ],
   template: `
   <div class="d-flex justify-content-center align-items-center card shadow" style="width: 18rem; boder-radius: 5px">
@@ -26,18 +26,16 @@ import { Component, Input, OnInit } from '@angular/core';
     </div>
   </div>
   `,
-  styleUrls: ['./cardtotal.component.scss']
+  styleUrls: ['./cardtotal.component.scss'],
 })
-export class CardtotalComponent implements OnInit {
+export class CardtotalComponent  {
 
 
-  @Input() number = "";
-  @Input() name = "";
-  @Input() color = "";
+  @Input() number = '';
 
-  constructor() { }
+  @Input() name = '';
 
-  ngOnInit(): void {
-  }
+  @Input() color = '';
+
 
 }

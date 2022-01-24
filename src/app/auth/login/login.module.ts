@@ -4,14 +4,14 @@ import { LoginComponent } from './login.component';
 import { LoginroutingModule } from './loginrouting.module';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SpinnerModule } from 'src/app/shared/spinner/spinner.module';
 
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -19,10 +19,10 @@ import { SpinnerModule } from 'src/app/shared/spinner/spinner.module';
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
-    SpinnerModule
+    SpinnerModule,
   ],
   exports: [
-    LoginComponent
-  ]
+    LoginComponent,
+  ],
 })
 export class LoginModule { }

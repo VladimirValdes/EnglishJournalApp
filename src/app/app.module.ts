@@ -4,35 +4,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { appRouting } from './appRouting.module';
+import { AppRouting } from './appRouting.module';
 import { LoginModule } from './auth/login/login.module';
-import { errorsInterceptor } from './interceptors/handleErrors.interceptor';
+import { ErrorsInterceptor } from './interceptors/handleErrors.interceptor';
 import { LoaderinterceptorService } from './interceptors/loaderinterceptor.service';
 import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    appRouting,
+    AppRouting,
     PagesModule,
     LoginModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderinterceptorService,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: errorsInterceptor,
-      multi: true
-    }
+      useClass: ErrorsInterceptor,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

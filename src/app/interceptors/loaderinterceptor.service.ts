@@ -5,7 +5,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { LoadingServicesService } from '../services/loading.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoaderinterceptorService {
   private requests: HttpRequest<any>[] = [];
@@ -34,7 +34,7 @@ export class LoaderinterceptorService {
 
     return next.handle( updateRequest ).pipe(
       catchError( ( error: HttpErrorResponse ) => this.handleError( error, updateRequest) ),
-      finalize(() => this.removeRequest( updateRequest) )
+      finalize(() => this.removeRequest( updateRequest) ),
     );
   }
 

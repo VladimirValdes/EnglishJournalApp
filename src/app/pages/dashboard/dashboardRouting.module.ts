@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
-    data: { title: ''}
-  }
-]
+    data: { title: '' },
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
 })
 export class DashboardroutingModule { }

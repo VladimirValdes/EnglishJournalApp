@@ -16,7 +16,11 @@
       },
       "extends": [
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:import/recommended",
+        // AirBnB Styleguide rules
+        "airbnb-typescript/base"
+        
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -35,6 +39,7 @@
             "style": "kebab-case"
           }
         ]
+
       }
     },
     {
@@ -42,26 +47,12 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        // AirBnB Styleguide rules
-        "airbnb-typescript/base",
-        // Settings for Prettier
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended"
+        "plugin:@angular-eslint/template/recommended"
+        
       ],
       "rules": {
-          // Custom rules
-          "import/no-unresolved": "off",
-          "import/prefer-default-export": "off",
-          "class-methods-use-this": "off",
-          "lines-between-class-members": "off",
-          "@typescript-eslint/unbound-method": [
-            "error",
-            {
-              "ignoreStatic": true
-            }
-          ]
       }
     }
   ]
+  
 }

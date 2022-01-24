@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../guards/auth.guard';
 import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
   {
     path: 'dashboard', 
     component: PagesComponent,
-    loadChildren: () => import('./child-routes.module').then(m => m.childRouting ),
-    data: { title: 'Dashboard'}
-  }
-]
+    canActivate: [ AuthGuard ],
+    canLoad: [ AuthGuard ],
+    loadChildren: () => import('./child-routes.module').then(m => m.ChildRouting ),
+    data: { title: 'Dashboard' },
+  },
+];
 
 
 @NgModule({
   imports: [ RouterModule.forChild(routes)],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
 })
 export class PagesroutingModule { }
