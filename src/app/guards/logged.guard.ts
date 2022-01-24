@@ -14,10 +14,14 @@ export class LoggedGuard implements CanActivate {
   }
 
   canActivate( ) {
-    const token = this.authService.token;      
-    return  ( !token ) 
-      ? true 
-      : this.router.navigateByUrl('/dashboard');
+    const token = this.authService.token;
+  
+    if ( !token ) { 
+      return true;
+    } else {
+      this.router.navigateByUrl('/dashboard');
+      return false;
+    }
   }
   
 }
