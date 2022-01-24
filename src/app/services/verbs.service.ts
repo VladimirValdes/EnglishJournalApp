@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Verbs } from '../interfaces/verbs.interface';
+import { Verb, Verbs } from '../interfaces/verbs.interface';
 import { AuthService } from './auth.service';
 
 const BASE_URL = environment.base_url;
@@ -15,7 +15,12 @@ export class VerbsService {
     private http: HttpClient,
     private auth: AuthService ) { }
 
-  getVerbs():Observable<Verbs[]> {
-    return this.http.get<Verbs[]>(`${ BASE_URL }/verbs/user`);
+  getVerbs():Observable<Verb[]> {
+    return this.http.get<Verbs>(`${ BASE_URL }/verbs/user`)
+      .pipe(
+        map( resp => {
+          return resp.verbs;
+        }),
+      );
   }
 }

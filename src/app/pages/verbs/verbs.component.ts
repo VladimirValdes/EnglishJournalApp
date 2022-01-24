@@ -12,7 +12,7 @@ export class VerbsComponent implements OnInit {
 
   ngOnInit(): void {
     this.verbService.getVerbs().subscribe( verbs => {
-      console.log({ verbs });
+      console.log(verbs);
     });
   }
 
