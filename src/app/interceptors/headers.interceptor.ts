@@ -21,7 +21,6 @@ export class HeadersInterceptor implements HttpInterceptor{
       'x-token': this.authService.token,
     });
 
-    console.log({ loginRoute });
     if ( req.url.indexOf(loginRoute) === -1 ) {
       const reqClone = req.clone({ headers });
       return next.handle( reqClone );
