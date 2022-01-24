@@ -47,11 +47,7 @@ export class AuthService {
 
   validateToken(): Observable<boolean> {
     return this.http
-      .get<RenewToken>(`${BASE_URL}/auth/renew`, {
-      headers: {
-        'x-token': this.token,
-      },
-    })
+      .get<RenewToken>(`${BASE_URL}/auth/renew`)
       .pipe(
         map((resp: RenewToken) => {
           const { name, email, role, uid } = resp.user;
