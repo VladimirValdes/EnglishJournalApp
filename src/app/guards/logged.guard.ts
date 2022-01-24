@@ -7,16 +7,24 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoggedGuard implements CanActivate {
 
+  token = this.authService.token;
 
   constructor( private authService: AuthService,
     private router: Router ) {
     
   }
 
-  canActivate( ) {
-    const token = this.authService.token;
-  
-    if ( !token ) { 
+  canLoad():boolean {
+    if ( !this.token ) { 
+      return true;
+    } else {
+      this.router.navigateByUrl('/dashboard');
+      return false;
+    }
+  }
+
+  canActivate():boolean {  
+    if ( !this.token ) { 
       return true;
     } else {
       this.router.navigateByUrl('/dashboard');
