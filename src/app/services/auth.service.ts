@@ -16,7 +16,9 @@ export class AuthService {
 
   public user!: User;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.readToken();
+  }
 
   get token() {
     return this.readToken();
@@ -29,6 +31,10 @@ export class AuthService {
         return res;
       }),
     );
+  }
+
+  logout(){
+    localStorage.removeItem('x-token');
   }
 
   validateToken(): Observable<boolean> {
