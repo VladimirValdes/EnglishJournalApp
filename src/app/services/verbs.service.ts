@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Verb, Verbs } from '../interfaces/verbs.interface';
-import { AuthService } from './auth.service';
 
 const BASE_URL = environment.base_url;
 @Injectable({
@@ -12,8 +11,7 @@ const BASE_URL = environment.base_url;
 export class VerbsService {
 
   constructor( 
-    private http: HttpClient,
-    private auth: AuthService ) { }
+    private http: HttpClient ) { }
 
   getVerbs():Observable<Verb[]> {
     return this.http.get<Verbs>(`${ BASE_URL }/verbs/user`)

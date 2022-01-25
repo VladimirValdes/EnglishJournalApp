@@ -1,101 +1,96 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col d-flex align-items-center">
-            <h2 class="fw-bolder me-5 mt-4" style="font-size: 4rem;">Verbs</h2>
-        </div>
+  <div class="row">
+    <div class="col d-flex align-items-center">
+      <h2 class="fw-bolder me-5 mt-4" style="font-size: 4rem">Verbs</h2>
     </div>
-    <div class="row">
-        <div class="col d-flex align-items-center mt-4">
-            <div class="d-flex align-items-center me-3">
-                <div class="searchbar  ">
-                    <input type="search" class="searchbar__input fs-4" placeholder="Search verbs...">
-                    <img src="/assets/icons/search.svg" alt="" class="searchbar__icon">
-                </div>
-                <div class="dropdown ms-3">
-                    <button class="btnicon btnfilter fs-4 fw-bolder" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/assets/icons/filter.svg" alt="filter">
-                      Filter
-                    </button>
-                    <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                  </div>
-            </div>
-            <button class="custombtn custombtn--add fw-bolder d-flex align-items-center  ms-auto"
-                data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
-                Add 
-            </button>
+  </div>
+  <div class="row">
+    <div class="col d-flex align-items-center mt-4">
+      <div class="d-flex align-items-center me-3">
+        <div class="searchbar">
+          <input
+            type="search"
+            class="searchbar__input fs-4"
+            placeholder="Search verbs..."
+          />
+          <img src="/assets/icons/search.svg" alt="" class="searchbar__icon" />
         </div>
+        <div class="dropdown ms-3">
+          <button
+            class="btnicon btnfilter fs-4 fw-bolder"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img src="/assets/icons/filter.svg" alt="filter" />
+            Filter
+          </button>
+          <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+      </div>
+      <button
+        class="custombtn custombtn--add fw-bolder d-flex align-items-center ms-auto"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        <img
+          src="/assets/icons/add.svg"
+          alt="add"
+          style="padding-right: 15px"
+        />
+        Add
+      </button>
     </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="card shadow overflow-hidden position-static" style="border-radius: 5px ;">
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <div
+        class="card shadow overflow-hidden position-static"
+        style="border-radius: 5px"
+      >
+        <table class="table table-striped">
+          <thead
+            class="text-center text-white fs-4"
+            style="background-color: #0f172a"
+          >
+            <tr>
+              <th style="width: 25%">Base Verb</th>
+              <th class="d-none d-md-table-cell" style="width: 25%">
+                Simple Past
+              </th>
+              <th class="d-none d-md-table-cell" style="width: 25%">
+                Past Participe
+              </th>
+              <th style="width: 25%">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-center fs-4">
+            <ng-container
+                *ngFor="let verb of verbs$ | async" >
+              <tr>
+                <td>{{ verb.baseForm }}</td>
+                <td class="d-none d-md-table-cell">{{ verb.pastSimple }}</td>
+                <td class="d-none d-md-table-cell">{{ verb.pastParticiple }}</td>
+                <td class="d-flex justify-content-center align-items-center">
+                  <button class="me-3 btnicon">
+                    <img src="/assets/icons/edit.svg" alt="edit" />
+                  </button>
 
-                <table class="table table-striped ">
-                    <thead class="text-center text-white fs-4" style="background-color: #0f172a;">
-                        <tr>
-                            <th style="width:25%;">Base Verb</th>
-                            <th class="d-none d-md-table-cell" style="width:25%">Simple Past</th>
-                            <th class="d-none d-md-table-cell" style="width:25%">Past Participe</th>
-                            <th style="width:25%">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center fs-4">
-                        <tr>
-                            <td>Ashley Briggs</td>
-                            <td class="d-none d-md-table-cell">864-348-0485</td>
-                            <td class="d-none d-md-table-cell">June 21, 1961</td>
-                            <td class="d-flex justify-content-center align-items-center">
-                                <button class="me-3 btnicon">
-                                    <img src="/assets/icons/edit.svg" alt="edit">
-                                </button>
-
-                                <button class="btnicon">
-                                    <img src="/assets/icons/delete.svg" alt="delete">
-                                </button>
-
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ashley Briggs</td>
-                            <td class="d-none d-md-table-cell">864-348-0485</td>
-                            <td class="d-none d-md-table-cell">June 21, 1961</td>
-                            <td class="d-flex justify-content-center align-items-center">
-                                <button class="me-3 btnicon">
-                                    <img src="/assets/icons/edit.svg" alt="edit">
-                                </button>
-
-                                <button class="btnicon">
-                                    <img src="/assets/icons/delete.svg" alt="delete">
-                                </button>
-
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ashley Briggs</td>
-                            <td class="d-none d-md-table-cell">864-348-0485</td>
-                            <td class="d-none d-md-table-cell">June 21, 1961</td>
-                            <td class="d-flex justify-content-center align-items-center">
-                                <button class="me-3 btnicon">
-                                    <img src="/assets/icons/edit.svg" alt="edit">
-                                </button>
-
-                                <button class="btnicon">
-                                    <img src="/assets/icons/delete.svg" alt="delete">
-                                </button>
-
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- <table class="table">
+                  <button class="btnicon">
+                    <img src="/assets/icons/delete.svg" alt="delete" />
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <!-- <table class="table">
                 <thead style="background-color: #edf2f7;" class="text-center">
                   <tr style="color: #64748b;">
                     <th scope="col">Base Verb</th>
@@ -117,60 +112,108 @@
                  
                 </tbody>
               </table> -->
-        </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title fs-4 fw-bolder" id="exampleModalLabel">Add Verb</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form class="col px-4">
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="verb" class="form-label fs-4 ls fw-bolder">Verb</label>
-                        <input type="text" class="form-control" id="verb" placeholder="verb">
-                    </div>
-                   <div class="col-5">
-                    <label for="type" class="form-label fs-4 ls fw-bolder">Type</label>
-                    <select id="type" class="form-select">
-                      <option selected>Choose...</option>
-                      <option value="regular">Regular</option>
-                      <option value="irregular">Irregular</option>
-                    </select>
-                   </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="past" class="form-label fs-4 ls fw-bolder">Simple Past</label>
-                    <input type="text" class="form-control" id="past" placeholder="verb in simple past">
-                  </div>
-                  <div class="mb-3">
-                    <label for="past" class="form-label fs-4 ls fw-bolder">Past Participle</label>
-                    <input type="text" class="form-control" id="past" placeholder="verb in past participle">
-                  </div>
-                  <div class="mb-3">
-                    <label for="past" class="form-label fs-4 ls fw-bolder">N-I-K</label>
-                    <select id="type" class="form-select">
-                        <option selected>Choose...</option>
-                        <option value="N">N ( Neutral Word)</option>
-                        <option value="I">I ( Impact Word)</option>
-                        <option value="K">K ( Know Word)</option>
-
-                      </select>
-                  </div>
-            </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="custombtn-close fw-bolder fs-4" data-bs-dismiss="modal">Close</button>
-          <button class="custombtn custombtn--add fw-bolder d-flex align-items-center">
-          <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
-          Save 
-      </button>
-        </div>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fs-4 fw-bolder" id="exampleModalLabel">
+          Add Verb
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="col px-4">
+          <div class="row mb-3">
+            <div class="col">
+              <label for="verb" class="form-label fs-4 ls fw-bolder"
+                >Verb</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="verb"
+                placeholder="verb"
+              />
+            </div>
+            <div class="col-5">
+              <label for="type" class="form-label fs-4 ls fw-bolder"
+                >Type</label
+              >
+              <select id="type" class="form-select">
+                <option selected>Choose...</option>
+                <option value="regular">Regular</option>
+                <option value="irregular">Irregular</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="past" class="form-label fs-4 ls fw-bolder"
+              >Simple Past</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="past"
+              placeholder="verb in simple past"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="past" class="form-label fs-4 ls fw-bolder"
+              >Past Participle</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="past"
+              placeholder="verb in past participle"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="past" class="form-label fs-4 ls fw-bolder">N-I-K</label>
+            <select id="type" class="form-select">
+              <option selected>Choose...</option>
+              <option value="N">N ( Neutral Word)</option>
+              <option value="I">I ( Impact Word)</option>
+              <option value="K">K ( Know Word)</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="custombtn-close fw-bolder fs-4"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          class="custombtn custombtn--add fw-bolder d-flex align-items-center"
+        >
+          <img
+            src="/assets/icons/add.svg"
+            alt="add"
+            style="padding-right: 15px"
+          />
+          Save
+        </button>
       </div>
     </div>
+  </div>
+</div>
