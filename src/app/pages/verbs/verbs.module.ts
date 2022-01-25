@@ -2,19 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VerbsComponent } from './verbs.component';
 import { VerbsRouting } from './verbsRouting.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    VerbsComponent
+    VerbsComponent,
   ],
   imports: [
     CommonModule,
-    VerbsRouting
+    VerbsRouting,
+    ReactiveFormsModule,
   ],
   exports: [
-    VerbsComponent  
-  ]
+    VerbsComponent,  
+  ],
 })
 export class VerbsModule { }

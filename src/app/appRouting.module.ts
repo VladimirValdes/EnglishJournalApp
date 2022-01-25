@@ -6,7 +6,7 @@ import { LoginroutingModule } from './auth/login/loginrouting.module';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/dashboard/home', pathMatch: 'full' },
 ];
 
 @NgModule({
