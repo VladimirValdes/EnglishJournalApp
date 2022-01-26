@@ -71,7 +71,7 @@
           </thead>
           <tbody class="text-center fs-4">
             <ng-container
-                *ngFor="let verb of verbs$ | async" >
+                *ngFor="let verb of verbs$ | async; trackBy: trackByFn" >
               <tr>
                 <td>{{ verb.baseForm }}</td>
                 <td class="d-none d-md-table-cell">{{ verb.pastSimple }}</td>
@@ -122,8 +122,8 @@
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
+  aria-hidden="true">
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -135,6 +135,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          #closebtn
         ></button>
       </div>
       <div class="modal-body">
@@ -241,7 +242,7 @@
   </div>
 </div>
 </div>
-<h3> Status </h3>
+<!-- <h3> Status </h3>
 <pre>
   baseForm: {{ verbForm.get('baseForm')?.status }}
   pastSimple: {{ verbForm.get('pastSimple')?.status }}
@@ -259,4 +260,4 @@
   type: {{ verbForm.get('type')?.value }}
   nik: {{ verbForm.get('nik')?.value }}
   
-</pre>
+</pre> -->

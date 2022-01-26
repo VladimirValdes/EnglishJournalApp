@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRouting } from './appRouting.module';
 import { LoginModule } from './auth/login/login.module';
-import { ErrorsInterceptor } from './interceptors/handleErrors.interceptor';
+// import { ErrorsInterceptor } from './interceptors/handleErrors.interceptor';
 import { HeadersInterceptor } from './interceptors/headers.interceptor';
 import { LoaderinterceptorService } from './interceptors/loaderinterceptor.service';
 import { PagesModule } from './pages/pages.module';
@@ -30,11 +30,11 @@ import { PagesModule } from './pages/pages.module';
       useClass: LoaderinterceptorService,
       multi: true,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorsInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ErrorsInterceptor,
+    //   multi: true,
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeadersInterceptor,

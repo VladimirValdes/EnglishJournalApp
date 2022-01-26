@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Verb } from 'src/app/interfaces/verbs.interface';
@@ -10,6 +10,8 @@ import { VerbsService } from 'src/app/services/verbs.service';
   styleUrls: ['./verbs.component.scss'],
 })
 export class VerbsComponent implements OnInit {
+
+  @ViewChild('closebtn') closebtn!: ElementRef;
 
   sumitted = false;
 
@@ -48,23 +50,42 @@ export class VerbsComponent implements OnInit {
  
 
   ngOnInit(): void {
-    this.verbs$ = this.verbService.getVerbs();
+    this.getVerbs();
   }
 
   addVerb() {
     this.sumitted = true;
     if ( this.verbForm.invalid) { return; }
 
+    this.verbService.addVerb(this.verbForm.value).subscribe( verb => {
+      console.log({ verb });
+      this.closebtn.nativeElement.click();
+      this.close();
+      this.getVerbs();
+
+    });
+
   }
 
   close() {
-    this.verbForm.reset();
+    this.verbForm.reset({
+      type: '',
+      nik: '',
+    });
+  }
+
+  getVerbs() {
+    this.verbs$ = this.verbService.getVerbs();
   }
 
   
   invalidField(formControl: string): boolean {
     const field = this.verbForm.get(formControl);
     return (field?.invalid && ( field?.touched || field?.dirty) && this.sumitted) ? true : false;
+  }
+
+  trackByFn( index: number): number {
+    return index;
   }
 
 }

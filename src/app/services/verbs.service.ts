@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Verb, Verbs } from '../interfaces/verbs.interface';
+import { VerbForm } from '../interfaces/verbsForm.interface';
 
 const BASE_URL = environment.base_url;
 @Injectable({
@@ -21,4 +22,6 @@ export class VerbsService {
         }),
       );
   }
+
+  addVerb( formData: VerbForm ) { return this.http.post(`${ BASE_URL }/verbs`, formData ); }
 }
