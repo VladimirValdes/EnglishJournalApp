@@ -55,14 +55,31 @@ export class VerbsComponent implements OnInit {
     this.getVerbs();
   }
 
+  getVerbs() {
+    this.verbs$ = this.verbService.getVerbs();
+  }
+
   addVerb() {
     this.sumitted = true;
     if ( this.verbForm.invalid) { return; }
 
     this.verbService.addVerb(this.verbForm.value).subscribe( () => {
-      this.alertService.success('Verb created');
+      this.alertService.success('Created', 'Your verb has been created');
       this.close();
       this.getVerbs();
+    });
+
+  }
+
+  deleteVerb( id: string ) {
+
+    this.alertService.confirm().then( ( result ) => {
+      if ( result.isConfirmed ) {
+        this.verbService.deleteVerb(id).subscribe( () => {
+          this.alertService.success('Deleted', 'Your verb has been deleted');
+          this.getVerbs();
+        });
+      }
     });
 
   }
@@ -74,11 +91,7 @@ export class VerbsComponent implements OnInit {
       nik: '',
     });
   }
-
-  getVerbs() {
-    this.verbs$ = this.verbService.getVerbs();
-  }
-
+  
   
   invalidField(formControl: string): boolean {
     const field = this.verbForm.get(formControl);

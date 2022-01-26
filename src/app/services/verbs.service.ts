@@ -26,4 +26,8 @@ export class VerbsService {
   addVerb( formData: VerbForm ):Observable<Verb> { 
     return this.http.post<Verb>(`${ BASE_URL }/verbs`, formData ); 
   }
+
+  deleteVerb( id: string ) {
+    return this.http.delete(`${ BASE_URL }/verbs/${ id }`);
+  }
 }
