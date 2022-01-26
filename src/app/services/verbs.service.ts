@@ -23,5 +23,7 @@ export class VerbsService {
       );
   }
 
-  addVerb( formData: VerbForm ) { return this.http.post(`${ BASE_URL }/verbs`, formData ); }
+  addVerb( formData: VerbForm ):Observable<Verb> { 
+    return this.http.post<Verb>(`${ BASE_URL }/verbs`, formData ); 
+  }
 }
