@@ -27,6 +27,10 @@ export class VerbsService {
     return this.http.post<Verb>(`${ BASE_URL }/verbs`, formData ); 
   }
 
+  updateVerb( formData: VerbForm, id: string ) {
+    return this.http.put<Verb>(`${ BASE_URL }/verbs/${ id }`, formData ); 
+  }
+
   deleteVerb( id: string ) {
     return this.http.delete(`${ BASE_URL }/verbs/${ id }`);
   }

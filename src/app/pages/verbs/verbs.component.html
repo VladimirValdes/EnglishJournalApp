@@ -37,6 +37,7 @@
         class="custombtn custombtn--add fw-bolder d-flex align-items-center ms-auto"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
+        #openModal
       >
         <img
           src="/assets/icons/add.svg"
@@ -77,7 +78,8 @@
                 <td class="d-none d-md-table-cell">{{ verb.pastSimple }}</td>
                 <td class="d-none d-md-table-cell">{{ verb.pastParticiple }}</td>
                 <td class="d-flex justify-content-center align-items-center">
-                  <button class="me-3 btnicon">
+                  <button class="me-3 btnicon"
+                    (click)="selectVerb( verb )">
                     <img src="/assets/icons/edit.svg" alt="edit" />
                   </button>
 

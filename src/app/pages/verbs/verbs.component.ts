@@ -14,7 +14,13 @@ export class VerbsComponent implements OnInit {
 
   @ViewChild('closebtn') closebtn!: ElementRef;
 
+  @ViewChild('openModal') openModal!:ElementRef;
+
   sumitted = false;
+
+  updateV = false;
+
+  idVerb = '';
 
   type = [ 'rregular', 'irregular'];
 
@@ -63,11 +69,26 @@ export class VerbsComponent implements OnInit {
     this.sumitted = true;
     if ( this.verbForm.invalid) { return; }
 
-    this.verbService.addVerb(this.verbForm.value).subscribe( () => {
-      this.alertService.success('Created', 'Your verb has been created');
-      this.close();
-      this.getVerbs();
-    });
+    if ( this.updateV ) {
+      console.log('Update Verb');
+
+      this.verbService.updateVerb( this.verbForm.value, this.idVerb ).subscribe( () => {
+        this.alertService.success('Updated', 'Your verb has been updated');
+        this.getVerbs();
+      });
+
+        
+    } else {
+      this.verbService.addVerb(this.verbForm.value).subscribe( () => {
+        this.alertService.success('Created', 'Your verb has been created');
+        this.getVerbs();
+
+      });
+    }
+
+    this.close();
+
+  
 
   }
 
@@ -82,6 +103,21 @@ export class VerbsComponent implements OnInit {
       }
     });
 
+  }
+
+  selectVerb( verb: Verb ) {
+    console.log( verb );
+    this.verbForm.setValue({
+      baseForm: verb.baseForm,
+      pastSimple: verb.pastSimple,
+      pastParticiple: verb.pastParticiple,
+      type: verb.type,
+      nik: verb.nik,
+    });
+
+    this.idVerb = verb._id;
+    this.updateV = true;
+    this.openModal.nativeElement.click();
   }
 
   close() {
