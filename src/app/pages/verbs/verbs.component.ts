@@ -26,15 +26,15 @@ export class VerbsComponent implements OnInit {
 
   nik = [
     {
-      type: 'N',
+      type: 'n',
       desc: 'N ( Neutral Word )',
     },
     {
-      type: 'I',
+      type: 'i',
       desc: 'I ( Impact Word )',
     },
     {
-      type: 'K',
+      type: 'k',
       desc: 'K ( Know Word )',
     }];
 
@@ -86,6 +86,7 @@ export class VerbsComponent implements OnInit {
       });
     }
 
+    this.closebtn.nativeElement.click();
     this.close();
 
   
@@ -106,8 +107,7 @@ export class VerbsComponent implements OnInit {
   }
 
   selectVerb( verb: Verb ) {
-    console.log( verb );
-    this.verbForm.setValue({
+    this.verbForm.reset({
       baseForm: verb.baseForm,
       pastSimple: verb.pastSimple,
       pastParticiple: verb.pastParticiple,
@@ -120,13 +120,15 @@ export class VerbsComponent implements OnInit {
     this.openModal.nativeElement.click();
   }
 
-  close() {
-    this.closebtn.nativeElement.click();
+  close( ) {
+    this.updateV = false;
     this.verbForm.reset({
       type: '',
       nik: '',
     });
   }
+
+  
   
   
   invalidField(formControl: string): boolean {
