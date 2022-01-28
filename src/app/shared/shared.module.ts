@@ -3,21 +3,23 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
+import { SearchbarModule } from '../components/searchbar/searchbar.module';
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SearchbarModule,
   ],
   exports: [
     SidebarComponent,
-    HeaderComponent
-  ]
+    HeaderComponent,
+  ],
 })
 export class SharedModule { }

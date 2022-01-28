@@ -13,10 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
         <span class="icon-menu__bar">
         </span>
     </button>
-    <div class="searchbar my-4">
-        <input type="search" class="searchbar__input fs-4" placeholder="Search ..." aria-describedby="addon-wrapping">
-        <img src="/assets/icons/search.svg" alt="" class="searchbar__icon">
-    </div>
+ 
+    <app-searchbar></app-searchbar>
     <button class="ms-auto mx-4"
       (click)="logout()">
       <img src="assets/icons/logout.svg" alt="logout">
