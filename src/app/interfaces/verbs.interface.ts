@@ -2,6 +2,10 @@ export interface Verbs {
   verbs: Verb[];
 }
 
+export interface SerchVerbs {
+  results: Verb[];
+}
+
 export interface Verb {
   _id:            string;
   baseForm:       string;

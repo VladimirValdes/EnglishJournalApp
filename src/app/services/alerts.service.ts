@@ -54,4 +54,13 @@ export class AlertsService {
 
   }
 
+  info( msg: any ) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Oops...',
+      text: `${ msg  }`,
+    });
+
+  }
+
 }

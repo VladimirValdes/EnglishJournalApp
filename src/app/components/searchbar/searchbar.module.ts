@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchbarComponent } from './searchbar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -10,6 +11,7 @@ import { SearchbarComponent } from './searchbar.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
   ],
   exports: [
     SearchbarComponent,

@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col d-flex align-items-center mt-4">
       <div class="d-flex align-items-center me-3">
-       <app-searchbar></app-searchbar>
+       <app-searchbar (submitted)="onSearch($event)"></app-searchbar>
         <div class="dropdown ms-3">
           <button
             class="btnicon btnfilter fs-4 fw-bolder"
@@ -17,7 +17,7 @@
             aria-expanded="false"
           >
             <img src="/assets/icons/filter.svg" alt="filter" />
-            Filter
+            Filter By
           </button>
           <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="#">Action</a></li>

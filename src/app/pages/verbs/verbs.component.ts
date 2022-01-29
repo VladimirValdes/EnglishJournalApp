@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Verb } from 'src/app/interfaces/verbs.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { VerbsService } from 'src/app/services/verbs.service';
@@ -38,6 +38,8 @@ export class VerbsComponent implements OnInit {
       desc: 'K ( Know Word )',
     }];
 
+  
+
   verbs$!:Observable<Verb[]>;
 
   public verbForm = this.fb.group({
@@ -70,8 +72,6 @@ export class VerbsComponent implements OnInit {
     if ( this.verbForm.invalid) { return; }
 
     if ( this.updateV ) {
-      console.log('Update Verb');
-
       this.verbService.updateVerb( this.verbForm.value, this.idVerb ).subscribe( () => {
         this.alertService.success('Updated', 'Your verb has been updated');
         this.getVerbs();
@@ -94,7 +94,6 @@ export class VerbsComponent implements OnInit {
   }
 
   deleteVerb( id: string ) {
-
     this.alertService.confirm().then( ( result ) => {
       if ( result.isConfirmed ) {
         this.verbService.deleteVerb(id).subscribe( () => {
@@ -103,7 +102,6 @@ export class VerbsComponent implements OnInit {
         });
       }
     });
-
   }
 
   selectVerb( verb: Verb ) {
@@ -120,6 +118,22 @@ export class VerbsComponent implements OnInit {
     this.openModal.nativeElement.click();
   }
 
+  onSearch( term: string ) {
+    console.log({ term });
+    if ( term ) {
+      this.verbs$ = this.verbService.searchVerbs( term ).pipe(
+        tap( verbs => {
+          if ( verbs.length <= 0) {
+            this.alertService.info("We don't find any register");
+            this.getVerbs();
+          }
+        }),
+      );
+    } else {
+      this.getVerbs();
+    }
+  }
+
   close( ) {
     this.updateV = false;
     this.verbForm.reset({
@@ -127,9 +141,6 @@ export class VerbsComponent implements OnInit {
       nik: '',
     });
   }
-
-  
-  
   
   invalidField(formControl: string): boolean {
     const field = this.verbForm.get(formControl);
