@@ -1,7 +1,10 @@
 <div class="d-flex flex-wrap align-items-center justify-content-evenly ">
-    <app-cardtotal [name]="'Verbs'" [number]="'30'" [color]="'#3b82f6'"></app-cardtotal>
-    <app-cardtotal [name]="'Phrasal Verbs'" [number]="'100'" [color]="'#ef4444'"></app-cardtotal>
-    <app-cardtotal [name]="'Adjectives'" [number]="'20'" [color]="'#f59e0b'"></app-cardtotal>
-    <app-cardtotal [name]="'Prepositions'" [number]="'75'" [color]="'#22c55e'"></app-cardtotal>
-    <app-cardtotal [name]="'Connectors'" [number]="'205'" [color]="'#3730a3'"></app-cardtotal>
+    <ng-container
+        *ngFor="let collection of collections">
+
+        <app-cardtotal [name]="collection.name" [number]="collection.numbers" [color]="collection.color"></app-cardtotal>
+
+    </ng-container>
+    
+ 
 </div>

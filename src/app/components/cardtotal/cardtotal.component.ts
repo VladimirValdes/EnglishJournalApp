@@ -31,7 +31,7 @@ import { Component, Input } from '@angular/core';
 export class CardtotalComponent  {
 
 
-  @Input() number = '';
+  @Input() number = 0;
 
   @Input() name = '';
 
