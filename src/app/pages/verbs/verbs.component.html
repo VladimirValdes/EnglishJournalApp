@@ -8,23 +8,24 @@
     <div class="col d-flex align-items-center mt-4">
       <div class="d-flex align-items-center me-3">
        <app-searchbar (submitted)="onSearch($event)"></app-searchbar>
-        <div class="dropdown ms-3">
-          <button
-            class="btnicon btnfilter fs-4 fw-bolder"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img src="/assets/icons/filter.svg" alt="filter" />
-            Filter By
-          </button>
-          <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
+        
+          <div class="d-flex justify-content-center align-items-center ms-3">
+            <label for="filter" class="fs-4 ls fw-bolder">Filter By:</label>
+            <select
+              id="filter"
+              class="form-select w-auto ms-3"
+              style=" border: 1px solid #94a3b8; padding: 8px 1.5rem;"
+              #selectFilter
+              (change)="filterBy(selectFilter.value)">
+              <option value="" selected>Choose...</option>
+              <ng-container *ngFor="let filter of filters">
+                
+                <option [value]="filter.type">{{ filter.desc }}</option>
+
+              </ng-container>
+            </select>
+          </div>
+         
       </div>
       <button
         class="custombtn custombtn--add fw-bolder d-flex align-items-center ms-auto"

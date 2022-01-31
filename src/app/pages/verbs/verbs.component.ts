@@ -22,9 +22,33 @@ export class VerbsComponent implements OnInit {
 
   idVerb = '';
 
+  selectedFilter = '';
+
   type = [ 'rregular', 'irregular'];
 
   nik = [
+    {
+      type: 'n',
+      desc: 'N ( Neutral Word )',
+    },
+    {
+      type: 'i',
+      desc: 'I ( Impact Word )',
+    },
+    {
+      type: 'k',
+      desc: 'K ( Know Word )',
+    }];
+
+  filters = [
+    {
+      type: 'regular',
+      desc: 'Regular',
+    },
+    {
+      type: 'irregular',
+      desc: 'Irregular',
+    },
     {
       type: 'n',
       desc: 'N ( Neutral Word )',
@@ -119,7 +143,6 @@ export class VerbsComponent implements OnInit {
   }
 
   onSearch( term: string ) {
-    console.log({ term });
     if ( term ) {
       this.verbs$ = this.verbService.searchVerbs( term ).pipe(
         tap( verbs => {
@@ -132,6 +155,11 @@ export class VerbsComponent implements OnInit {
     } else {
       this.getVerbs();
     }
+  }
+
+  filterBy( term: string ) {
+    console.log({ term });
+    
   }
 
   close( ) {

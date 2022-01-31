@@ -24,7 +24,7 @@ export class VerbsService {
   }
 
   searchVerbs( term: string ):Observable<Verb[]> {
-    return this.http.get<SerchVerbs>(`${ BASE_URL }/search/verbs/${ term }`)
+    return this.http.get<SerchVerbs>(`${ BASE_URL }/searchuser/verbs/${ term }`)
       .pipe(
         map( resp => {
           return resp.results;
