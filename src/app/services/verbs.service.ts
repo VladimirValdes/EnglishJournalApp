@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Verb, Verbs, SerchVerbs } from '../interfaces/verbs.interface';
+import { Verb, Verbs, SearchVerbs } from '../interfaces/verbs.interface';
 import { VerbForm } from '../interfaces/verbsForm.interface';
 
 const BASE_URL = environment.base_url;
@@ -24,9 +24,21 @@ export class VerbsService {
   }
 
   searchVerbs( term: string ):Observable<Verb[]> {
-    return this.http.get<SerchVerbs>(`${ BASE_URL }/searchuser/verbs/${ term }`)
+    return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ term }`)
       .pipe(
         map( resp => {
+          
+          return resp.results;
+        }),
+      );
+  }
+
+  filterVerbs( field = 'type', term = 'rregular' ):Observable<Verb[]> {
+    return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ field }/${ term }`)
+      .pipe(
+        map( resp => {
+          // console.log(resp.results);
+
           return resp.results;
         }),
       );

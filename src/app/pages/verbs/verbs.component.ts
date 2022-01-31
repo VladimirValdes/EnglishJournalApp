@@ -42,7 +42,7 @@ export class VerbsComponent implements OnInit {
 
   filters = [
     {
-      type: 'regular',
+      type: 'rregular',
       desc: 'Regular',
     },
     {
@@ -158,7 +158,23 @@ export class VerbsComponent implements OnInit {
   }
 
   filterBy( term: string ) {
-    console.log({ term });
+    console.log(term );
+
+    const field = ( term === 'rregular' || term === 'irregular') ? 'type' : 'nik';
+
+    console.log({ field });
+    
+    this.verbs$ = this.verbService.filterVerbs(field, term).pipe(
+      tap( verbs => {
+        if ( verbs.length <= 0) {
+          this.alertService.info("We don't find any register");
+          this.getVerbs();
+        }
+      }),
+    );
+
+  
+    
     
   }
 

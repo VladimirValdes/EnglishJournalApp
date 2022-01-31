@@ -2,7 +2,7 @@ export interface Verbs {
   verbs: Verb[];
 }
 
-export interface SerchVerbs {
+export interface SearchVerbs {
   results: Verb[];
 }
 
