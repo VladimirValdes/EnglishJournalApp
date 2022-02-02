@@ -20,7 +20,11 @@
               <option value="" selected>Choose...</option>
               <ng-container *ngFor="let filter of filters">
                 
-                <option [value]="filter.type">{{ filter.desc }}</option>
+                <option
+                  *ngIf="filter.type !== 'all'"
+                  [value]="filter.type">
+                  {{ filter.desc }}
+                </option>
 
               </ng-container>
             </select>
@@ -40,6 +44,25 @@
         />
         Add
       </button>
+      <div class="dropdown ms-3">
+        <button class="btnicon btnfilter fs-4 fw-bolder" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Export
+        </button>
+        <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
+          <!-- <li class="dropdown-item" style="cursor: pointer;">All</li> -->
+          <ng-container
+            *ngFor="let filter of filters">
+            <li
+              (click)="getReport( filter.type, filter.field )"
+              class="dropdown-item"
+              style="cursor: pointer;">
+              {{ filter.desc }}
+            </li>
+          </ng-container>
+          
+          
+        </ul>
+      </div>
     </div>
   </div>
   <div class="row mt-5">

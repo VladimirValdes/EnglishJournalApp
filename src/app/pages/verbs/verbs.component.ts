@@ -4,6 +4,8 @@ import { Observable, tap } from 'rxjs';
 import { Verb } from 'src/app/interfaces/verbs.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { VerbsService } from 'src/app/services/verbs.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-verbs',
@@ -42,22 +44,32 @@ export class VerbsComponent implements OnInit {
 
   filters = [
     {
+      field: 'all',
+      type: 'all',
+      desc: 'All',
+    },
+    {
+      field: 'type',
       type: 'rregular',
       desc: 'Regular',
     },
     {
+      field: 'type',
       type: 'irregular',
       desc: 'Irregular',
     },
     {
+      field: 'nik',
       type: 'n',
       desc: 'N ( Neutral Word )',
     },
     {
+      field: 'nik',
       type: 'i',
       desc: 'I ( Impact Word )',
     },
     {
+      field: 'nik',
       type: 'k',
       desc: 'K ( Know Word )',
     }];
@@ -85,6 +97,8 @@ export class VerbsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVerbs();
+
+   
   }
 
   getVerbs() {
@@ -176,6 +190,21 @@ export class VerbsComponent implements OnInit {
   
     
     
+  }
+
+  getReport( term: string, field: string ) {
+
+    Swal.fire({
+      title: 'Loading PDF',
+    });
+    Swal.showLoading();
+    this.verbService.reportsVerb(field, term).subscribe( resp => {
+      let fileURL = URL.createObjectURL( resp );      
+      window.open(fileURL);
+
+      Swal.close();
+      Swal.hideLoading();
+    });
   }
 
   close( ) {

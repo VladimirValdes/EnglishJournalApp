@@ -44,6 +44,18 @@ export class VerbsService {
       );
   }
 
+  reportsVerb( field = '', term = '') {
+    return this.http.get(`${ BASE_URL }/reports/verbs/${ field }/${ term }`, { responseType: 'blob' })
+      .pipe(
+        map( resp => {
+
+          return resp;
+          // return new Blob([resp.stream()], { type: 'application/pdf' });
+        
+        }),
+      );
+  }
+
   addVerb( formData: VerbForm ):Observable<Verb> { 
     return this.http.post<Verb>(`${ BASE_URL }/verbs`, formData ); 
   }

@@ -63,4 +63,8 @@ export class AlertsService {
 
   }
 
+  // loading( msg: string ) {
+
+  // }
+
 }
