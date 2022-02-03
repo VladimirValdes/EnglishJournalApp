@@ -15,7 +15,7 @@ import { Component, Input } from '@angular/core';
     ]),
   ],
   template: `
-  <div class="d-flex justify-content-center align-items-center card shadow" style="width: 18rem; boder-radius: 5px">
+  <div class="d-flex justify-content-center align-items-center card shadow" style="width: 16rem; boder-radius: 5px">
     <div class="card-body">
      <h5
         [@fadeSlideInOut]

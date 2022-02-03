@@ -33,7 +33,7 @@ export class VerbsService {
       );
   }
 
-  filterVerbs( field = 'type', term = 'rregular' ):Observable<Verb[]> {
+  filterVerbs( field: string, term: string ):Observable<Verb[]> {
     return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ field }/${ term }`)
       .pipe(
         map( resp => {
@@ -44,7 +44,7 @@ export class VerbsService {
       );
   }
 
-  reportsVerb( field = '', term = '') {
+  reportsVerb( field: string, term: string) {
     return this.http.get(`${ BASE_URL }/reports/verbs/${ field }/${ term }`, { responseType: 'blob' })
       .pipe(
         map( resp => {

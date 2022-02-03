@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-header',
   template:`
-  <header class="d-flex align-items-center  shadow bg-white mb-5 header">
+  <header class="d-flex align-items-center  shadow bg-white mb-5 header" style="z-index: 100;">
     <button
       class="icon-menu"
       type="button"

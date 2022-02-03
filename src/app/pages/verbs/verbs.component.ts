@@ -26,7 +26,7 @@ export class VerbsComponent implements OnInit {
 
   selectedFilter = '';
 
-  type = [ 'rregular', 'irregular'];
+  type = [ 'regular', 'irregular'];
 
   nik = [
     {
@@ -50,7 +50,7 @@ export class VerbsComponent implements OnInit {
     },
     {
       field: 'type',
-      type: 'rregular',
+      type: 'regular',
       desc: 'Regular',
     },
     {
@@ -174,7 +174,7 @@ export class VerbsComponent implements OnInit {
   filterBy( term: string ) {
     console.log(term );
 
-    const field = ( term === 'rregular' || term === 'irregular') ? 'type' : 'nik';
+    const field = ( term === 'regular' || term === 'irregular') ? 'type' : 'nik';
 
     console.log({ field });
     
