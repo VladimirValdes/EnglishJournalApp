@@ -5,3 +5,8 @@ export interface CountRegister {
   prepositionsTotal: number;
   connectorsTotal:   number;
 }
+
+export interface DateFilter {
+  startDate: Date;
+  endDate:   Date;
+}
