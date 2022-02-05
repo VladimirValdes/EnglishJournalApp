@@ -7,6 +7,6 @@ export interface CountRegister {
 }
 
 export interface DateFilter {
-  startDate: Date;
-  endDate:   Date;
+  startDate: string;
+  endDate:   string;
 }

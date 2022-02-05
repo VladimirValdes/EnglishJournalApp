@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { endOfDay, startOfDay, subDays, startOfMonth, subMonths, endOfMonth } from 'date-fns';
+import { endOfDay, startOfDay, subDays, startOfMonth, subMonths, endOfMonth, formatISO } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +10,11 @@ export class DatesService {
   // constructor() { }
 
 
-  getDay( day: Date ): { startAt: Date, endAt: Date } {
+  getDay( day: Date ): { startAt: string, endAt: string } {
 
     return {
-      startAt: startOfDay(day),
-      endAt: endOfDay(day),
+      startAt: formatISO(startOfDay(day)),
+      endAt: formatISO(endOfDay(day)),
     };
 
   }
@@ -26,10 +26,10 @@ export class DatesService {
     };
   }
 
-  currentMonth( day: Date, numberDays: number ): { startAt: Date, endAt: Date } {
+  currentMonth( numberDays: number ): { startAt: string, endAt: string } {
     return {
-      startAt: startOfMonth(subMonths(this.today, numberDays)),
-      endAt: endOfMonth(subMonths(this.today, numberDays)),
+      startAt: formatISO( startOfMonth(subMonths(this.today, numberDays))),
+      endAt: formatISO( endOfMonth(subMonths(this.today, numberDays))),
     };
   }
 }

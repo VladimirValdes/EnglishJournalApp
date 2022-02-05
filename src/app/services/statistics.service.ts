@@ -13,7 +13,13 @@ export class StatisticsService {
 
   constructor( private http: HttpClient) { }
 
-  getStatistic( dates: DateFilter ):Observable<CountRegister> {
-    return this.http.get<CountRegister>(`${ BASE_URL }/searchuser/datescount/${ dates.startDate}/${ dates.endDate }`);
+  getNumberStatistic( dates: DateFilter ):Observable<CountRegister> {
+    return this.http.post<CountRegister>(`${ BASE_URL }/searchuser/datescount`, dates);
   }
+
+  getRegisterByDates( dates: DateFilter ){
+    return this.http.post(`${ BASE_URL }/searchuser/dates`, dates);
+  }
+
+ 
 }
