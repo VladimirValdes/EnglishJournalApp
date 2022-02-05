@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { endOfDay, startOfDay, subDays, startOfMonth, subMonths, endOfMonth, formatISO } from 'date-fns';
+import { endOfDay, startOfDay, subDays, startOfMonth, subMonths, endOfMonth, formatISO, startOfWeek, endOfWeek } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,13 @@ export class DatesService {
     return {
       startAt: formatISO( startOfMonth(subMonths(this.today, numberDays))),
       endAt: formatISO( endOfMonth(subMonths(this.today, numberDays))),
+    };
+  }
+
+  geCurrenttWeek(): { startAt: string, endAt: string } {
+    return {
+      startAt: formatISO(startOfWeek(this.today)),
+      endAt: formatISO(endOfWeek(this.today)),
     };
   }
 }
