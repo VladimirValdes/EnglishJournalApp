@@ -23,6 +23,12 @@ export class BarchartComponent implements OnInit  {
   };
 
   labels: string[] = [];
+
+  activeT = false;
+
+  activeW =  false;
+
+  activeM = false;
   
   constructor( private statisticsService: StatisticsService,
     private datesService: DatesService) {}
@@ -85,6 +91,9 @@ export class BarchartComponent implements OnInit  {
   }
 
   getTodayRegisters() {
+    this.activeT = true;
+    this.activeM = false;
+    this.activeW = false;
     const { startAt, endAt } = this.datesService.getDay(this.today);
 
     console.log('click inside registers');
@@ -99,6 +108,10 @@ export class BarchartComponent implements OnInit  {
   }
 
   getRegistersByCurrentMonth() {
+    this.activeM = true;
+    this.activeT = false;
+    this.activeW = false;
+
     const { startAt, endAt } = this.datesService.currentMonth(0);
     this.dates.startDate = startAt;
     this.dates.endDate = endAt;
@@ -110,6 +123,10 @@ export class BarchartComponent implements OnInit  {
   }
 
   getRegistersByCurrentWeek() {
+    this.activeW = true;
+    this.activeT = false;
+    this.activeM = false;
+
     const { startAt, endAt } = this.datesService.geCurrenttWeek();
     this.dates.startDate = startAt;
     this.dates.endDate = endAt;

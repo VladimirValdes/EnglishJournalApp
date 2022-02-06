@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cardtotal',
@@ -15,7 +16,8 @@ import { Component, Input } from '@angular/core';
     ]),
   ],
   template: `
-  <div class="d-flex justify-content-center align-items-center card shadow" style="width: 16rem; boder-radius: 5px">
+  <div class="cardT d-flex justify-content-center align-items-center card shadow mt-2" style="width: 16rem; boder-radius: 5px"
+    (click)="navigateTo()">
     <div class="card-body">
      <h5
         [@fadeSlideInOut]
@@ -30,12 +32,27 @@ import { Component, Input } from '@angular/core';
 })
 export class CardtotalComponent  {
 
-
   @Input() number = 0;
 
   @Input() name = '';
 
   @Input() color = '';
+
+  @Input() routeName = '';
+  
+  constructor( private route: Router) {
+    
+  }
+
+
+
+
+  navigateTo() {
+    console.log('Im navigation to ');
+
+    this.route.navigateByUrl(`/dashboard/${ this.routeName }`);
+    
+  }
 
 
 }

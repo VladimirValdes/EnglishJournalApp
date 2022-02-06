@@ -4,7 +4,11 @@
         <ng-container
             *ngFor="let collection of collections">
     
-            <app-cardtotal [name]="collection.name" [number]="collection.numbers" [color]="collection.color"></app-cardtotal>
+          <app-cardtotal
+              [name]="collection.name"
+              [number]="collection.numbers"
+              [color]="collection.color"
+              [routeName]="collection.route"></app-cardtotal>
     
         </ng-container>
     

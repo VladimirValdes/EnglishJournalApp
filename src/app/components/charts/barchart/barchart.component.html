@@ -4,9 +4,23 @@
        <div class="d-flex justify-content-between my-3">
          <h3 class="fw-bolder">Number of Register</h3>
          <div class="btn-group" role="group" aria-label="filters" style="background-color: #f0f4f8; padding: 4px; border-radius: 5px;">
-          <button (click)="getTodayRegisters()" type="button" class="btnChart btnChart--active fs-5">Today</button>
-          <button  (click)="getRegistersByCurrentWeek()"  type="button" class="btnChart fs-5">7D</button>
-          <button (click)="getRegistersByCurrentMonth()"   type="button" class="btnChart fs-5">1M</button>
+          <button
+            (click)="getTodayRegisters()"
+            type="button"
+            [ngClass]="{'btnChart--active': activeT}"
+            class="btnChart  fs-5">
+            Today
+          </button>
+          <button
+            (click)="getRegistersByCurrentWeek()"
+            type="button"
+            [ngClass]="{'btnChart--active': activeW}"
+            class="btnChart fs-5">7D</button>
+          <button
+            (click)="getRegistersByCurrentMonth()"
+            type="button"
+            [ngClass]="{'btnChart--active': activeM}"
+            class="btnChart fs-5">1M</button>
   
         </div>
        </div>

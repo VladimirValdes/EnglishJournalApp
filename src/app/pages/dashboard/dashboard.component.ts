@@ -13,30 +13,34 @@ export class DashboardComponent implements OnInit {
       name: 'Verbs',
       color: '#3b82f6',
       numbers: 0,
+      route: 'verbs',
     },
     {
       name: 'Phrasal Verbs',
       color: '#ef4444',
       numbers: 0,
+      route: 'phrasalverbs',
 
     },
     {
       name: 'Adjectives',
       color: '#f59e0b',
       numbers: 0,
+      route: 'adjectives',
 
     },
     {
       name: 'Prepositions',
       color: '#22c55e',
       numbers: 0,
+      route: 'prepositions',
 
     },
     {
       name: 'Connectors',
       color: '#3730a3',
       numbers: 0,
-
+      route: 'connectors',
     },
   ];
 
