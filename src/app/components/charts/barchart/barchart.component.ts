@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {  ChartDataset, ChartType } from 'chart.js';
+import {  ChartDataset, ChartConfiguration, ChartType } from 'chart.js';
 import { format } from 'date-fns';
 import { BaseChartDirective } from 'ng2-charts';
 import { CountRegister, DateFilter } from 'src/app/interfaces/countRegister.interface';
 import { DatesService } from 'src/app/services/dates.service';
 import { StatisticsService } from 'src/app/services/statistics.service';
+
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-barchart',
@@ -28,31 +30,55 @@ export class BarchartComponent implements OnInit  {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   barChartData: ChartDataset[] = [
-    { data: [], label: 'Verbs', backgroundColor: '#3b82f6', hoverBackgroundColor: '#3b82f6' },
-    { data: [], label: 'Phrasal Verbs', backgroundColor: '#ef4444', hoverBackgroundColor: '#ef4444' },
-    { data: [], label: 'Adjectives', backgroundColor: '#f59e0b', hoverBackgroundColor: '#f59e0b' },
-    { data: [], label: 'Prepositons', backgroundColor: '#22c55e', hoverBackgroundColor: '#22c55e' },
-    { data: [], label: 'Connectors', backgroundColor: '#3730a3', hoverBackgroundColor: '#3730a3' },
+    { data: [55], label: 'Verbs', backgroundColor: '#3b82f6', hoverBackgroundColor: '#3b82f6' },
+    { data: [50], label: 'Phrasal Verbs', backgroundColor: '#ef4444', hoverBackgroundColor: '#ef4444' },
+    { data: [100], label: 'Adjectives', backgroundColor: '#f59e0b', hoverBackgroundColor: '#f59e0b' },
+    { data: [125], label: 'Prepositons', backgroundColor: '#22c55e', hoverBackgroundColor: '#22c55e' },
+    { data: [3], label: 'Connectors', backgroundColor: '#3730a3', hoverBackgroundColor: '#3730a3' },
   ];
 
   barChartLabels: String[] = [];
 
-  barChartOptions = {
+  barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
-    scale: {
-      ticks: {
-        precision: 0,
+    layout: {
+      padding: 20,
+    },
+    plugins: {
+     
+      legend: {
+        position: 'right',
+        align: 'center',
+        labels: {
+          usePointStyle: true,
+        },
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      },
+     
+    },
+
+    scales: {
+      y: {
+        ticks: {
+          precision: 0,
+        },
       },
     },
   };
 
+  
+
   barChartLegend = true;
 
-  barChartPlugins = [];
+  barChartPlugins = [ DataLabelsPlugin ];
 
   barChartType: ChartType = 'bar';
 
   barChartTitle = 'Number of register by collections';
+
 
   ngOnInit(): void {
     this.getTodayRegisters();
@@ -106,7 +132,6 @@ export class BarchartComponent implements OnInit  {
 
   setRegisters( collections: CountRegister, labels: string[] ) {
 
-    console.log({ collections });
     
     this.barChartData[0].data = [collections.verbsTotal];
     this.barChartData[1].data = [collections.phrasalverbsTotal];

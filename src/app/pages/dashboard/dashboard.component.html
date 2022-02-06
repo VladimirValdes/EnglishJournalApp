@@ -1,16 +1,23 @@
-<div class="d-flex flex-wrap align-items-center justify-content-evenly ">
-    <ng-container
-        *ngFor="let collection of collections">
-
-        <app-cardtotal [name]="collection.name" [number]="collection.numbers" [color]="collection.color"></app-cardtotal>
-
-    </ng-container>
-
- 
+<div class="wrapper d-flex flex-wrap">
+    <div 
+        class="card-wrapper d-flex flex-wrap align-items-center justify-content-center gap-3 mb-5">
+        <ng-container
+            *ngFor="let collection of collections">
+    
+            <app-cardtotal [name]="collection.name" [number]="collection.numbers" [color]="collection.color"></app-cardtotal>
+    
+        </ng-container>
+    
+     
+    </div>
+    <div class="chart-wrapper">
+        <app-barchart></app-barchart>
+    
+    </div>
 </div>
 
-<div >
-    <app-barchart></app-barchart>
 
-</div>
+
+
+
 
