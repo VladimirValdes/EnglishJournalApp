@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
         </span>
     </button>
  
-    <app-searchbar></app-searchbar>
+    <app-searchbar [borderR]="'25px'"></app-searchbar>
     <button class="ms-auto mx-4"
       (click)="logout()">
       <img src="assets/icons/logout.svg" alt="logout">

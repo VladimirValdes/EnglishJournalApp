@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 
@@ -8,7 +8,8 @@ import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
   <form
     [formGroup]="searchForm"
     (ngSubmit)="search()">
-    <div class="searchbar my-4">
+    <div class="searchbar my-4"
+      [ngStyle]="{'border-radius': borderR}">
         <input type="search"  formControlName="search" class="searchbar__input fs-4" placeholder="Search ..." aria-describedby="addon-wrapping">
         <img src="/assets/icons/search.svg" alt="" class="searchbar__icon">
     </div>
@@ -19,6 +20,8 @@ import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 export class SearchbarComponent implements OnInit {
 
   searchForm!: FormGroup;
+
+  @Input() borderR = '';
 
   @Output()submitted:EventEmitter<string> = new EventEmitter<string>();
  

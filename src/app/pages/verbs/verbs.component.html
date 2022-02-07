@@ -1,142 +1,193 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col d-flex align-items-center">
-      <h2 class="fw-bolder me-5 mt-4" style="font-size: 4rem">Verbs</h2>
-    </div>
+<div class="container-fluid row mb-4">
+  <div class="col d-flex align-items-center">
+    <h2 class="fw-bolder me-5  fs-1">Verbs</h2>
   </div>
-  <div class="row">
-    <div class="col d-flex align-items-center mt-4">
-      <div class="d-flex align-items-center me-3">
-       <app-searchbar (submitted)="onSearch($event)"></app-searchbar>
-        
-          <div class="d-flex justify-content-center align-items-center ms-3">
-            <label for="filter" class="fs-4 ls fw-bolder">Filter By:</label>
+</div>
+
+<div class="px-4 mb-4">
+  <div class="container-fluid bg-white shadow px-4 rounded-2">
+  
+    <div class="row">
+      <div class="col d-flex align-items-center mt-4 flex-wrap">
+
+        <div 
+          class="d-flex align-items-center flex-wrap order-1 w-100 justify-content-between order-lg-0"
+          style="max-width: 580px;">
+
+         <app-searchbar
+           class="componentW"
+           (submitted)="onSearch($event)"
+           [borderR]="'3px'"></app-searchbar>
+          
+           <!-- ======================= -->
+                  <!-- SELECT -->
+          <!-- ======================= -->
+         <div class="d-flex align-items-center componentW">
+            <label for="filter" class="fs-4 ls fw-bolder me-2" style="width: 115px;">Filter By:</label>
             <select
               id="filter"
-              class="form-select w-auto ms-3"
-              style=" border: 1px solid #94a3b8; padding: 8px 1.5rem;"
+              class="form-select fs-4"
+              style=" border: 1px solid #94a3b8; padding: 8px 1.5rem; background-color: transparent;"
               #selectFilter
               (change)="filterBy(selectFilter.value)">
               <option value="" selected>Choose...</option>
+
               <ng-container *ngFor="let filter of filters">
                 
                 <option
-                  *ngIf="filter.type !== 'all'"
+                *ngIf="filter.type !== 'all'"
                   [value]="filter.type">
                   {{ filter.desc }}
                 </option>
-
               </ng-container>
+
             </select>
-          </div>
-         
-      </div>
-      <button
-        class="custombtn custombtn--add fw-bolder d-flex align-items-center ms-auto"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        #openModal
-      >
-        <img
-          src="/assets/icons/add.svg"
-          alt="add"
-          style="padding-right: 15px"
-        />
-        Add
-      </button>
-      <div class="dropdown ms-3">
-        <button class="btnicon btnfilter fs-4 fw-bolder" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Export
+         </div>
+           <!-- ======================= -->
+                  <!-- SELECT -->
+          <!-- ======================= -->
+
+        </div>
+
+        <div
+        class="d-flex align-items-center justify-content-lg-end flex-wrap  w-100  ms-lg-auto"
+        style="max-width: 350px;">
+          <button
+          class="custombtn custombtn--add fw-bolder d-flex align-items-center fs-4"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          #openModal>
+          <img
+            src="/assets/icons/add.svg"
+            alt="add"
+            style="padding-right: 15px"/>
+          Add New Verb
         </button>
-        <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
-          <!-- <li class="dropdown-item" style="cursor: pointer;">All</li> -->
-          <ng-container
-            *ngFor="let filter of filters">
-            <li
-              (click)="getReport( filter.type, filter.field )"
-              class="dropdown-item"
-              style="cursor: pointer;">
-              {{ filter.desc }}
-            </li>
-          </ng-container>
-          
-          
-        </ul>
+
+          <!-- ======================= -->
+                  <!-- DROPDOWN -->
+          <!-- ======================= -->
+        <div class="dropdown ms-3">
+          <button
+            class="btnicon btnfilter fs-4 fw-bolder"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Export
+          </button>
+          <ul class="dropdown-menu fs-5" aria-labelledby="dropdownMenuButton1">
+            <ng-container
+              *ngFor="let filter of filters">
+              <li
+                (click)="getReport( filter.type, filter.field )"
+                class="dropdown-item"
+                style="cursor: pointer;">
+                {{ filter.desc }}
+              </li>
+            </ng-container>
+            
+            
+          </ul>
+        </div>
+          <!-- ======================= -->
+                  <!-- DROPDOWN -->
+          <!-- ======================= -->
+        </div>
+
+     
       </div>
     </div>
-  </div>
-  <div class="row mt-5">
-    <div class="col">
-      <div
-        class="card shadow overflow-hidden position-static"
-        style="border-radius: 5px"
-      >
-        <table class="table table-striped">
-          <thead
-            class="text-center text-white fs-4"
-            style="background-color: #0f172a"
-          >
-            <tr>
-              <th style="width: 25%">Base Verb</th>
-              <th class="d-none d-md-table-cell" style="width: 25%">
-                Simple Past
-              </th>
-              <th class="d-none d-md-table-cell" style="width: 25%">
-                Past Participe
-              </th>
-              <th style="width: 25%">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="text-center fs-4">
-            <ng-container
-                *ngFor="let verb of verbs$ | async; trackBy: trackByFn" >
-              <tr>
-                <td>{{ verb.baseForm }}</td>
-                <td class="d-none d-md-table-cell">{{ verb.pastSimple }}</td>
-                <td class="d-none d-md-table-cell">{{ verb.pastParticiple }}</td>
-                <td class="d-flex justify-content-center align-items-center">
-                  <button class="me-3 btnicon"
-                    (click)="selectVerb( verb )">
-                    <img src="/assets/icons/edit.svg" alt="edit" />
-                  </button>
 
-                  <button class="btnicon"
-                    (click)="deleteVerb( verb._id )">
-                    <img src="/assets/icons/delete.svg" alt="delete" />
-                  </button>
-                </td>
+    <div class="row mt-5">
+      <div class="col">
+        <div
+          class="card shadow overflow-hidden position-static mb-5"
+          style="border-radius: 5px">
+
+          <!-- ======================= -->
+                  <!-- TABLE -->
+          <!-- ======================= -->
+
+          <table class="table table-striped">
+            <thead
+              class="text-center text-white fs-4"
+              style="background-color: #0f172a">
+              <tr>
+                <th >Base Verb</th>
+                <th class="d-none d-md-table-cell" >
+                  Simple Past
+                </th>
+                <th class="d-none d-md-table-cell" >
+                  Past Participe
+                </th>
+                <th class="d-none d-md-table-cell" >
+                 Type
+                </th>
+                <th >Actions</th>
               </tr>
-            </ng-container>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="text-center fs-4">
+              <ng-container
+                  *ngFor="let verb of verbs$ | async; trackBy: trackByFn" >
+                <tr>
+                  <td>{{ verb.baseForm }}</td>
+                  <td class="d-none d-md-table-cell">{{ verb.pastSimple }}</td>
+                  <td class="d-none d-md-table-cell">{{ verb.pastParticiple }}</td>
+                  <td class="d-none d-md-table-cell">{{ verb.type }}</td>
+  
+                  <td class="d-flex justify-content-center align-items-center">
+                    <button class="me-3 btnicon"
+                      (click)="selectVerb( verb )">
+                      <img src="/assets/icons/edit.svg" alt="edit" />
+                    </button>
+  
+                    <button class="btnicon"
+                      (click)="deleteVerb( verb._id )">
+                      <img src="/assets/icons/delete.svg" alt="delete" />
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+
+              <!-- ======================= -->
+                  <!-- TABLE -->
+          <!-- ======================= -->
+        </div>
+        <!-- <table class="table">
+                  <thead style="background-color: #edf2f7;" class="text-center">
+                    <tr style="color: #64748b;">
+                      <th scope="col">Base Verb</th>
+                      <th scope="col">Simple Past</th>
+                      <th scope="col">Past Participe</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                   
+                  </tbody>
+                </table> -->
       </div>
-      <!-- <table class="table">
-                <thead style="background-color: #edf2f7;" class="text-center">
-                  <tr style="color: #64748b;">
-                    <th scope="col">Base Verb</th>
-                    <th scope="col">Simple Past</th>
-                    <th scope="col">Past Participe</th>
-                  </tr>
-                </thead>
-                <tbody class="text-center">
-                  <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                 
-                </tbody>
-              </table> -->
     </div>
   </div>
 </div>
 
-<!-- Modal -->
+
+<!--===============================================-->
+                <!-- MODAL -->
+<!--===============================================-->
+
 <div
   class="modal fade"
   id="exampleModal"
@@ -247,7 +298,7 @@
             </button>
             <button
               type="submit"
-              class="custombtn custombtn--add fw-bolder d-flex align-items-center">
+              class="custombtn custombtn--add fw-bolder d-flex align-items-center fs-4">
               <img
                 src="/assets/icons/add.svg"
                 alt="add"

@@ -125,9 +125,8 @@ $nav-pills-link-active-bg: #2c3344;
   border: 1px solid #94a3b8;
   border-radius: 5px;
   color: #212529;
-  // width: 100%;
-  // // max-width: 260px;
-  min-width: 100px;
+
+  min-width: 105px;
 
   &:focus-within {
     border-color: #4f46e5;
@@ -135,7 +134,6 @@ $nav-pills-link-active-bg: #2c3344;
 }
 
 .custombtn {
-  font-size: 1.5rem;
   color: white;
   background-color: #4f46e5;
   height: 48px;
@@ -165,6 +163,7 @@ $nav-pills-link-active-bg: #2c3344;
   background-color: #feecee;
   padding: 8px 15px;
   border-radius: 5px;
+  height: 48px;
 
   &:hover {
     background-color: red;
@@ -183,9 +182,9 @@ $nav-pills-link-active-bg: #2c3344;
   align-items: center;
   padding: 8px 1.5rem;
   border: 1px solid #94a3b8;
-  border-radius: 25px;
+  // border-radius: 25px;
   width: 100%;
-  max-width: 260px;
+  max-width: 350px;
   min-width: 100px;
 
   &:focus-within {
@@ -316,6 +315,12 @@ $form-select-indicator-color: white;
 }
 
 
+// SWEET ALERT
+
+
+.swal2-popup {
+  font-size: 1.5rem !important;
+}
 
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
