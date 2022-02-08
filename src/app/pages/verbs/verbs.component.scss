@@ -3,3 +3,14 @@
     width: 100%;
     max-width: 280px;
 }
+
+
+.form-selectC {
+    background-color: transparent;
+    padding: 8px 1.5rem;
+    border: 1px solid #94a3b8;
+
+    &:focus {
+        border-color:#4f46e5;
+    }
+}

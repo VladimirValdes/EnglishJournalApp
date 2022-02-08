@@ -26,8 +26,8 @@
             <label for="filter" class="fs-4 ls fw-bolder me-2" style="width: 115px;">Filter By:</label>
             <select
               id="filter"
-              class="form-select fs-4"
-              style=" border: 1px solid #94a3b8; padding: 8px 1.5rem; background-color: transparent;"
+              class="form-select fs-4 form-selectC"
+              
               #selectFilter
               (change)="filterBy(selectFilter.value)">
               <option value="" selected>Choose...</option>
@@ -81,7 +81,7 @@
               *ngFor="let filter of filters">
               <li
                 (click)="getReport( filter.type, filter.field )"
-                class="dropdown-item"
+                class="dropdown-item fs-4"
                 style="cursor: pointer;">
                 {{ filter.desc }}
               </li>
