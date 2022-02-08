@@ -1,97 +1,240 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col d-flex align-items-center">
-            <h2 class="fw-bolder me-5 mt-4" style="font-size: 4rem;">Phrasal Verbs</h2>
-        </div>
+<div class="container-fluid row mb-4">
+    <div class="col d-flex align-items-center">
+      <h2 class="fw-bolder me-5  fs-1">Phrasal Verbs</h2>
     </div>
-    <div class="row">
-        <div class="col d-flex align-items-center mt-4">
-            <div class="d-flex align-items-center me-3">
-                <div class="searchbar  ">
-                    <input type="search" class="searchbar__input fs-4" placeholder="Search phrasal verbs...">
-                    <img src="/assets/icons/search.svg" alt="" class="searchbar__icon">
-                </div>
-                <div class="dropdown ms-3">
-                    <button class="btnicon btnfilter fs-4 fw-bolder" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/assets/icons/filter.svg" alt="filter">
-                      Filter
-                    </button>
-                    <ul class="dropdown-menu fs-4" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                  </div>
-            </div>
-            <button class="custombtn custombtn--add fw-bolder d-flex align-items-center  ms-auto">
-                <img src="/assets/icons/add.svg" alt="add" style="padding-right: 15px;">
-                Add 
+  </div>
+  
+  <div class="px-4 mb-4">
+    <div class="container-fluid bg-white shadow px-4 rounded-2">
+    
+      <div class="row">
+        <div class="col d-flex align-items-center mt-4 flex-wrap">
+  
+          <div 
+            class="d-flex align-items-center flex-wrap order-1 w-100 justify-content-between order-lg-0"
+            style="max-width: 580px;">
+  
+           <app-searchbar
+             class="componentW"
+             (submitted)="onSearch($event)"
+             [borderR]="'3px'"></app-searchbar>
+            
+  
+          </div>
+  
+          <div
+          class="d-flex align-items-center justify-content-lg-end flex-wrap  w-100  ms-lg-auto"
+          style="max-width: 350px;">
+            <button
+            class="custombtn custombtn--add fw-bolder d-flex align-items-center fs-4"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            #openModal>
+            <img
+              src="/assets/icons/add.svg"
+              alt="add"
+              style="padding-right: 15px"/>
+            Add Phrasal Verb
+          </button>
+  
+            <!-- ======================= -->
+                    <!-- DROPDOWN -->
+            <!-- ======================= -->
+          <div class="dropdown ms-3">
+            <button
+              class="btnicon btnfilter fs-4 fw-bolder"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Export
             </button>
+            <!-- <ul class="dropdown-menu fs-5" aria-labelledby="dropdownMenuButton1">
+              <ng-container
+                *ngFor="let filter of filters">
+                <li
+                  (click)="getReport( filter.type, filter.field )"
+                  class="dropdown-item fs-4"
+                  style="cursor: pointer;">
+                  {{ filter.desc }}
+                </li>
+              </ng-container>
+              
+              
+            </ul> -->
+          </div>
+            <!-- ======================= -->
+                    <!-- DROPDOWN -->
+            <!-- ======================= -->
+          </div>
+  
+       
         </div>
-    </div>
-    <div class="row mt-5">
+      </div>
+  
+      <div class="row mt-5">
         <div class="col">
-            <div class="card shadow overflow-hidden position-static" style="border-radius: 5px ;">
-
-                <table class="table table-striped ">
-                    <thead class="text-center text-white fs-4" style="background-color: #0f172a;">
-                        <tr>
-                            <th style="width:50%;">Base Verb</th>
-                            
-                            <th style="width:50%">Actions</th>
-                        </tr>
+          <div
+            class="card shadow overflow-hidden position-static mb-5"
+            style="border-radius: 5px">
+  
+            <!-- ======================= -->
+                    <!-- TABLE -->
+            <!-- ======================= -->
+  
+            <table class="table table-striped">
+              <thead
+                class="text-center text-white fs-4"
+                style="background-color: #0f172a">
+                <tr>
+                  <th>Phrasal Verb</th>
+                  <th >Actions</th>
+                </tr>
+              </thead>
+              <tbody class="text-center fs-4">
+                <!-- <ng-container
+                    *ngFor="let verb of verbs$ | async; trackBy: trackByFn" >
+                  <tr>
+                    <td>{{ verb.baseForm }}</td>
+    
+                    <td class="d-flex justify-content-center align-items-center">
+                      <button class="me-3 btnicon"
+                        (click)="selectVerb( verb )">
+                        <img src="/assets/icons/edit.svg" alt="edit" />
+                      </button>
+    
+                      <button class="btnicon"
+                        (click)="deleteVerb( verb._id )">
+                        <img src="/assets/icons/delete.svg" alt="delete" />
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container> -->
+              </tbody>
+            </table>
+  
+                <!-- ======================= -->
+                    <!-- TABLE -->
+            <!-- ======================= -->
+          </div>
+          <!-- <table class="table">
+                    <thead style="background-color: #edf2f7;" class="text-center">
+                      <tr style="color: #64748b;">
+                        <th scope="col">Base Verb</th>
+                        <th scope="col">Simple Past</th>
+                        <th scope="col">Past Participe</th>
+                      </tr>
                     </thead>
-                    <tbody class="text-center fs-4">
-                        <tr>
-                            <td>Ashley Briggs</td>
-                            
-                            <td class="d-flex justify-content-center align-items-center">
-                                <button class="me-3 btnicon">
-                                    <img src="/assets/icons/edit.svg" alt="edit">
-                                </button>
-
-                                <button class="btnicon">
-                                    <img src="/assets/icons/delete.svg" alt="delete">
-                                </button>
-
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ashley Briggs</td>
-                            
-                            <td class="d-flex justify-content-center align-items-center">
-                                <button class="me-3 btnicon">
-                                    <img src="/assets/icons/edit.svg" alt="edit">
-                                </button>
-
-                                <button class="btnicon">
-                                    <img src="/assets/icons/delete.svg" alt="delete">
-                                </button>
-
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Ashley Briggs</td>
-                           
-                            <td class="d-flex justify-content-center align-items-center">
-                                <button class="me-3 btnicon">
-                                    <img src="/assets/icons/edit.svg" alt="edit">
-                                </button>
-
-                                <button class="btnicon">
-                                    <img src="/assets/icons/delete.svg" alt="delete">
-                                </button>
-
-
-                            </td>
-                        </tr>
+                    <tbody class="text-center">
+                      <tr>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                     
                     </tbody>
-                </table>
-            </div>
-         
+                  </table> -->
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  
+  
+  <!--===============================================-->
+                  <!-- MODAL -->
+  <!--===============================================-->
+  
+  <div
+    class="modal fade"
+    id="exampleModal"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+  
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-4 fw-bolder" id="exampleModalLabel">
+            Add Phrasal Verb
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            #closebtn
+            (click)="close()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            class="col px-4"
+            [formGroup]="phrasalVerbForm"
+            (ngSubmit)="addPhrasalVerb()">
+            <div class="row mb-3">
 
+                <div class="col my-2">
+                    <label for="phrasalverb" class="form-label fs-4 ls fw-bolder">
+                        Phrasal Verb
+                    </label>
+                    <input
+                    type="text"
+                    [ngClass]="{ 'is-invalid': invalidField('phrasalVerb')}"
+                    class="form-control"
+                    id="phrasalverb"
+                    placeholder="Phrasal verb"
+                    formControlName="phrasalVerb"
+                    />
+                </div>
+            
+                <div class="modal-footer">
+                <button
+                    type="button"
+                    class="custombtn-close fw-bolder fs-4"
+                    data-bs-dismiss="modal"
+                    (click)="close()">
+                    Close
+                </button>
+                <button
+                    type="submit"
+                    class="custombtn custombtn--add fw-bolder d-flex align-items-center fs-4">
+                    <img
+                    src="/assets/icons/add.svg"
+                    alt="add"
+                    style="padding-right: 15px"
+                    />
+                    Save
+                </button>
+                </div>
+            </div>
+          </form>
+          
+       
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- <h3> Status </h3>
+  <pre>
+    baseForm: {{ verbForm.get('baseForm')?.status }}
+    pastSimple: {{ verbForm.get('pastSimple')?.status }}
+    pastParticiple: {{ verbForm.get('pastParticiple')?.status }}
+    type: {{ verbForm.get('type')?.status }}
+    nik: {{ verbForm.get('nik')?.status }}
+    FORM: {{ verbForm.status }}
+  </pre>
+  
+  <h3> Values </h3>
+  <pre>
+    baseForm: {{ verbForm.get('baseForm')?.value }}
+    pastSimple: {{ verbForm.get('pastSimple')?.value }}
+    pastParticiple: {{ verbForm.get('pastParticiple')?.value }}
+    type: {{ verbForm.get('type')?.value }}
+    nik: {{ verbForm.get('nik')?.value }}
+    
+  </pre> -->
+  
