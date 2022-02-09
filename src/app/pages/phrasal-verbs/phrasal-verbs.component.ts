@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { PhrasalVerb } from 'src/app/interfaces/phrasalVerb.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { PhrasalVerbService } from 'src/app/services/phrasalVerbs.service';
@@ -39,11 +39,11 @@ export class PhrasalVerbsComponent implements OnInit {
     private alertService: AlertsService) { }
 
   ngOnInit(): void {
-    this.getPharalVerbs();
+    this.getPhrasalVerbs();
   }
 
 
-  getPharalVerbs() {
+  getPhrasalVerbs() {
     this.phrasalVerbs$ = this.phrasalVerbService.getPhrasalVerbs();
   }
 
@@ -55,15 +55,15 @@ export class PhrasalVerbsComponent implements OnInit {
     
 
     if ( this.updateFv ) {
-      // this.phrasalVerbService.updateVerb( this.verbForm.value, this.idVerb ).subscribe( () => {
-      //   this.alertService.success('Updated', 'Your verb has been updated');
-      //   this.getVerbs();
-      // });
+      this.phrasalVerbService.updatePhrasalVerb( this.phrasalVerbForm.value, this.idPhrasalVerb ).subscribe( () => {
+        this.alertService.success('Updated', 'Your verb has been updated');
+        this.getPhrasalVerbs();
+      });
 
     } else {
       this.phrasalVerbService.addPhrasalVerb(this.phrasalVerbForm.value).subscribe( () => {
         this.alertService.success('Created', 'Your phrasal verb has been created');
-        this.getPharalVerbs();
+        this.getPhrasalVerbs();
 
       });
     }
@@ -78,7 +78,7 @@ export class PhrasalVerbsComponent implements OnInit {
   selectPhrasalVerb( phrasalVerb: PhrasalVerb) {
     console.log(phrasalVerb);
     this.phrasalVerbForm.reset({
-      phrasalVerb: '',
+      phrasalVerb: phrasalVerb.phrasalVerb,
     });
 
     this.idPhrasalVerb = phrasalVerb._id;
@@ -88,7 +88,14 @@ export class PhrasalVerbsComponent implements OnInit {
   }
 
   deletePhrasalVerb( id: string ) {
-    console.log(id);
+    this.alertService.confirm().then( ( result ) => {
+      if ( result.isConfirmed ) {
+        this.phrasalVerbService.deletePhrasalVerb(id).subscribe( () => {
+          this.alertService.success('Deleted', 'Your verb has been deleted');
+          this.getPhrasalVerbs();
+        });
+      }
+    });
     
   }
 
@@ -96,18 +103,18 @@ export class PhrasalVerbsComponent implements OnInit {
 
     console.log({ term });
     
-    // if ( term ) {
-    //   this.verbs$ = this.verbService.searchVerbs( term ).pipe(
-    //     tap( verbs => {
-    //       if ( verbs.length <= 0) {
-    //         this.alertService.info("We don't find any register");
-    //         this.getVerbs();
-    //       }
-    //     }),
-    //   );
-    // } else {
-    //   this.getVerbs();
-    // }
+    if ( term ) {
+      this.phrasalVerbs$ = this.phrasalVerbService.searchPhrasalVerbs( term ).pipe(
+        tap( phrasalV => {
+          if ( phrasalV.length <= 0) {
+            this.alertService.info("We don't find any register");
+            this.getPhrasalVerbs();
+          }
+        }),
+      );
+    } else {
+      this.getPhrasalVerbs();
+    }
   }
 
   trackByFn( index: number): number {
