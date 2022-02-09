@@ -5,3 +5,7 @@ export interface VerbForm {
   type:           string;
   nik:            string;
 } 
+
+export interface PhrasalVerbForm {
+  phrasalVerb:       string;
+} 

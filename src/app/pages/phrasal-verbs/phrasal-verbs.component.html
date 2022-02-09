@@ -49,19 +49,7 @@
               aria-expanded="false">
               Export
             </button>
-            <!-- <ul class="dropdown-menu fs-5" aria-labelledby="dropdownMenuButton1">
-              <ng-container
-                *ngFor="let filter of filters">
-                <li
-                  (click)="getReport( filter.type, filter.field )"
-                  class="dropdown-item fs-4"
-                  style="cursor: pointer;">
-                  {{ filter.desc }}
-                </li>
-              </ng-container>
-              
-              
-            </ul> -->
+          
           </div>
             <!-- ======================= -->
                     <!-- DROPDOWN -->
@@ -92,24 +80,24 @@
                 </tr>
               </thead>
               <tbody class="text-center fs-4">
-                <!-- <ng-container
-                    *ngFor="let verb of verbs$ | async; trackBy: trackByFn" >
+                <ng-container
+                    *ngFor="let phrasalverb of phrasalVerbs$ | async; trackBy: trackByFn" >
                   <tr>
-                    <td>{{ verb.baseForm }}</td>
+                    <td>{{ phrasalverb.phrasalVerb }}</td>
     
                     <td class="d-flex justify-content-center align-items-center">
                       <button class="me-3 btnicon"
-                        (click)="selectVerb( verb )">
+                        (click)="selectPhrasalVerb( phrasalverb )">
                         <img src="/assets/icons/edit.svg" alt="edit" />
                       </button>
     
                       <button class="btnicon"
-                        (click)="deleteVerb( verb._id )">
+                        (click)="deletePhrasalVerb( phrasalverb._id )">
                         <img src="/assets/icons/delete.svg" alt="delete" />
                       </button>
                     </td>
                   </tr>
-                </ng-container> -->
+                </ng-container>
               </tbody>
             </table>
   
@@ -117,28 +105,6 @@
                     <!-- TABLE -->
             <!-- ======================= -->
           </div>
-          <!-- <table class="table">
-                    <thead style="background-color: #edf2f7;" class="text-center">
-                      <tr style="color: #64748b;">
-                        <th scope="col">Base Verb</th>
-                        <th scope="col">Simple Past</th>
-                        <th scope="col">Past Participe</th>
-                      </tr>
-                    </thead>
-                    <tbody class="text-center">
-                      <tr>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                     
-                    </tbody>
-                  </table> -->
         </div>
       </div>
     </div>
