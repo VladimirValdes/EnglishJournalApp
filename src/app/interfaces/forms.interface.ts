@@ -9,3 +9,7 @@ export interface VerbForm {
 export interface PhrasalVerbForm {
   phrasalVerb:       string;
 } 
+
+export interface AdjectiveForm {
+  adjective:       string;
+} 
