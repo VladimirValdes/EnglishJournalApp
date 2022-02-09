@@ -4,6 +4,8 @@ import { Observable, tap } from 'rxjs';
 import { PhrasalVerb } from 'src/app/interfaces/phrasalVerb.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { PhrasalVerbService } from 'src/app/services/phrasalVerbs.service';
+import { ReportService } from 'src/app/services/report.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-phrasal-verbs',
@@ -36,6 +38,7 @@ export class PhrasalVerbsComponent implements OnInit {
 
   constructor( private fb: FormBuilder,
     private phrasalVerbService: PhrasalVerbService,
+    private reportService: ReportService,
     private alertService: AlertsService) { }
 
   ngOnInit(): void {
@@ -95,6 +98,21 @@ export class PhrasalVerbsComponent implements OnInit {
           this.getPhrasalVerbs();
         });
       }
+    });
+    
+  }
+
+  generateReport() {
+    Swal.fire({
+      title: 'Loading PDF',
+    });
+    Swal.showLoading();
+    this.reportService.generateReport('phrasalverbs', 'phrasalverb' ).subscribe( resp => {
+      let fileURL = URL.createObjectURL( resp );      
+      window.open(fileURL);
+
+      Swal.close();
+      Swal.hideLoading();
     });
     
   }

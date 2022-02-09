@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, tap } from 'rxjs';
 import { Verb } from 'src/app/interfaces/verbs.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
+import { ReportService } from 'src/app/services/report.service';
 import { VerbsService } from 'src/app/services/verbs.service';
 import Swal from 'sweetalert2';
 
@@ -91,6 +92,7 @@ export class VerbsComponent implements OnInit {
  
   constructor( 
     private verbService: VerbsService,
+    private reportService: ReportService,
     private fb: FormBuilder,
     private alertService: AlertsService) { }
  
@@ -198,7 +200,7 @@ export class VerbsComponent implements OnInit {
       title: 'Loading PDF',
     });
     Swal.showLoading();
-    this.verbService.reportsVerb(field, term).subscribe( resp => {
+    this.reportService.generateReport('verbs', field, term).subscribe( resp => {
       let fileURL = URL.createObjectURL( resp );      
       window.open(fileURL);
 
