@@ -38,7 +38,7 @@ export class AdjectivesService {
     return this.http.delete(`${ BASE_URL }/adjectives/${ id }`);
   }
 
-  searchPhrasalVerbs( term: string ):Observable<Adjective[]> {
+  searchAdjectives( term: string ):Observable<Adjective[]> {
     return this.http.get<SearchAdjectives>(`${ BASE_URL }/searchuser/adjectives/${ term }`)
       .pipe(
         map( resp => {

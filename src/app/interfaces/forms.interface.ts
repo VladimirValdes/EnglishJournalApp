@@ -13,3 +13,7 @@ export interface PhrasalVerbForm {
 export interface AdjectiveForm {
   adjective:       string;
 } 
+
+export interface PrepositionForm {
+  preposition:       string;
+} 
