@@ -17,3 +17,7 @@ export interface AdjectiveForm {
 export interface PrepositionForm {
   preposition:       string;
 } 
+
+export interface ConnectorForm {
+  connector:       string;
+} 
