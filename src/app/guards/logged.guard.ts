@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
@@ -27,22 +28,31 @@ export class LoggedGuard implements CanActivate {
   //   }
   // }
 
-  canActivate():boolean {  
+  canActivate():Observable<boolean> {  
 
-    if ( !this.authService.token  || !this.isTokenValid) { 
+   
+
+    if ( !this.authService.token ) { 
       console.log('can I pass to login');
-      return true;
+      return of(true);
     } else {
       console.log('can not I pass to login');
-
-      this.router.navigateByUrl('/dashboard');
-      return false;
+      return  this.authService.validateToken().pipe(
+        tap( isAuthentication  => {
+          if ( isAuthentication ) {
+            this.router.navigateByUrl('/dashboard');
+            
+          }
+        }),
+      );
     }
   }
 
   checkToken() {
     this.authService.validateToken().pipe(
       tap( isAuthentication  => {
+        console.log({ isAuthentication });
+        
         this.isTokenValid = isAuthentication;
       }),
     );

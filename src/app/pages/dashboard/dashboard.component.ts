@@ -44,10 +44,14 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
+  connection!: boolean;
+
 
   constructor( private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+
+    
     this.dashboardService.getCountRegisters().subscribe( registers => {
 
       this.collections[0].numbers = registers.verbsTotal;
@@ -59,5 +63,6 @@ export class DashboardComponent implements OnInit {
       
     });
   }
+
 
 }

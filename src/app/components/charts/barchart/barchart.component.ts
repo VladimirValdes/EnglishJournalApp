@@ -29,6 +29,7 @@ export class BarchartComponent implements OnInit  {
   activeW =  false;
 
   activeM = false;
+
   
   constructor( private statisticsService: StatisticsService,
     private datesService: DatesService) {}
@@ -36,11 +37,11 @@ export class BarchartComponent implements OnInit  {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   barChartData: ChartDataset[] = [
-    { data: [55], label: 'Verbs', backgroundColor: '#3b82f6', hoverBackgroundColor: '#3b82f6' },
-    { data: [50], label: 'Phrasal Verbs', backgroundColor: '#ef4444', hoverBackgroundColor: '#ef4444' },
-    { data: [100], label: 'Adjectives', backgroundColor: '#f59e0b', hoverBackgroundColor: '#f59e0b' },
-    { data: [125], label: 'Prepositons', backgroundColor: '#22c55e', hoverBackgroundColor: '#22c55e' },
-    { data: [3], label: 'Connectors', backgroundColor: '#3730a3', hoverBackgroundColor: '#3730a3' },
+    { data: [], label: 'Verbs', backgroundColor: '#3b82f6', hoverBackgroundColor: '#3b82f6' },
+    { data: [], label: 'Phrasal Verbs', backgroundColor: '#ef4444', hoverBackgroundColor: '#ef4444' },
+    { data: [], label: 'Adjectives', backgroundColor: '#f59e0b', hoverBackgroundColor: '#f59e0b' },
+    { data: [], label: 'Prepositons', backgroundColor: '#22c55e', hoverBackgroundColor: '#22c55e' },
+    { data: [], label: 'Connectors', backgroundColor: '#3730a3', hoverBackgroundColor: '#3730a3' },
   ];
 
   barChartLabels: String[] = [];
@@ -87,6 +88,7 @@ export class BarchartComponent implements OnInit  {
 
 
   ngOnInit(): void {
+
     this.getTodayRegisters();
   }
 
@@ -161,4 +163,7 @@ export class BarchartComponent implements OnInit  {
     this.chart?.update();
 
   }
+
+
+
 }

@@ -54,7 +54,8 @@ export class AuthService {
 
           this.user = new User(uid, name, email, role, resp.token);
           this.saveToken(resp.token);
-
+          console.log('Im in renewToken');
+          
           return true;
         }),
         catchError(() => of(false)),
