@@ -15,6 +15,9 @@ const BASE_URL = environment.base_url;
 export class AuthService {
   public userToken: string = '';
 
+  public userRefreshToken: string = '';
+
+
   public user!: User;
 
   constructor(
@@ -35,6 +38,7 @@ export class AuthService {
     return this.http.post<User>(`${BASE_URL}/auth/login`, formData).pipe(
       map((res: User) => {
         this.saveToken(res.token);
+        this.saveRefreshToken( res.refreshToken );
         return res;
       }),
     );
@@ -42,6 +46,7 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem('x-token');
+    localStorage.removeItem('x-refreshToken');
     this.router.navigateByUrl('/login');
   }
 
@@ -52,8 +57,9 @@ export class AuthService {
         map((resp: RenewToken) => {
           const { name, email, role, uid } = resp.user;
 
-          this.user = new User(uid, name, email, role, resp.token);
+          this.user = new User(uid, name, email, role, resp.token, resp.refreshToken);
           this.saveToken(resp.token);
+          this.saveRefreshToken(resp.refreshToken);
           console.log('Im in renewToken');
           
           return true;
@@ -68,9 +74,17 @@ export class AuthService {
       : (this.userToken = '');
   }
 
-  private saveToken(token: string) {
+  private saveToken( token: string ) {
     this.userToken = token;
 
     localStorage.setItem('x-token', token);
   }
+
+  private saveRefreshToken(refreshToken: string) {
+    this.userRefreshToken = refreshToken;
+
+    localStorage.setItem('x-refreshToken', refreshToken);
+  }
+
+
 }

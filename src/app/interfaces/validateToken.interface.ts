@@ -1,5 +1,6 @@
 export interface RenewToken {
   token: string;
+  refreshToken: string;
   user:  User;
 }
 
