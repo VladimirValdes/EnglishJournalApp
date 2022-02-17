@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,50 +18,48 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
          <a
             [routerLink]='opt.url'
             routerLinkActive="active"
-            class="nav-link  text-white fs-4 fw-bold">{{
+            class="nav-link  text-white fs-4 fw-bold item-outline ">{{
             opt.title
             }}</a>
         </li>
     </ul>
 </aside>
-  ` ,
-  styleUrls: ['./sidebar.component.scss']
+  `,
+  styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent  {
 
   menu = [
 
     {
       title: 'Dashboard',
-      url: 'home'
+      url: 'home',
     },
     {
       title: 'Verbs',
-      url: 'verbs'
+      url: 'verbs',
     },
     {
       title: 'Phrasal Verbs',
-      url: 'phrasalverbs'
+      url: 'phrasalverbs',
     },
     {
       title: 'Adjectives',
-      url: 'adjectives'
+      url: 'adjectives',
     },
     {
       title: 'Prepositions',
-      url: 'prepositions'
+      url: 'prepositions',
     },
     {
       title: 'Connectors',
-      url: 'connectors'
-    }
+      url: 'connectors',
+    },
   ];
 
 
 
-  constructor() { }
+  // constructor() { }
 
-  ngOnInit(): void {
-  }
 
 }

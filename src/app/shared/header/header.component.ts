@@ -15,10 +15,30 @@ import { AuthService } from 'src/app/services/auth.service';
     </button>
  
     <app-searchbar [borderR]="'25px'"></app-searchbar>
-    <button class="ms-auto mx-4"
+    <a class="ms-auto mx-4 d-sm-inline-block" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+        id="dropdownMenu" style="outline: none;">
+      <img src="assets/images/avatar.png" class="avatar img-fluid rounded-circle me-1" alt="Chris Wood"> 
+    </a>
+
+    <ul class="dropdown-menu " aria-labelledby="dropdownMenu">
+    <li><a class="dropdown-item  fs-4 cursor" >Profile</a></li>
+    <li><a class="dropdown-item fs-4 cursor" >Settings</a></li>
+    <li><hr class="dropdown-divider fs-4 "></li>
+    <li>
+      <a
+        (click)="logout()"
+        class="dropdown-item fs-4 cursor"
+        >
+        Sign out
+      </a>
+    </li>
+  </ul>
+            
+            
+    <!-- <button class=""
       (click)="logout()">
       <img src="assets/icons/logout.svg" alt="logout">
-    </button>
+    </button> -->
   </header>`,
   styleUrls: ['./header.component.scss'],
 })
