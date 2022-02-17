@@ -9,7 +9,6 @@ const routes: Routes = [
     path: 'login', 
     component: LoginComponent, 
     canActivate: [ LoggedGuard ],
-    // canLoad: [ LoggedGuard ],
     data: { title: 'Login' },
 
   },

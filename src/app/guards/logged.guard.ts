@@ -28,9 +28,8 @@ export class LoggedGuard implements CanActivate {
   // }
 
   canActivate():boolean {  
-
-   
-
+    // console.log(!this.authService.token );
+    
     if ( !this.authService.token ) { 
       console.log('can I pass to login');
       return true;

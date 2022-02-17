@@ -1,6 +1,6 @@
-import {  HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  catchError, Observable, tap, throwError  } from 'rxjs';
+import {  catchError, map, Observable, switchMap, tap, throwError  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth.service';
 import { CheckConnectionService } from '../services/check-connection.service';
@@ -23,24 +23,35 @@ export class HeadersInterceptor implements HttpInterceptor{
         }
       }),
     ).subscribe();
+
+   
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
 
-    const loginRoute = `${ BASE_URL }/auth/login`;
-    const headers = new HttpHeaders({
-      'x-token': this.authService.token,
-    });
+    const routesWithoutToken = [
+      `${ BASE_URL }/auth/login`,
+      `${ BASE_URL }/auth/refreshtoken`,
+    ];
 
-    if ( req.url.indexOf(loginRoute) === -1 ) {
-      const reqClone = req.clone({ headers });
-      return next.handle( reqClone );
+
+    const reqClone = this.attachToken(req, this.authService.token);
+
+
+    if ( routesWithoutToken.includes( req.url )) {
+      return next.handle( req );
     }
 
   
-    return next.handle( req ).pipe(
-      catchError( this.showErrors ),
+    return next.handle( reqClone ).pipe(
+      catchError( err  => {
+        if ( err instanceof HttpErrorResponse && err.status === 401) {
+          return this.handle401Error( req, next);
+        }
+
+        return this.showErrors(err);
+      }),
     );
     
   }
@@ -52,7 +63,18 @@ export class HeadersInterceptor implements HttpInterceptor{
 
   }
 
- 
+  private handle401Error(req: HttpRequest<any>, next: HttpHandler) {
+    return this.authService.refreshToken()
+      .pipe(
+        map( res => this.attachToken(req, res.token)),
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        switchMap(req => next.handle(req)),
+      );
+  }
+
+  private attachToken(req: HttpRequest<any>, token: string ): HttpRequest<any> {
+    return req.clone({ setHeaders: { 'x-token': token } });
+  }
 
  
 

@@ -4,6 +4,12 @@ export interface RenewToken {
   user:  User;
 }
 
+
+export interface RefreshToken {
+  token:        string;
+  refreshToken: string;
+}
+
 export interface User {
   name:   string;
   email:  string;

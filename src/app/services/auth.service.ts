@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/loginForm.interface';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { User } from '../model/user.mode';
-import { RenewToken } from '../interfaces/validateToken.interface';
+import { RefreshToken, RenewToken } from '../interfaces/validateToken.interface';
 import { Router } from '@angular/router';
 
 const BASE_URL = environment.base_url;
@@ -24,6 +24,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router) {
     this.readToken();
+    this.readRefreshToken();
   }
 
   get token() {
@@ -68,15 +69,41 @@ export class AuthService {
       );
   }
 
+  refreshToken():Observable<RefreshToken>{
+    const data = {
+      refreshToken : this.userRefreshToken,
+    };
+
+    console.log({ data });
+    return this.http.post<RefreshToken>(`${BASE_URL}/auth/refreshtoken`, data )
+      .pipe(
+        tap( resp => {
+          this.saveToken(resp.token);
+          this.saveRefreshToken(resp.refreshToken);
+
+          console.log('Im in refresh token');
+          
+          return resp;
+        }),
+      );
+  }
+
   private readToken(): string {
     return localStorage.getItem('x-token')
       ? (this.userToken = localStorage.getItem('x-token') || '')
-      : (this.userToken = '');
+      : this.userToken = '';
+  }
+
+  private readRefreshToken(): string {
+    return localStorage.getItem('x-refreshToken')
+      ? (this.userRefreshToken = localStorage.getItem('x-refreshToken') || '')
+      : this.userRefreshToken = '';
   }
 
   private saveToken( token: string ) {
     this.userToken = token;
-
+    // console.log(this.userToken);
+    
     localStorage.setItem('x-token', token);
   }
 
