@@ -22,6 +22,8 @@
 
 ## Overview
 
+![screenshot](src/assets/images/englishJournal.png)
+
 This app was built with the purpose to solve the following problem I am learning English by myself and I needed to save my progress at the beginning I started to save my notes in a notebook, but I thought why not build an app where I can be able to save my English progress and I created English Journal is a web app where you can save verbs, phrasal verbs, adjectives, connectors and prepositions. I built this app using MEAN stack.
 
 ### What you can do with English Journal?
