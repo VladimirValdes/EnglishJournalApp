@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingServicesService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loginForm = this.fb.group(
     {
       email: [
-        '',
+        'user1@gmail.com',
         [
           Validators.required,
           Validators.minLength(3),
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
         ],
       ],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['12345678', [Validators.required, Validators.minLength(8)]],
     },
     {
       updateOn: 'blur',
@@ -36,18 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private loadingService: LoadingServicesService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
-
-   
-    this.subscription.add(
-      this.loadingService.loadingSub.subscribe((value) => {
-        this.loading = value;
-      }),
-    );
+    this.loading = false;
   }
 
   login() {
@@ -55,11 +47,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.loading = true;
     this.subscription.add(
       this.authService.login(this.loginForm.value).subscribe(() => {
         this.router.navigateByUrl('/dashboard');
+        this.loading = false;
+
       }),
     );
+
   }
 
   invalidField(formControl: string): boolean {
