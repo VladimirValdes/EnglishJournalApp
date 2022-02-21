@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Connector } from 'src/app/interfaces/connectors.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { ConnectorsService } from 'src/app/services/connectors.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './connectors.component.html',
   styleUrls: ['./connectors.component.scss'],
 })
-export class ConnectorsComponent implements OnInit {
+export class ConnectorsComponent implements OnInit, OnDestroy {
 
   @ViewChild('closebtn') closebtn!: ElementRef;
 
@@ -24,8 +24,9 @@ export class ConnectorsComponent implements OnInit {
 
   idConnector = '';
 
-
   connectors$!:Observable<Connector[]>;
+
+  private subscriptions: Subscription = new Subscription();
 
 
   public connectorForm = this.fb.group({
@@ -39,6 +40,7 @@ export class ConnectorsComponent implements OnInit {
     private connectorsService: ConnectorsService,
     private alertService: AlertsService,
     private reportService: ReportService) { }
+ 
 
   ngOnInit(): void {
     this.getConnectors();
@@ -52,21 +54,22 @@ export class ConnectorsComponent implements OnInit {
     this.sumitted = true;
     if ( this.connectorForm.invalid) { return; }
 
-    console.log( this.connectorForm.get('connector')?.value);
     
 
     if ( this.updateConnector ) {
-      this.connectorsService.updateConnector( this.connectorForm.value, this.idConnector ).subscribe( () => {
-        this.alertService.success('Updated', 'Your connector has been updated');
-        this.getConnectors();
-      });
+      this.subscriptions.add(
+        this.connectorsService.updateConnector( this.connectorForm.value, this.idConnector ).subscribe( () => {
+          this.alertService.success('Updated', 'Your connector has been updated');
+          this.getConnectors();
+        }));
 
     } else {
-      this.connectorsService.addConnector(this.connectorForm.value).subscribe( () => {
-        this.alertService.success('Created', 'Your connector has been created');
-        this.getConnectors();
+      this.subscriptions.add(
+        this.connectorsService.addConnector(this.connectorForm.value).subscribe( () => {
+          this.alertService.success('Created', 'Your connector has been created');
+          this.getConnectors();
 
-      });
+        }));
     }
 
     this.closebtn.nativeElement.click();
@@ -77,7 +80,6 @@ export class ConnectorsComponent implements OnInit {
   }
 
   selectConnector( connector: Connector) {
-    console.log(connector);
     this.connectorForm.reset({
       connector: connector.connector,
     });
@@ -91,10 +93,11 @@ export class ConnectorsComponent implements OnInit {
   deleteConnector( id: string ) {
     this.alertService.confirm().then( ( result ) => {
       if ( result.isConfirmed ) {
-        this.connectorsService.deleteConnector(id).subscribe( () => {
-          this.alertService.success('Deleted', 'Your connector has been deleted');
-          this.getConnectors();
-        });
+        this.subscriptions.add(
+          this.connectorsService.deleteConnector(id).subscribe( () => {
+            this.alertService.success('Deleted', 'Your connector has been deleted');
+            this.getConnectors();
+          }));
       }
     });
     
@@ -105,19 +108,19 @@ export class ConnectorsComponent implements OnInit {
       title: 'Loading PDF',
     });
     Swal.showLoading();
-    this.reportService.generateReport('connectors', 'connector' ).subscribe( resp => {
-      let fileURL = URL.createObjectURL( resp );      
-      window.open(fileURL);
+    this.subscriptions.add(
+      this.reportService.generateReport('connectors', 'connector' ).subscribe( resp => {
+        let fileURL = URL.createObjectURL( resp );      
+        window.open(fileURL);
 
-      Swal.close();
-      Swal.hideLoading();
-    });
+        Swal.close();
+        Swal.hideLoading();
+      }));
     
   }
 
   onSearch( term: string ) {
 
-    console.log({ term });
     
     if ( term ) {
       this.connectors$ = this.connectorsService.searchConnectors( term ).pipe(
@@ -147,6 +150,11 @@ export class ConnectorsComponent implements OnInit {
     this.connectorForm.reset({
       adjective: '',
     });
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

@@ -32,32 +32,23 @@ export class AuthGuard implements CanActivate {
     return this.isAuthenticate();
   }
 
-
   isAuthenticate():Observable<boolean> {
 
     if ( !this.connection ) {
       this.checkConnection(); 
     }
 
-    console.log('Im inside of auth guard');
-    
-
     return  this.authService.validateToken().pipe(
-      tap( isAuthentication  => {
-        console.log({ isAuthentication });
-        
+      tap( isAuthentication  => {        
         if ( !isAuthentication ) { this.router.navigateByUrl('/login'); }
       }),
     );
 
   }
-
-
   
   checkConnection(): boolean {
     this.checkConnectionService.showAlertConnection(this.connection);
     this.router.navigateByUrl('/login');
-    console.log('connection', this.connection);
     return this.connection;
   }
 

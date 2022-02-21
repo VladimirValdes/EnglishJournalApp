@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Preposition } from 'src/app/interfaces/preposition.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { PrepositionsService } from 'src/app/services/prepositions.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './prepositions.component.html',
   styleUrls: ['./prepositions.component.scss'],
 })
-export class PrepositionsComponent implements OnInit {
+export class PrepositionsComponent implements OnInit, OnDestroy {
 
   @ViewChild('closebtn') closebtn!: ElementRef;
 
@@ -25,7 +25,10 @@ export class PrepositionsComponent implements OnInit {
   idPreposition = '';
 
 
+  private subscriptions: Subscription = new Subscription();
+
   prepositions$!:Observable<Preposition[]>;
+
 
 
   public prepositionForm = this.fb.group({
@@ -39,6 +42,7 @@ export class PrepositionsComponent implements OnInit {
     private prepositionService: PrepositionsService,
     private alertService: AlertsService,
     private reportService: ReportService) { }
+ 
 
   ngOnInit(): void {
     this.getPrepositions();
@@ -52,21 +56,22 @@ export class PrepositionsComponent implements OnInit {
     this.sumitted = true;
     if ( this.prepositionForm.invalid) { return; }
 
-    console.log( this.prepositionForm.get('preposition')?.value);
     
 
     if ( this.updatePreposition ) {
-      this.prepositionService.updatePreposition( this.prepositionForm.value, this.idPreposition ).subscribe( () => {
-        this.alertService.success('Updated', 'Your preposition has been updated');
-        this.getPrepositions();
-      });
+      this.subscriptions.add(
+        this.prepositionService.updatePreposition( this.prepositionForm.value, this.idPreposition ).subscribe( () => {
+          this.alertService.success('Updated', 'Your preposition has been updated');
+          this.getPrepositions();
+        }));
 
     } else {
-      this.prepositionService.addPreposition(this.prepositionForm.value).subscribe( () => {
-        this.alertService.success('Created', 'Your preposition has been created');
-        this.getPrepositions();
+      this.subscriptions.add(
+        this.prepositionService.addPreposition(this.prepositionForm.value).subscribe( () => {
+          this.alertService.success('Created', 'Your preposition has been created');
+          this.getPrepositions();
 
-      });
+        }));
     }
 
     this.closebtn.nativeElement.click();
@@ -77,7 +82,6 @@ export class PrepositionsComponent implements OnInit {
   }
 
   selectecPreposition( preposition: Preposition) {
-    console.log(preposition);
     this.prepositionForm.reset({
       preposition: preposition.preposition,
     });
@@ -91,10 +95,11 @@ export class PrepositionsComponent implements OnInit {
   deletePreposition( id: string ) {
     this.alertService.confirm().then( ( result ) => {
       if ( result.isConfirmed ) {
-        this.prepositionService.deletePreposition(id).subscribe( () => {
-          this.alertService.success('Deleted', 'Your preposition has been deleted');
-          this.getPrepositions();
-        });
+        this.subscriptions.add(
+          this.prepositionService.deletePreposition(id).subscribe( () => {
+            this.alertService.success('Deleted', 'Your preposition has been deleted');
+            this.getPrepositions();
+          }));
       }
     });
     
@@ -105,20 +110,19 @@ export class PrepositionsComponent implements OnInit {
       title: 'Loading PDF',
     });
     Swal.showLoading();
-    this.reportService.generateReport('prepositions', 'preposition' ).subscribe( resp => {
-      let fileURL = URL.createObjectURL( resp );      
-      window.open(fileURL);
+    this.subscriptions.add(
+      this.reportService.generateReport('prepositions', 'preposition' ).subscribe( resp => {
+        let fileURL = URL.createObjectURL( resp );      
+        window.open(fileURL);
 
-      Swal.close();
-      Swal.hideLoading();
-    });
+        Swal.close();
+        Swal.hideLoading();
+      }));
     
   }
 
   onSearch( term: string ) {
 
-    console.log({ term });
-    
     if ( term ) {
       this.prepositions$ = this.prepositionService.searchPreposition( term ).pipe(
         tap( preposition => {
@@ -147,6 +151,10 @@ export class PrepositionsComponent implements OnInit {
     this.prepositionForm.reset({
       preposition: '',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

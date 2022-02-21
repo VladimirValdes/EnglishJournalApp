@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.loadingService.loadingSub.subscribe((value) => {
         this.loading = value;
-        console.log('loading', this.loading);
       }),
     );
   }
@@ -57,8 +56,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.subscription.add(
-      this.authService.login(this.loginForm.value).subscribe((resp) => {
-        console.log(resp);
+      this.authService.login(this.loginForm.value).subscribe(() => {
         this.router.navigateByUrl('/dashboard');
       }),
     );

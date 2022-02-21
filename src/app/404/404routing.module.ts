@@ -1,13 +1,13 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AdjectivesComponent } from './adjectives.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
 
   {
     path: '',
-    component: AdjectivesComponent,
-    data: { title: 'Adjectives' },
+    component: NotfoundComponent,
+    data: { title: 'page not found' },
   },
 
  
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class adjectivesRouting {}
+export class NotFoundRouting {}

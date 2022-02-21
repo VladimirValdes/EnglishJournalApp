@@ -61,7 +61,6 @@ export class AuthService {
           this.user = new User(uid, name, email, role, resp.token, resp.refreshToken);
           this.saveToken(resp.token);
           this.saveRefreshToken(resp.refreshToken);
-          console.log('Im in renewToken');
           
           return true;
         }),
@@ -81,7 +80,6 @@ export class AuthService {
           this.saveToken(resp.token);
           this.saveRefreshToken(resp.refreshToken);
 
-          console.log('Im in refresh token');
           
           return resp;
         }),
@@ -102,7 +100,6 @@ export class AuthService {
 
   private saveToken( token: string ) {
     this.userToken = token;
-    // console.log(this.userToken);
     
     localStorage.setItem('x-token', token);
   }

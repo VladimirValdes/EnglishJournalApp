@@ -103,7 +103,6 @@ export class BarchartComponent implements OnInit, OnDestroy  {
     this.activeW = false;
     const { startAt, endAt } = this.datesService.getDay(this.today);
 
-    console.log('click inside registers');
     
     this.dates.startDate = startAt;
     this.dates.endDate = endAt;

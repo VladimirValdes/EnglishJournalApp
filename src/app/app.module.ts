@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { NotFoundModule } from './404/404.module';
 
 import { AppComponent } from './app.component';
 import { AppRouting } from './appRouting.module';
@@ -23,6 +24,7 @@ import { PagesModule } from './pages/pages.module';
     LoginModule,
     RouterModule,
     BrowserAnimationsModule,
+    NotFoundModule,
   ],
   providers: [
     // {

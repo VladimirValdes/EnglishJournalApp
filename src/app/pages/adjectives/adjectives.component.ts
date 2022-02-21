@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Adjective } from 'src/app/interfaces/adjectives.interface';
 import { AdjectivesService } from 'src/app/services/adjectives.service';
 import { AlertsService } from 'src/app/services/alerts.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './adjectives.component.html',
   styleUrls: ['./adjectives.component.scss'],
 })
-export class AdjectivesComponent implements OnInit {
+export class AdjectivesComponent implements OnInit, OnDestroy {
 
   @ViewChild('closebtn') closebtn!: ElementRef;
 
@@ -27,6 +27,8 @@ export class AdjectivesComponent implements OnInit {
 
   adjectives$!:Observable<Adjective[]>;
 
+  private subscriptions: Subscription = new Subscription();
+
 
   public adjectiveForm = this.fb.group({
     adjective: ['', [ Validators.required, Validators.minLength(2)]],
@@ -40,6 +42,7 @@ export class AdjectivesComponent implements OnInit {
     private alertService: AlertsService,
     private reportService: ReportService) { }
 
+
   ngOnInit(): void {
     this.getAdjectives();
   }
@@ -50,23 +53,22 @@ export class AdjectivesComponent implements OnInit {
 
   addAdjective() {
     this.sumitted = true;
-    if ( this.adjectiveForm.invalid) { return; }
-
-    console.log( this.adjectiveForm.get('adjective')?.value);
-    
+    if ( this.adjectiveForm.invalid) { return; }    
 
     if ( this.updateAdj ) {
-      this.adjectivesService.updateAdjective( this.adjectiveForm.value, this.idAdjective ).subscribe( () => {
-        this.alertService.success('Updated', 'Your adjective has been updated');
-        this.getAdjectives();
-      });
+      this.subscriptions.add(
+        this.adjectivesService.updateAdjective( this.adjectiveForm.value, this.idAdjective ).subscribe( () => {
+          this.alertService.success('Updated', 'Your adjective has been updated');
+          this.getAdjectives();
+        }));
 
     } else {
-      this.adjectivesService.addAdjective(this.adjectiveForm.value).subscribe( () => {
-        this.alertService.success('Created', 'Your adjective has been created');
-        this.getAdjectives();
+      this.subscriptions.add(
+        this.adjectivesService.addAdjective(this.adjectiveForm.value).subscribe( () => {
+          this.alertService.success('Created', 'Your adjective has been created');
+          this.getAdjectives();
 
-      });
+        }));
     }
 
     this.closebtn.nativeElement.click();
@@ -77,7 +79,6 @@ export class AdjectivesComponent implements OnInit {
   }
 
   selectAdjective( adjective: Adjective) {
-    console.log(adjective);
     this.adjectiveForm.reset({
       adjective: adjective.adjective,
     });
@@ -91,10 +92,11 @@ export class AdjectivesComponent implements OnInit {
   deleteAdjective( id: string ) {
     this.alertService.confirm().then( ( result ) => {
       if ( result.isConfirmed ) {
-        this.adjectivesService.deleteAdjective(id).subscribe( () => {
-          this.alertService.success('Deleted', 'Your adjective has been deleted');
-          this.getAdjectives();
-        });
+        this.subscriptions.add(
+          this.adjectivesService.deleteAdjective(id).subscribe( () => {
+            this.alertService.success('Deleted', 'Your adjective has been deleted');
+            this.getAdjectives();
+          }));
       }
     });
     
@@ -105,19 +107,19 @@ export class AdjectivesComponent implements OnInit {
       title: 'Loading PDF',
     });
     Swal.showLoading();
-    this.reportService.generateReport('adjectives', 'adjective' ).subscribe( resp => {
-      let fileURL = URL.createObjectURL( resp );      
-      window.open(fileURL);
+    this.subscriptions.add(
+      this.reportService.generateReport('adjectives', 'adjective' ).subscribe( resp => {
+        let fileURL = URL.createObjectURL( resp );      
+        window.open(fileURL);
 
-      Swal.close();
-      Swal.hideLoading();
-    });
+        Swal.close();
+        Swal.hideLoading();
+      }));
     
   }
 
   onSearch( term: string ) {
 
-    console.log({ term });
     
     if ( term ) {
       this.adjectives$ = this.adjectivesService.searchAdjectives( term ).pipe(
@@ -147,6 +149,10 @@ export class AdjectivesComponent implements OnInit {
     this.adjectiveForm.reset({
       adjective: '',
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

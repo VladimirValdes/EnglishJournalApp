@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { PhrasalVerb } from 'src/app/interfaces/phrasalVerb.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { PhrasalVerbService } from 'src/app/services/phrasalVerbs.service';
@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './phrasal-verbs.component.html',
   styleUrls: ['./phrasal-verbs.component.scss'],
 })
-export class PhrasalVerbsComponent implements OnInit {
+export class PhrasalVerbsComponent implements OnInit, OnDestroy {
 
   @ViewChild('closebtn') closebtn!: ElementRef;
 
@@ -27,6 +27,8 @@ export class PhrasalVerbsComponent implements OnInit {
 
   phrasalVerbs$!:Observable<PhrasalVerb[]>;
 
+  private subscriptions: Subscription = new Subscription();
+
 
   public phrasalVerbForm = this.fb.group({
     phrasalVerb: ['', [ Validators.required, Validators.minLength(2)]],
@@ -40,7 +42,7 @@ export class PhrasalVerbsComponent implements OnInit {
     private phrasalVerbService: PhrasalVerbService,
     private reportService: ReportService,
     private alertService: AlertsService) { }
-
+  
   ngOnInit(): void {
     this.getPhrasalVerbs();
   }
@@ -54,21 +56,22 @@ export class PhrasalVerbsComponent implements OnInit {
     this.sumitted = true;
     if ( this.phrasalVerbForm.invalid) { return; }
 
-    console.log( this.phrasalVerbForm.get('phrasalVerb')?.value);
     
 
     if ( this.updateFv ) {
-      this.phrasalVerbService.updatePhrasalVerb( this.phrasalVerbForm.value, this.idPhrasalVerb ).subscribe( () => {
-        this.alertService.success('Updated', 'Your verb has been updated');
-        this.getPhrasalVerbs();
-      });
+      this.subscriptions.add(
+        this.phrasalVerbService.updatePhrasalVerb( this.phrasalVerbForm.value, this.idPhrasalVerb ).subscribe( () => {
+          this.alertService.success('Updated', 'Your verb has been updated');
+          this.getPhrasalVerbs();
+        }));
 
     } else {
-      this.phrasalVerbService.addPhrasalVerb(this.phrasalVerbForm.value).subscribe( () => {
-        this.alertService.success('Created', 'Your phrasal verb has been created');
-        this.getPhrasalVerbs();
+      this.subscriptions.add(
+        this.phrasalVerbService.addPhrasalVerb(this.phrasalVerbForm.value).subscribe( () => {
+          this.alertService.success('Created', 'Your phrasal verb has been created');
+          this.getPhrasalVerbs();
 
-      });
+        }));
     }
 
     this.closebtn.nativeElement.click();
@@ -79,7 +82,6 @@ export class PhrasalVerbsComponent implements OnInit {
   }
 
   selectPhrasalVerb( phrasalVerb: PhrasalVerb) {
-    console.log(phrasalVerb);
     this.phrasalVerbForm.reset({
       phrasalVerb: phrasalVerb.phrasalVerb,
     });
@@ -93,10 +95,11 @@ export class PhrasalVerbsComponent implements OnInit {
   deletePhrasalVerb( id: string ) {
     this.alertService.confirm().then( ( result ) => {
       if ( result.isConfirmed ) {
-        this.phrasalVerbService.deletePhrasalVerb(id).subscribe( () => {
-          this.alertService.success('Deleted', 'Your verb has been deleted');
-          this.getPhrasalVerbs();
-        });
+        this.subscriptions.add(
+          this.phrasalVerbService.deletePhrasalVerb(id).subscribe( () => {
+            this.alertService.success('Deleted', 'Your verb has been deleted');
+            this.getPhrasalVerbs();
+          }));
       }
     });
     
@@ -107,13 +110,14 @@ export class PhrasalVerbsComponent implements OnInit {
       title: 'Loading PDF',
     });
     Swal.showLoading();
-    this.reportService.generateReport('phrasalverbs', 'phrasalverb' ).subscribe( resp => {
-      let fileURL = URL.createObjectURL( resp );      
-      window.open(fileURL);
+    this.subscriptions.add(
+      this.reportService.generateReport('phrasalverbs', 'phrasalverb' ).subscribe( resp => {
+        let fileURL = URL.createObjectURL( resp );      
+        window.open(fileURL);
 
-      Swal.close();
-      Swal.hideLoading();
-    });
+        Swal.close();
+        Swal.hideLoading();
+      }));
     
   }
 
@@ -151,5 +155,9 @@ export class PhrasalVerbsComponent implements OnInit {
     });
   }
   
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
 
 }

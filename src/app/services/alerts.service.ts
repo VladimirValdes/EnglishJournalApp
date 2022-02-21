@@ -16,11 +16,7 @@ export class AlertsService {
       timer: 1500,
     });
 
-    // Swal.fire(
-    //   'Deleted!',
-    //   'Your file has been deleted.',
-    //   'success',
-    // );
+   
   }
 
   confirm(): Promise< SweetAlertResult >{
@@ -35,11 +31,7 @@ export class AlertsService {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
     });
-    // .then((result) => {
-    //   if (result.isConfirmed) {
-    //     deleteVerb =  true;
-    //   }
-    // });
+    
 
   }
 
