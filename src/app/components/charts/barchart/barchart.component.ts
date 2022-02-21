@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {  ChartDataset, ChartConfiguration, ChartType } from 'chart.js';
 import { format } from 'date-fns';
 import { BaseChartDirective } from 'ng2-charts';
@@ -7,13 +7,17 @@ import { DatesService } from 'src/app/services/dates.service';
 import { StatisticsService } from 'src/app/services/statistics.service';
 
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-barchart',
   templateUrl: './barchart.component.html',
   styleUrls: ['./barchart.component.scss'],
 })
-export class BarchartComponent implements OnInit  {
+export class BarchartComponent implements OnInit, OnDestroy  {
+
+  private subscription: Subscription = new Subscription();
+
 
   today = new Date();
 
@@ -33,6 +37,7 @@ export class BarchartComponent implements OnInit  {
   
   constructor( private statisticsService: StatisticsService,
     private datesService: DatesService) {}
+ 
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -139,9 +144,10 @@ export class BarchartComponent implements OnInit  {
   }
 
   getStatistics( dates: DateFilter ) {
-    this.statisticsService.getNumberStatistic( dates ).subscribe( data => {
-      this.setRegisters(data, this.labels);   
-    });
+    this.subscription.add(
+      this.statisticsService.getNumberStatistic( dates ).subscribe( data => {
+        this.setRegisters(data, this.labels);   
+      }));
   }
 
   setLabels( value: string){
@@ -162,6 +168,11 @@ export class BarchartComponent implements OnInit  {
 
     this.chart?.update();
 
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
@@ -6,7 +7,10 @@ import { DashboardService } from 'src/app/services/dashboard.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+
+  private subscription: Subscription = new Subscription();
+
 
   collections = [
     {
@@ -48,20 +52,25 @@ export class DashboardComponent implements OnInit {
 
 
   constructor( private dashboardService: DashboardService) { }
+ 
 
   ngOnInit(): void {
 
-    
-    this.dashboardService.getCountRegisters().subscribe( registers => {
+    this.subscription.add(
+      this.dashboardService.getCountRegisters().subscribe( registers => {
 
-      this.collections[0].numbers = registers.verbsTotal;
-      this.collections[1].numbers = registers.phrasalverbsTotal;
-      this.collections[2].numbers = registers.adjectivesTotal;
-      this.collections[3].numbers = registers.prepositionsTotal;
-      this.collections[4].numbers = registers.connectorsTotal;
+        this.collections[0].numbers = registers.verbsTotal;
+        this.collections[1].numbers = registers.phrasalverbsTotal;
+        this.collections[2].numbers = registers.adjectivesTotal;
+        this.collections[3].numbers = registers.prepositionsTotal;
+        this.collections[4].numbers = registers.connectorsTotal;
 
-      
-    });
+        
+      }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 

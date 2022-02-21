@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { Verb } from 'src/app/interfaces/verbs.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { ReportService } from 'src/app/services/report.service';
@@ -13,11 +13,17 @@ import Swal from 'sweetalert2';
   templateUrl: './verbs.component.html',
   styleUrls: ['./verbs.component.scss'],
 })
-export class VerbsComponent implements OnInit {
+export class VerbsComponent implements OnInit, OnDestroy {
 
   @ViewChild('closebtn') closebtn!: ElementRef;
 
   @ViewChild('openModal') openModal!:ElementRef;
+
+  @ViewChild('selectFilter') selectFilter!:ElementRef;
+
+  private subscription: Subscription = new Subscription();
+
+
 
   sumitted = false;
 
@@ -95,12 +101,11 @@ export class VerbsComponent implements OnInit {
     private reportService: ReportService,
     private fb: FormBuilder,
     private alertService: AlertsService) { }
+
  
 
   ngOnInit(): void {
-    this.getVerbs();
-
-   
+    this.getVerbs();   
   }
 
   getVerbs() {
@@ -112,34 +117,34 @@ export class VerbsComponent implements OnInit {
     if ( this.verbForm.invalid) { return; }
 
     if ( this.updateV ) {
-      this.verbService.updateVerb( this.verbForm.value, this.idVerb ).subscribe( () => {
-        this.alertService.success('Updated', 'Your verb has been updated');
-        this.getVerbs();
-      });
+      this.subscription.add(
+        this.verbService.updateVerb( this.verbForm.value, this.idVerb ).subscribe( () => {
+          this.alertService.success('Updated', 'Your verb has been updated');
+          this.getVerbs();
+        }),
+      );
 
         
     } else {
-      this.verbService.addVerb(this.verbForm.value).subscribe( () => {
-        this.alertService.success('Created', 'Your verb has been created');
-        this.getVerbs();
-
-      });
+      this.subscription.add(
+        this.verbService.addVerb(this.verbForm.value).subscribe( () => {
+          this.alertService.success('Created', 'Your verb has been created');
+          this.getVerbs();
+        }));
     }
 
     this.closebtn.nativeElement.click();
     this.close();
-
-  
-
   }
 
   deleteVerb( id: string ) {
     this.alertService.confirm().then( ( result ) => {
       if ( result.isConfirmed ) {
-        this.verbService.deleteVerb(id).subscribe( () => {
-          this.alertService.success('Deleted', 'Your verb has been deleted');
-          this.getVerbs();
-        });
+        this.subscription.add(
+          this.verbService.deleteVerb(id).subscribe( () => {
+            this.alertService.success('Deleted', 'Your verb has been deleted');
+            this.getVerbs();
+          }));
       }
     });
   }
@@ -164,7 +169,6 @@ export class VerbsComponent implements OnInit {
         tap( verbs => {
           if ( verbs.length <= 0) {
             this.alertService.info("We don't find any register");
-            this.getVerbs();
           }
         }),
       );
@@ -174,24 +178,23 @@ export class VerbsComponent implements OnInit {
   }
 
   filterBy( term: string ) {
-    console.log(term );
+
+    if ( !term ) {
+      return;
+    }
 
     const field = ( term === 'regular' || term === 'irregular') ? 'type' : 'nik';
 
-    console.log({ field });
     
     this.verbs$ = this.verbService.filterVerbs(field, term).pipe(
       tap( verbs => {
         if ( verbs.length <= 0) {
           this.alertService.info("We don't find any register");
+          this.selectFilter.nativeElement.value = '';
           this.getVerbs();
         }
       }),
     );
-
-  
-    
-    
   }
 
   getReport( term: string, field: string ) {
@@ -200,13 +203,14 @@ export class VerbsComponent implements OnInit {
       title: 'Loading PDF',
     });
     Swal.showLoading();
-    this.reportService.generateReport('verbs', field, term).subscribe( resp => {
-      let fileURL = URL.createObjectURL( resp );      
-      window.open(fileURL);
+    this.subscription.add(
+      this.reportService.generateReport('verbs', field, term).subscribe( resp => {
+        let fileURL = URL.createObjectURL( resp );      
+        window.open(fileURL);
 
-      Swal.close();
-      Swal.hideLoading();
-    });
+        Swal.close();
+        Swal.hideLoading();
+      }));
   }
 
   close( ) {
@@ -224,6 +228,10 @@ export class VerbsComponent implements OnInit {
 
   trackByFn( index: number): number {
     return index;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
