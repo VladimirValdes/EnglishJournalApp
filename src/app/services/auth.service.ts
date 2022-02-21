@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/loginForm.interface';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { User } from '../model/user.mode';
 import { RefreshToken, RenewToken } from '../interfaces/validateToken.interface';
 import { Router } from '@angular/router';
+import { AlertsService } from './alerts.service';
 
 const BASE_URL = environment.base_url;
 
@@ -18,11 +19,13 @@ export class AuthService {
   public userRefreshToken: string = '';
 
 
+
   public user!: User;
 
   constructor(
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private alertService: AlertsService) {
     this.readToken();
     this.readRefreshToken();
   }
@@ -42,6 +45,7 @@ export class AuthService {
         this.saveRefreshToken( res.refreshToken );
         return res;
       }),
+      catchError( error => this.showError( error )),
     );
   }
 
@@ -84,6 +88,15 @@ export class AuthService {
           return resp;
         }),
       );
+  }
+
+
+  showError( error: any ) {
+
+    const errorMessage = new Error(error.error.msg);
+    this.alertService.error(errorMessage);
+    return throwError(() => errorMessage);
+    
   }
 
   private readToken(): string {

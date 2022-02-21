@@ -49,13 +49,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.loading = true;
     this.subscription.add(
-      this.authService.login(this.loginForm.value).subscribe(() => {
-        this.router.navigateByUrl('/dashboard');
-        this.loading = false;
-
+      this.authService.login(this.loginForm.value).subscribe({
+        error:() => this.loading = false,
+        complete: () => {
+          this.router.navigateByUrl('/dashboard');
+          this.loading = false;
+        },
       }),
     );
-
   }
 
   invalidField(formControl: string): boolean {
