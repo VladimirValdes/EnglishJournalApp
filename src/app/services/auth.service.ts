@@ -77,7 +77,6 @@ export class AuthService {
       refreshToken : this.userRefreshToken,
     };
 
-    console.log({ data });
     return this.http.post<RefreshToken>(`${BASE_URL}/auth/refreshtoken`, data )
       .pipe(
         tap( resp => {
