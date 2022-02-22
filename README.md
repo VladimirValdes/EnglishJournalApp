@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/9c162608-866d-4f54-8c74-890a4c61cc3a/deploy-status)](https://app.netlify.com/sites/englishjournal/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9c162608-866d-4f54-8c74-890a4c61cc3a/deploy-status)](https://englishjournal.netlify.app/#/login)
 </div>
 
 
