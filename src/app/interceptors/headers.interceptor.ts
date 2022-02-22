@@ -1,6 +1,6 @@
 import {  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  catchError, map, Observable, switchMap, throwError  } from 'rxjs';
+import {  catchError, map, Observable, switchMap, tap, throwError  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth.service';
 import { CheckConnectionService } from '../services/check-connection.service';
@@ -12,12 +12,12 @@ const BASE_URL = environment.base_url;
 export class HeadersInterceptor implements HttpInterceptor{
 
 
-  connection!: boolean;
+  connection = navigator.onLine;
 
   constructor( private authService: AuthService,
     private checkConnectionService: CheckConnectionService) {
     checkConnectionService.checkConnection$().pipe(
-      map( connection => {
+      tap( connection => {
         console.log({ connection });
         
         if (!connection) {
@@ -25,6 +25,8 @@ export class HeadersInterceptor implements HttpInterceptor{
         }
       }),
     );
+
+    
 
    
   }

@@ -22,6 +22,7 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
 
   updateConnector = false;
 
+
   idConnector = '';
 
   connectors$!:Observable<Connector[]>;

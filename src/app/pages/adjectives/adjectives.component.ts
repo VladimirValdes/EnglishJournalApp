@@ -22,6 +22,8 @@ export class AdjectivesComponent implements OnInit, OnDestroy {
 
   updateAdj = false;
 
+  mobile!:boolean;
+
   idAdjective = '';
 
 

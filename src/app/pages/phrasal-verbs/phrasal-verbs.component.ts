@@ -22,6 +22,7 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
 
   updateFv = false;
 
+
   idPhrasalVerb = '';
 
 

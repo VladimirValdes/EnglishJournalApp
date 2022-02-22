@@ -18,7 +18,10 @@ export class CheckConnectionService {
       fromEvent(window, 'online'),
       fromEvent(window, 'offline'),
     ).pipe( map( () => navigator.onLine));
+
+
   }
+
 
   showAlertConnection( connection: boolean ){
     if ( connection ) {

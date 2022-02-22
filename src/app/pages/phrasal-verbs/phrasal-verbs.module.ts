@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
 
 
-
 @NgModule({
   declarations: [
     PhrasalVerbsComponent,
@@ -16,7 +15,6 @@ import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
     PhrasalVerbRouting,
     ReactiveFormsModule,
     SearchbarModule,
-
   ],
 })
 export class PhrasalVerbsModule { }

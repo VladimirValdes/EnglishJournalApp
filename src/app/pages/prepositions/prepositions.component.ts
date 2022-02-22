@@ -22,6 +22,7 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
 
   updatePreposition = false;
 
+
   idPreposition = '';
 
 
