@@ -4,6 +4,7 @@ import { VerbsComponent } from './verbs.component';
 import { VerbsRouting } from './verbsRouting.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
+import { PaginationModule } from 'src/app/components/pagination/pagination.module';
 
 
 
@@ -16,6 +17,7 @@ import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
     VerbsRouting,
     ReactiveFormsModule,
     SearchbarModule,
+    PaginationModule,
   ],
   exports: [
     VerbsComponent,  

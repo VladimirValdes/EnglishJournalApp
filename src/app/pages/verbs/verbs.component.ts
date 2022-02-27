@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription, tap } from 'rxjs';
-import { Verb } from 'src/app/interfaces/verbs.interface';
+import { Verbs, Verb } from 'src/app/interfaces/verbs.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 import { ReportService } from 'src/app/services/report.service';
 import { VerbsService } from 'src/app/services/verbs.service';
 import Swal from 'sweetalert2';
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2';
   selector: 'app-verbs',
   templateUrl: './verbs.component.html',
   styleUrls: ['./verbs.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerbsComponent implements OnInit, OnDestroy {
 
@@ -26,13 +28,22 @@ export class VerbsComponent implements OnInit, OnDestroy {
 
 
 
+
   sumitted = false;
 
   updateV = false;
 
+  allVerbs = false;
+
   idVerb = '';
 
+  search = '';
+
+  filter = '';
+
   selectedFilter = '';
+
+  total = 0;
 
   type = [ 'regular', 'irregular'];
 
@@ -84,7 +95,9 @@ export class VerbsComponent implements OnInit, OnDestroy {
 
   
 
-  verbs$!:Observable<Verb[]>;
+  verbs$!:Observable<Verbs>;
+
+
 
   public verbForm = this.fb.group({
     baseForm: ['', [ Validators.required, Validators.minLength(2)]],
@@ -101,20 +114,64 @@ export class VerbsComponent implements OnInit, OnDestroy {
     private verbService: VerbsService,
     private reportService: ReportService,
     private fb: FormBuilder,
-    private alertService: AlertsService) { }
+    private alertService: AlertsService,
+    private paginationService: PaginationService,
+    private cdr: ChangeDetectorRef) { }
 
  
-
   ngOnInit(): void {
-    this.getVerbs();   
+    this.getVerbs();
+
+    this.subscription.add(
+      this.paginationService.totalSubject.subscribe( total => {
+        this.pagination(total);
+      }),
+    );
+
   }
 
-  getVerbs() {
-    this.verbs$ = this.verbService.getVerbs();
+  pagination( items = 0) {
+    
+    if ( this.search ) {
+
+      this.onSearch( this.search, items );
+      
+      return;
+    }
+
+    
+    if ( this.filter ) {
+
+      this.filterBy( this.filter, items );
+      
+      return;
+    }
+
+
+    this.getVerbs( items );
+    
+  }
+
+  getVerbs( from = 0 ) {
+
+    this.verbs$ = this.verbService.getVerbs( from ).pipe(
+      tap( verbs => {
+        this.total = verbs.total;
+        if (!this.allVerbs) {
+          this.paginationService.pagination(this.total);
+        }
+        this.allVerbs = true;
+      }));
+
+    this.search = '';
+    this.filter = '';
+    this.cdr.detectChanges();
   }
 
   addVerb() {
     this.sumitted = true;
+    this.selectFilter.nativeElement.value = '';
+
     if ( this.verbForm.invalid) { return; }
 
     if ( this.updateV ) {
@@ -124,12 +181,11 @@ export class VerbsComponent implements OnInit, OnDestroy {
           this.getVerbs();
         }),
       );
-
-        
     } else {
       this.subscription.add(
         this.verbService.addVerb(this.verbForm.value).subscribe( () => {
           this.alertService.success('Created', 'Your verb has been created');
+          this.allVerbs = false;
           this.getVerbs();
         }));
     }
@@ -144,6 +200,7 @@ export class VerbsComponent implements OnInit, OnDestroy {
         this.subscription.add(
           this.verbService.deleteVerb(id).subscribe( () => {
             this.alertService.success('Deleted', 'Your verb has been deleted');
+            this.allVerbs = false;
             this.getVerbs();
           }));
       }
@@ -164,21 +221,36 @@ export class VerbsComponent implements OnInit, OnDestroy {
     this.openModal.nativeElement.click();
   }
 
-  onSearch( term: string ) {
+  onSearch( term: string, from = 0 ) {
     if ( term ) {
-      this.verbs$ = this.verbService.searchVerbs( term ).pipe(
-        tap( verbs => {
-          if ( verbs.length <= 0) {
+      this.verbs$ = this.verbService.searchVerbs( term, from ).pipe(
+        tap( resp => {
+          
+          this.total = resp.total;
+
+          if (this.search !== term) {
+            
+            this.paginationService.pagination( resp.total );
+            
+          }
+          
+          if ( resp.verbs.length <= 0) {
             this.alertService.info("We don't find any register");
           }
+
+          this.search = term;
+          
         }),
       );
     } else {
       this.getVerbs();
     }
+    this.allVerbs = false;
+    this.filter = '';
+    this.selectFilter.nativeElement.value = '';
   }
 
-  filterBy( term: string ) {
+  filterBy( term: string, from = 0 ) {
 
     if ( !term ) {
       return;
@@ -187,15 +259,31 @@ export class VerbsComponent implements OnInit, OnDestroy {
     const field = ( term === 'regular' || term === 'irregular') ? 'type' : 'nik';
 
     
-    this.verbs$ = this.verbService.filterVerbs(field, term).pipe(
-      tap( verbs => {
-        if ( verbs.length <= 0) {
+    this.verbs$ = this.verbService.filterVerbs(field, term, from ).pipe(
+      tap( resp => {
+
+        
+        this.total = resp.total;
+
+        if (this.filter !== term ) {
+          
+          this.paginationService.pagination( this.total );
+          
+        }
+        
+        this.filter = term;
+        
+        if ( resp.verbs.length <= 0) {
           this.alertService.info("We don't find any register");
           this.selectFilter.nativeElement.value = '';
           this.getVerbs();
         }
+
       }),
     );
+       
+    this.allVerbs = false;
+
   }
 
   getReport( term: string, field: string ) {

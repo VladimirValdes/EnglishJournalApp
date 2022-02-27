@@ -15,13 +15,8 @@ export class ConnectorsService {
   constructor( private http: HttpClient) { }
 
   
-  getConnectors():Observable<Connector[]> {
-    return this.http.get<Connectors>(`${ BASE_URL }/connectors/user`)
-      .pipe(
-        map( resp => {
-          return resp.connectors;
-        }),
-      );
+  getConnectors( from = 0):Observable<Connectors> {
+    return this.http.get<Connectors>(`${ BASE_URL }/connectors/user?from=${ from }`);
   }
 
   updateConnector( formData: ConnectorForm, id: string ) {
@@ -36,12 +31,12 @@ export class ConnectorsService {
     return this.http.delete(`${ BASE_URL }/connectors/${ id }`);
   }
 
-  searchConnectors( term: string ):Observable<Connector[]> {
-    return this.http.get<SearchConnectors>(`${ BASE_URL }/searchuser/connectors/${ term }`)
+  searchConnectors( term: string, from = 0 ):Observable<Connectors> {
+    return this.http.get<SearchConnectors>(`${ BASE_URL }/searchuser/connectors/${ term }?from=${ from }`)
       .pipe(
         map( resp => {
           
-          return resp.results;
+          return { total: resp.total, connectors: resp.results };
         }),
       );
   }

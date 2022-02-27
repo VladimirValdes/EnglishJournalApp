@@ -17,13 +17,8 @@ export class AdjectivesService {
   constructor( private http: HttpClient) { }
 
   
-  getAdjectives():Observable<Adjective[]> {
-    return this.http.get<Adjectives>(`${ BASE_URL }/adjectives/user`)
-      .pipe(
-        map( resp => {
-          return resp.adjectives;
-        }),
-      );
+  getAdjectives( from = 0):Observable<Adjectives> {
+    return this.http.get<Adjectives>(`${ BASE_URL }/adjectives/user?from=${ from }`);
   }
 
   updateAdjective( formData: AdjectiveForm, id: string ) {
@@ -38,12 +33,12 @@ export class AdjectivesService {
     return this.http.delete(`${ BASE_URL }/adjectives/${ id }`);
   }
 
-  searchAdjectives( term: string ):Observable<Adjective[]> {
-    return this.http.get<SearchAdjectives>(`${ BASE_URL }/searchuser/adjectives/${ term }`)
+  searchAdjectives( term: string, from = 0 ):Observable<Adjectives> {
+    return this.http.get<SearchAdjectives>(`${ BASE_URL }/searchuser/adjectives/${ term }?from=${ from }`)
       .pipe(
         map( resp => {
           
-          return resp.results;
+          return { total: resp.total, adjectives: resp.results };
         }),
       );
   }

@@ -1,8 +1,10 @@
 export interface Verbs {
+  total: number;
   verbs: Verb[];
 }
 
 export interface SearchVerbs {
+  total: number;
   results: Verb[];
 }
 

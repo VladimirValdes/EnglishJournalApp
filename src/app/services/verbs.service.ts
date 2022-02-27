@@ -11,35 +11,31 @@ const BASE_URL = environment.base_url;
 })
 export class VerbsService {
 
+
+  totalVerbs!: number;
+
   constructor( 
     private http: HttpClient ) { }
 
-  getVerbs():Observable<Verb[]> {
-    return this.http.get<Verbs>(`${ BASE_URL }/verbs/user`)
+
+  getVerbs( from = 0 ):Observable<Verbs> {
+    return this.http.get<Verbs>(`${ BASE_URL }/verbs/user?from=${ from }`);
+  }
+
+  searchVerbs( term: string, from = 0 ):Observable<Verbs> {
+    return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ term }?from=${ from }`)
       .pipe(
         map( resp => {
-          return resp.verbs;
+          return { total: resp.total, verbs: resp.results };
         }),
       );
   }
 
-  searchVerbs( term: string ):Observable<Verb[]> {
-    return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ term }`)
+  filterVerbs( field: string, term: string, from = 0 ):Observable<Verbs> {
+    return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ field }/${ term }?from=${ from }`)
       .pipe(
         map( resp => {
-          
-          return resp.results;
-        }),
-      );
-  }
-
-  filterVerbs( field: string, term: string ):Observable<Verb[]> {
-    return this.http.get<SearchVerbs>(`${ BASE_URL }/searchuser/verbs/${ field }/${ term }`)
-      .pipe(
-        map( resp => {
-          // console.log(resp.results);
-
-          return resp.results;
+          return { total: resp.total, verbs: resp.results };
         }),
       );
   }

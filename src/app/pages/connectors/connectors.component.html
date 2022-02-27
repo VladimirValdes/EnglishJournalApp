@@ -82,7 +82,7 @@
               </thead>
               <tbody class="text-center fs-4">
                 <ng-container
-                    *ngFor="let connec of connectors$ | async; trackBy: trackByFn" >
+                    *ngFor="let connec of (connectors$ | async)?.connectors; trackBy: trackByFn" >
                   <tr>
                     <td>{{ connec.connector }}</td>
     
@@ -106,6 +106,8 @@
                     <!-- TABLE -->
             <!-- ======================= -->
           </div>
+
+          <app-pagination *ngIf="total > 0"></app-pagination>
         </div>
       </div>
     </div>

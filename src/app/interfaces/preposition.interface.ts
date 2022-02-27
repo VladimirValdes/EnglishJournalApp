@@ -1,8 +1,10 @@
 export interface Prepositions {
+  total: number;
   prepositions: Preposition[];
 }
 
 export interface SearchPrepositions {
+  total: number;
   results: Preposition[];
 }
 

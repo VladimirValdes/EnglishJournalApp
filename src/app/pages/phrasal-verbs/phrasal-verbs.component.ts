@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription, tap } from 'rxjs';
-import { PhrasalVerb } from 'src/app/interfaces/phrasalVerb.interface';
+import { PhrasalVerb, PhrasalVerbs } from 'src/app/interfaces/phrasalVerb.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 import { PhrasalVerbService } from 'src/app/services/phrasalVerbs.service';
 import { ReportService } from 'src/app/services/report.service';
 import Swal from 'sweetalert2';
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
   selector: 'app-phrasal-verbs',
   templateUrl: './phrasal-verbs.component.html',
   styleUrls: ['./phrasal-verbs.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhrasalVerbsComponent implements OnInit, OnDestroy {
 
@@ -22,11 +24,16 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
 
   updateFv = false;
 
+  allPhrasalVerbs = false;
+
+  search = '';
 
   idPhrasalVerb = '';
 
+  total = 0;
 
-  phrasalVerbs$!:Observable<PhrasalVerb[]>;
+
+  phrasalVerbs$!:Observable<PhrasalVerbs>;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -42,22 +49,56 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
   constructor( private fb: FormBuilder,
     private phrasalVerbService: PhrasalVerbService,
     private reportService: ReportService,
-    private alertService: AlertsService) { }
+    private alertService: AlertsService,
+    private paginationService: PaginationService,
+    private cdr: ChangeDetectorRef) { }
   
   ngOnInit(): void {
     this.getPhrasalVerbs();
+
+
+    this.subscriptions.add(
+      this.paginationService.totalSubject.subscribe( total => {
+        this.pagination(total);
+      }),
+    );
   }
 
+  pagination( items = 0) {
+    
+    if ( this.search ) {
 
-  getPhrasalVerbs() {
-    this.phrasalVerbs$ = this.phrasalVerbService.getPhrasalVerbs();
+      this.onSearch( this.search, items );
+      
+      return;
+    }
+
+
+
+    this.getPhrasalVerbs( items );
+    
+  }
+
+  getPhrasalVerbs( from = 0) {
+    this.phrasalVerbs$ = this.phrasalVerbService.getPhrasalVerbs(from).pipe(
+      tap( phrasalVerbs => {
+
+        this.total = phrasalVerbs.total;
+
+        if (!this.allPhrasalVerbs) {
+          this.paginationService.pagination(this.total);
+        }
+        this.allPhrasalVerbs = true;
+      }));
+
+    this.search = '';
+    this.cdr.detectChanges();
   }
 
   addPhrasalVerb() {
     this.sumitted = true;
     if ( this.phrasalVerbForm.invalid) { return; }
 
-    
 
     if ( this.updateFv ) {
       this.subscriptions.add(
@@ -70,6 +111,7 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
       this.subscriptions.add(
         this.phrasalVerbService.addPhrasalVerb(this.phrasalVerbForm.value).subscribe( () => {
           this.alertService.success('Created', 'Your phrasal verb has been created');
+          this.allPhrasalVerbs = false;
           this.getPhrasalVerbs();
 
         }));
@@ -99,6 +141,7 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
           this.phrasalVerbService.deletePhrasalVerb(id).subscribe( () => {
             this.alertService.success('Deleted', 'Your verb has been deleted');
+            this.allPhrasalVerbs = false;
             this.getPhrasalVerbs();
           }));
       }
@@ -122,22 +165,35 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
     
   }
 
-  onSearch( term: string ) {
+  onSearch( term: string, from = 0 ) {
 
-    console.log({ term });
     
     if ( term ) {
-      this.phrasalVerbs$ = this.phrasalVerbService.searchPhrasalVerbs( term ).pipe(
-        tap( phrasalV => {
-          if ( phrasalV.length <= 0) {
-            this.alertService.info("We don't find any register");
-            this.getPhrasalVerbs();
+      this.phrasalVerbs$ = this.phrasalVerbService.searchPhrasalVerbs( term, from ).pipe(
+        tap( resp => {
+
+          this.total = resp.total;
+
+          if (this.search !== term) {
+            
+            this.paginationService.pagination( this.total );
+            
           }
+
+          if ( resp.phrasalVerbs.length <= 0) {
+            this.alertService.info("We don't find any register");
+          }
+
+          this.search = term;
+
         }),
       );
     } else {
       this.getPhrasalVerbs();
     }
+
+    this.allPhrasalVerbs = false;
+
   }
 
   trackByFn( index: number): number {

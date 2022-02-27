@@ -101,7 +101,7 @@
     </div>
 
     <div class="row mt-5">
-      <div class="col">
+      <div class="col flex flex-column">
         <div
           class="card shadow overflow-hidden position-static mb-5"
           style="border-radius: 5px">
@@ -130,7 +130,7 @@
             </thead>
             <tbody class="text-center fs-4">
               <ng-container
-                  *ngFor="let verb of verbs$ | async; trackBy: trackByFn" >
+                  *ngFor="let verb of (verbs$ | async)?.verbs;" >
                 <tr>
                   <td>{{ verb.baseForm }}</td>
                   <td class="d-none d-md-table-cell">{{ verb.pastSimple }}</td>
@@ -157,7 +157,8 @@
                   <!-- TABLE -->
           <!-- ======================= -->
         </div>
-  
+
+        <app-pagination *ngIf="total > 0"></app-pagination>
       </div>
     </div>
   </div>

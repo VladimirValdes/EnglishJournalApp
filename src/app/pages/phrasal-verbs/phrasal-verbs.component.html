@@ -81,7 +81,7 @@
               </thead>
               <tbody class="text-center fs-4">
                 <ng-container
-                    *ngFor="let phrasalverb of phrasalVerbs$ | async; trackBy: trackByFn" >
+                    *ngFor="let phrasalverb of (phrasalVerbs$ | async)?.phrasalVerbs; trackBy: trackByFn" >
                   <tr>
                     <td>{{ phrasalverb.phrasalVerb }}</td>
     
@@ -105,6 +105,7 @@
                     <!-- TABLE -->
             <!-- ======================= -->
           </div>
+          <app-pagination *ngIf=" total > 0"></app-pagination>
         </div>
       </div>
     </div>

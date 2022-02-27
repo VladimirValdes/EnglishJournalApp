@@ -1,0 +1,41 @@
+<div class="flex w-100 mb-2">
+  <nav aria-label="Page navigation">
+    <ul class="pagination fs-4">
+      <li
+        class="page-item"
+        [ngClass]="{ disabled: paginationService.indexPage === 0 || paginationService.disablePrev }">
+        <a (click)="paginationService.previus()" class="page-link fw-bolder  cursor__pointer"> Previous </a>
+      </li>
+      <ng-container *ngFor="let num of paginationService.pages; let i = index">
+        <li
+          *ngIf="i < 5"
+          class="page-item"
+          [ngClass]="{ active: i === paginationService.indexPage }">
+          <a class="page-link mx-2 cursor__pointer" (click)="paginationService.getPaginationNumber(i)">{{ num}}</a>
+        </li>
+
+        <li *ngIf="i === 6">
+          <a class="ellipsis mx-2">...</a>
+        </li>
+        <li
+          *ngIf="i > 5 && i === paginationService.pages.length - 2"
+          class="page-item"
+          [ngClass]="{ active: i === paginationService.indexPage }">
+          <a class="page-link mx-2 cursor__pointer" (click)="paginationService.getPaginationNumber(i)">{{ num }}</a>
+        </li>
+        <li
+          *ngIf="i > 5 && i === paginationService.pages.length - 1"
+          class="page-item"
+          [ngClass]="{ active: i === paginationService.indexPage }">
+          <a class="page-link mx-2 cursor__pointer" (click)="paginationService.getPaginationNumber(i)">{{ num }}</a>
+        </li>
+      </ng-container>
+
+      <li
+        class="page-item"
+        [ngClass]="{ disabled: paginationService.indexPage === paginationService.pages.length - 1 || paginationService.disableNext }">
+        <a (click)="paginationService.next()" class="page-link fw-bolder cursor__pointer">Next </a>
+      </li>
+    </ul>
+  </nav>
+</div>

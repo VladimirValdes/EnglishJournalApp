@@ -1,8 +1,10 @@
 export interface Adjectives {
+  total: number;
   adjectives: Adjective[];
 }
 
 export interface SearchAdjectives {
+  total: number;
   results: Adjective[];
 }
 

@@ -81,7 +81,7 @@
               </thead>
               <tbody class="text-center fs-4">
                 <ng-container
-                    *ngFor="let prep of prepositions$ | async; trackBy: trackByFn" >
+                    *ngFor="let prep of (prepositions$ | async)?.prepositions; trackBy: trackByFn" >
                   <tr>
                     <td>{{ prep.preposition }}</td>
     
@@ -105,6 +105,9 @@
                     <!-- TABLE -->
             <!-- ======================= -->
           </div>
+          <app-pagination
+          *ngIf="total > 0">
+        </app-pagination>
         </div>
       </div>
     </div>

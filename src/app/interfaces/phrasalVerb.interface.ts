@@ -1,9 +1,11 @@
 export interface PhrasalVerbs {
+  total: number;
   phrasalVerbs: PhrasalVerb[];
 }
 
 
 export interface SearchPhrasalVerbs {
+  total: number;
   results: PhrasalVerb[];
 }
 

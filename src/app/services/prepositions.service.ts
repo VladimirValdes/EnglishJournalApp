@@ -14,13 +14,8 @@ export class PrepositionsService {
 
   constructor( private http: HttpClient) { }
 
-  getPrepositions():Observable<Preposition[]> {
-    return this.http.get<Prepositions>(`${ BASE_URL }/prepositions/user`)
-      .pipe(
-        map( resp => {
-          return resp.prepositions;
-        }),
-      );
+  getPrepositions( from = 0):Observable<Prepositions> {
+    return this.http.get<Prepositions>(`${ BASE_URL }/prepositions/user?from=${ from }`);
   }
 
   updatePreposition( formData: PrepositionForm, id: string ) {
@@ -35,12 +30,12 @@ export class PrepositionsService {
     return this.http.delete(`${ BASE_URL }/prepositions/${ id }`);
   }
 
-  searchPreposition( term: string ):Observable<Preposition[]> {
-    return this.http.get<SearchPrepositions>(`${ BASE_URL }/searchuser/prepositions/${ term }`)
+  searchPreposition( term: string, from = 0 ):Observable<Prepositions> {
+    return this.http.get<SearchPrepositions>(`${ BASE_URL }/searchuser/prepositions/${ term }?from=${ from }`)
       .pipe(
         map( resp => {
           
-          return resp.results;
+          return { total: resp.total, prepositions: resp.results };
         }),
       );
   }

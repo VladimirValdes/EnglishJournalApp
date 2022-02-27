@@ -1,9 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription, tap } from 'rxjs';
-import { Connector } from 'src/app/interfaces/connectors.interface';
+import { Connector, Connectors } from 'src/app/interfaces/connectors.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
 import { ConnectorsService } from 'src/app/services/connectors.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 import { ReportService } from 'src/app/services/report.service';
 import Swal from 'sweetalert2';
 
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
   selector: 'app-connectors',
   templateUrl: './connectors.component.html',
   styleUrls: ['./connectors.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConnectorsComponent implements OnInit, OnDestroy {
 
@@ -18,14 +20,20 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
 
   @ViewChild('openModal') openModal!:ElementRef;
 
+
+  total = 0;
+
   sumitted = false;
 
   updateConnector = false;
 
+  allConnectors = false;
+
+  search = '';
 
   idConnector = '';
 
-  connectors$!:Observable<Connector[]>;
+  connectors$!:Observable<Connectors>;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -40,15 +48,50 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
   constructor( private fb: FormBuilder,
     private connectorsService: ConnectorsService,
     private alertService: AlertsService,
-    private reportService: ReportService) { }
+    private reportService: ReportService,
+    private paginationService: PaginationService,
+    private cdr: ChangeDetectorRef) { }
  
 
   ngOnInit(): void {
     this.getConnectors();
+
+    this.subscriptions.add(
+      this.paginationService.totalSubject.subscribe( total => {
+        this.pagination(total);
+      }),
+    );
   }
 
-  getConnectors() {
-    this.connectors$ = this.connectorsService.getConnectors();
+  pagination( items = 0) {
+    
+    if ( this.search ) {
+
+      this.onSearch( this.search, items );
+      
+      return;
+    }
+
+    this.getConnectors( items );
+    
+  }
+
+  getConnectors( from = 0) {
+    this.connectors$ = this.connectorsService.getConnectors( from ).pipe(
+      tap( connectors  => {
+
+        this.total = connectors.total;
+
+        if (!this.allConnectors) {
+          this.paginationService.pagination(this.total);
+        }
+        this.allConnectors = true;
+      }));
+
+    this.search = '';
+
+    this.cdr.detectChanges();
+
   }
 
   addConnector() {
@@ -67,6 +110,7 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
     } else {
       this.subscriptions.add(
         this.connectorsService.addConnector(this.connectorForm.value).subscribe( () => {
+          this.allConnectors = false;
           this.alertService.success('Created', 'Your connector has been created');
           this.getConnectors();
 
@@ -96,6 +140,7 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
       if ( result.isConfirmed ) {
         this.subscriptions.add(
           this.connectorsService.deleteConnector(id).subscribe( () => {
+            this.allConnectors = false;
             this.alertService.success('Deleted', 'Your connector has been deleted');
             this.getConnectors();
           }));
@@ -120,21 +165,37 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
     
   }
 
-  onSearch( term: string ) {
-
+  onSearch( term: string, from = 0 ) {
     
     if ( term ) {
-      this.connectors$ = this.connectorsService.searchConnectors( term ).pipe(
-        tap( connector => {
-          if ( connector.length <= 0) {
-            this.alertService.info("We don't find any register");
-            this.getConnectors();
+      this.connectors$ = this.connectorsService.searchConnectors( term, from ).pipe(
+        tap( resp => {
+
+          this.total = resp.total;
+
+          if (this.search !== term) {
+            
+            this.paginationService.pagination( this.total );
+            
           }
+
+
+          if ( resp.connectors.length <= 0) {
+            this.alertService.info("We don't find any register");
+          }
+
+          this.search = term;
+
+
         }),
       );
     } else {
       this.getConnectors();
     }
+
+    this.allConnectors = false;
+
+
   }
 
   trackByFn( index: number): number {

@@ -1,8 +1,10 @@
 export interface Connectors {
+  total:number
   connectors: Connector[];
 }
 
 export interface SearchConnectors {
+  total:number;
   results: Connector[];
 }
 

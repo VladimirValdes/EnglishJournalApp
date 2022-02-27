@@ -4,6 +4,7 @@ import { PrepositionsComponent } from './prepositions.component';
 import { prepositionRouting } from './prepositionRouting.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
+import { PaginationModule } from 'src/app/components/pagination/pagination.module';
 
 
 
@@ -16,6 +17,7 @@ import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
     prepositionRouting,
     ReactiveFormsModule,
     SearchbarModule,
+    PaginationModule,
   ],
 })
 export class PrepositionsModule { }

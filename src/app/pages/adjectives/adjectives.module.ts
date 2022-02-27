@@ -4,6 +4,7 @@ import { AdjectivesComponent } from './adjectives.component';
 import { adjectivesRouting } from './adjectivesRouting.module';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PaginationModule } from 'src/app/components/pagination/pagination.module';
 
 
 
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     adjectivesRouting,
     SearchbarModule,
     ReactiveFormsModule,
+    PaginationModule,
   ],
 })
 export class AdjectivesModule { }

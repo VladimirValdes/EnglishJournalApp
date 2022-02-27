@@ -15,13 +15,8 @@ export class PhrasalVerbService {
         
   }
 
-  getPhrasalVerbs():Observable<PhrasalVerb[]> {
-    return this.http.get<PhrasalVerbs>(`${ BASE_URL }/phrasalverbs/user`)
-      .pipe(
-        map( resp => {
-          return resp.phrasalVerbs;
-        }),
-      );
+  getPhrasalVerbs( from = 0):Observable<PhrasalVerbs> {
+    return this.http.get<PhrasalVerbs>(`${ BASE_URL }/phrasalverbs/user?from=${ from }`);
   }
 
   updatePhrasalVerb( formData: PhrasalVerbForm, id: string ) {
@@ -36,12 +31,12 @@ export class PhrasalVerbService {
     return this.http.delete(`${ BASE_URL }/phrasalverbs/${ id }`);
   }
 
-  searchPhrasalVerbs( term: string ):Observable<PhrasalVerb[]> {
-    return this.http.get<SearchPhrasalVerbs>(`${ BASE_URL }/searchuser/phrasalverbs/${ term }`)
+  searchPhrasalVerbs( term: string, from = 0 ):Observable<PhrasalVerbs> {
+    return this.http.get<SearchPhrasalVerbs>(`${ BASE_URL }/searchuser/phrasalverbs/${ term }?from=${ from }`)
       .pipe(
         map( resp => {
           
-          return resp.results;
+          return { total: resp.total, phrasalVerbs: resp.results };
         }),
       );
   }

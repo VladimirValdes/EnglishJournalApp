@@ -81,7 +81,7 @@
               </thead>
               <tbody class="text-center fs-4">
                 <ng-container
-                    *ngFor="let adjective of adjectives$ | async; trackBy: trackByFn" >
+                    *ngFor="let adjective of (adjectives$ | async)?.adjectives; trackBy: trackByFn" >
                   <tr>
                     <td>{{ adjective.adjective }}</td>
     
@@ -105,6 +105,9 @@
                     <!-- TABLE -->
             <!-- ======================= -->
           </div>
+          
+          <app-pagination *ngIf=" total > 0"></app-pagination>
+
         </div>
       </div>
     </div>

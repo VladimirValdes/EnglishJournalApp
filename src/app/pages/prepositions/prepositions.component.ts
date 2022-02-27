@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription, tap } from 'rxjs';
-import { Preposition } from 'src/app/interfaces/preposition.interface';
+import { Preposition, Prepositions } from 'src/app/interfaces/preposition.interface';
 import { AlertsService } from 'src/app/services/alerts.service';
+import { PaginationService } from 'src/app/services/pagination.service';
 import { PrepositionsService } from 'src/app/services/prepositions.service';
 import { ReportService } from 'src/app/services/report.service';
 import Swal from 'sweetalert2';
@@ -11,6 +12,8 @@ import Swal from 'sweetalert2';
   selector: 'app-prepositions',
   templateUrl: './prepositions.component.html',
   styleUrls: ['./prepositions.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class PrepositionsComponent implements OnInit, OnDestroy {
 
@@ -22,13 +25,18 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
 
   updatePreposition = false;
 
+  allPrepositions = false;
+
+  search = '';
 
   idPreposition = '';
+
+  total = 0;
 
 
   private subscriptions: Subscription = new Subscription();
 
-  prepositions$!:Observable<Preposition[]>;
+  prepositions$!:Observable<Prepositions>;
 
 
 
@@ -42,22 +50,57 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
   constructor( private fb: FormBuilder,
     private prepositionService: PrepositionsService,
     private alertService: AlertsService,
-    private reportService: ReportService) { }
+    private reportService: ReportService,
+    private paginationService: PaginationService,
+    private cdr: ChangeDetectorRef) { }
  
 
   ngOnInit(): void {
     this.getPrepositions();
+
+    this.subscriptions.add(
+      this.paginationService.totalSubject.subscribe( total => {
+        this.pagination(total);
+      }),
+    );
+
   }
 
-  getPrepositions() {
-    this.prepositions$ = this.prepositionService.getPrepositions();
+  pagination(items = 0) {
+
+    
+    if ( this.search ) {
+
+      this.onSearch( this.search, items );
+      
+      return;
+    }
+
+    this.getPrepositions( items );
+    
+  }
+
+  getPrepositions( from = 0 ) {
+
+    this.prepositions$ = this.prepositionService.getPrepositions( from ).pipe(
+
+      tap( prepositions => {
+        this.total = prepositions.total;
+
+        if (!this.allPrepositions) {
+          this.paginationService.pagination(this.total);
+        }
+        this.allPrepositions = true;
+
+      }));
+      
+    this.search = '';
+    this.cdr.detectChanges();
   }
 
   addPreposition() {
     this.sumitted = true;
     if ( this.prepositionForm.invalid) { return; }
-
-    
 
     if ( this.updatePreposition ) {
       this.subscriptions.add(
@@ -68,11 +111,15 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
 
     } else {
       this.subscriptions.add(
+
         this.prepositionService.addPreposition(this.prepositionForm.value).subscribe( () => {
-          this.alertService.success('Created', 'Your preposition has been created');
+          this.allPrepositions = false;
           this.getPrepositions();
+          this.alertService.success('Created', 'Your preposition has been created');
 
         }));
+
+
     }
 
     this.closebtn.nativeElement.click();
@@ -99,8 +146,11 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
           this.prepositionService.deletePreposition(id).subscribe( () => {
             this.alertService.success('Deleted', 'Your preposition has been deleted');
+            this.allPrepositions = false;
             this.getPrepositions();
           }));
+
+
       }
     });
     
@@ -122,20 +172,32 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
     
   }
 
-  onSearch( term: string ) {
+  onSearch( term: string, from = 0) {
 
     if ( term ) {
-      this.prepositions$ = this.prepositionService.searchPreposition( term ).pipe(
-        tap( preposition => {
-          if ( preposition.length <= 0) {
-            this.alertService.info("We don't find any register");
-            this.getPrepositions();
+      this.prepositions$ = this.prepositionService.searchPreposition( term, from ).pipe(
+        tap( resp => {
+          this.total = resp.total;
+
+          if (this.search !== term) {
+            
+            this.paginationService.pagination(this.total );
+            
           }
+
+          if ( resp.prepositions.length <= 0) {
+            this.alertService.info("We don't find any register");
+          }
+
+          this.search = term;
+
         }),
       );
     } else {
       this.getPrepositions();
     }
+
+    this.allPrepositions = false;
   }
 
   trackByFn( index: number): number {
