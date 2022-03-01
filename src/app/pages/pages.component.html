@@ -1,17 +1,32 @@
 
 
-    <div class="d-flex align-items-stretch min-vh-100"
-         style="background-color: #f1f5f9;">
-        <app-sidebar
+<div class="main__wrapper">
+<app-sidebar 
             *ngIf="!menuActive"
             [@enterAnimation]>
-        </app-sidebar>
-        <main class="w-100">
-            <app-header (active)="menuActive = $event"></app-header>
-            <div>
-                
-                <router-outlet></router-outlet>
+</app-sidebar>
 
-            </div>
-        </main>
-    </div>
+<main>
+            <app-header (active)="menuActive = $event"></app-header>
+            
+            <router-outlet></router-outlet>
+
+            
+</main>
+
+</div>
+<!-- 
+    <div class="d-flex align-items-stretch "
+         style="background-color: #f1f5f9;"> -->
+        <!-- <app-sidebar
+            *ngIf="!menuActive"
+            [@enterAnimation]>
+        </app-sidebar> -->
+        <!-- <main>
+            <app-header (active)="menuActive = $event"></app-header>
+            
+            <router-outlet></router-outlet>
+
+            
+        </main> -->
+    <!-- </div> -->
