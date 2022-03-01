@@ -4,23 +4,7 @@
 @import "../../node_modules/bootstrap/scss/root";
 
 
-
-@import "./components/pagination.scss";
-
-
-// tables
-
-$table-cell-padding-y:        1.5rem;
-$table-cell-padding-x:        1rem;
-
-$table-group-separator-color: transparent;
-
-
-
-
-
 // colors
-
 $primary: $indigo;
 $gray-900: #151515;
 
@@ -31,141 +15,19 @@ $font-family-monospace: 'Open Sans', sans-serif;
 $font-weight-bold: 400;
 $font-weight-bolder: 600;
 
-
-//forms
-
-$input-font-size: 1.5rem;
-$input-padding-y: 15px; 
-$input-padding-x: 8px;
-$input-bg: #edf2f7;
-$input-focus-bg:#edf2f7;
-$input-border-radius: 5px;
-$input-border-color:  transparent;
-$input-focus-border-color: #4f46e5;
-$input-border-width: 1px;
-$input-focus-bg: transparent;
-$input-focus-box-shadow: transparent;
-
-
-
-// navbar
-
-$nav-link-padding-y: 12px;              
-$nav-link-padding-x: 8px;         
-$nav-pills-border-radius: 10px;
-// $nav-pills-link-active-bg: #454545;
-$nav-pills-link-active-bg: #2c3344;
-
-
-// card
-$card-border-color: transparent;
-$card-border-radius: 5px;
-
-.nav .nav-link:hover {
-  background-color: #2c3344;
-  outline: none;
-}
-
-
-
-
-.btnicon {
-  background: none;
-  outline: none;
-  border: none;
-}
-
-.btnfilter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 1.5rem;
-  border: 1px solid #94a3b8;
-  border-radius: 5px;
-  color: #212529;
-
-  min-width: 105px;
-
-  &:focus-within {
-    border-color: #4f46e5;
-  }
-}
-
-.custombtn {
-  color: white;
-  background-color: #4f46e5;
-  height: 48px;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-
-  &--add {
-    padding: 10px 1.5rem;
-
-  }
-
-
-
-  &:hover {
-    background-color: #473fce;
-
-
-  }
-}
-
-
-.custombtn-close {
-  font-size: 1.5rem;
-  color: red;
-  border: 1px solid red;
-  background-color: #feecee;
-  padding: 8px 15px;
-  border-radius: 5px;
-  height: 48px;
-
-  &:hover {
-    background-color: red;
-    color: white;
-
-  }
-}
-
-// Search bar
-
-.searchbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 1.5rem;
-  border: 1px solid #94a3b8;
-  width: 100%;
-  max-width: 350px;
-  min-width: 100px;
-
-  &:focus-within {
-    border-color: #4f46e5;
-  }
-
-  &__icon {
-    margin: 0 0.5rem;
-  }
-
-  &__input {
-    width: 100%;
-    border: none;
-    background: none;
-    outline: none;
-  }
-}
-
-
-
+@import "./components/pagination.scss";
+@import "./components/table.scss";
+@import "./components/forms.scss";
+@import "./components/navbar.scss";
+@import "./components/card.scss";
+@import "./components/select.scss";
+@import "./components/dropdown.scss";
+@import "./components/buttons.scss";
 
 $theme-colors: (
   "primary": $primary,
   "dark": $gray-900
 );
-
 
 html {
   font-size: 65.5%;
@@ -185,95 +47,10 @@ html {
   height: 30px;
 }
 
-// select
-
-$form-select-padding-y: 15px;
-$form-select-font-size:1.5rem;
-$form-select-bg:#edf2f7;
-$form-select-focus-box-shadow: none;
-$form-select-box-shadow:none;
-$form-select-border-color: transparent;
-$form-select-focus-border-color:#4f46e5;
-$form-select-indicator-color: white;
-// $form-select-padding-x: 8px;
-
-
-// dropdown 
-
-
-$dropdown-bg:   $gray-200;;
-$dropdown-link-hover-color:         white;
-$dropdown-link-hover-bg:            #212529;
-
-
-
-.icon-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 65px;
-  padding: 16px;
-  background-color: transparent;
-  border: none;
-
-  cursor: pointer;
-
-  &__bar {
-    
-  position: relative;
-
-  width: 35px;
-  height: 4px;
-  
-  border-radius: 2px;
-
-  background-color: #2c3344;
-
-    &:before, &:after {
-        
-        content: '';
-
-        position: absolute;
-        bottom: .9em;
-
-        display: block; 
-        width: 30px;
-        height: 4px;
-
-        background-color: #2c3344;
-        border-radius: 2px;
-        
-        transition: transform .2s;
-    } 
-
-    &:after {
-      width: 25px;
-      top: 0.9em;
-    }
-  }   
-}
-
-.border-debug {
-  border: 1px solid red;
-}
-
 .border {
   border: 2px solid #94a3b8;
   border-radius: 5px;
 }
-
-.collapse-sidebar {
-  // // position: relative;
-  // opacity: 0;
-  // visibility: hidden;
-  transform: translateX(-100%);
-  transition: 0.3s ease-out;
-  // width: 0;
-}
-
-
-
-
 
 
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';

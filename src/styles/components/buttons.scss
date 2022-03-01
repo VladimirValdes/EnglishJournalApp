@@ -1,0 +1,62 @@
+
+
+.btnicon {
+    background: none;
+    outline: none;
+    border: none;
+  }
+  
+  .btnfilter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 1.5rem;
+    border: 1px solid #94a3b8;
+    border-radius: 5px;
+    color: #212529;
+  
+    min-width: 105px;
+  
+    &:focus-within {
+      border-color: #4f46e5;
+    }
+  }
+  
+  .custombtn {
+    color: white;
+    background-color: #4f46e5;
+    height: 48px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+  
+    &--add {
+      padding: 10px 1.5rem;
+  
+    }
+  
+  
+  
+    &:hover {
+      background-color: #473fce;
+  
+  
+    }
+  }
+  
+  
+  .custombtn-close {
+    font-size: 1.5rem;
+    color: red;
+    border: 1px solid red;
+    background-color: #feecee;
+    padding: 8px 15px;
+    border-radius: 5px;
+    height: 48px;
+  
+    &:hover {
+      background-color: red;
+      color: white;
+  
+    }
+  }
