@@ -18,8 +18,6 @@ export class AuthService {
 
   public userRefreshToken: string = '';
 
-
-
   public user!: User;
 
   constructor(
