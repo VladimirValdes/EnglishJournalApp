@@ -32,6 +32,8 @@ export class AdjectivesComponent implements OnInit, OnDestroy {
 
   total = 0;
 
+  modalTitle = 'Add Adjective';
+
 
   adjectives$!:Observable<Adjectives>;
 
@@ -129,6 +131,7 @@ export class AdjectivesComponent implements OnInit, OnDestroy {
       adjective: adjective.adjective,
     });
 
+    this.modalTitle = 'Update Adjective';
     this.idAdjective = adjective._id;
     this.updateAdj = true;
     this.openModal.nativeElement.click();

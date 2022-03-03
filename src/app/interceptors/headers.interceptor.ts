@@ -2,6 +2,7 @@ import {  HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpReques
 import { Injectable } from '@angular/core';
 import {  catchError, map, Observable, switchMap, throwError  } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AlertsService } from '../services/alerts.service';
 import { AuthService } from '../services/auth.service';
 
 const BASE_URL = environment.base_url;
@@ -13,7 +14,8 @@ export class HeadersInterceptor implements HttpInterceptor{
 
  
 
-  constructor( private authService: AuthService) {}
+  constructor( private authService: AuthService,
+    private alertService: AlertsService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -37,9 +39,7 @@ export class HeadersInterceptor implements HttpInterceptor{
         const msg = err.error.msg;
 
         if ( err instanceof HttpErrorResponse && err.status === 401 && msg === 'Token has expired') {
-          console.log(err.error.msg);
-          console.log(this.authService.userRefreshToken);
-          // return err;
+         
           return this.handle401Error( req, next);
         }
         return this.showErrors(err);
@@ -48,10 +48,10 @@ export class HeadersInterceptor implements HttpInterceptor{
     
   }
 
-  showErrors( error: HttpErrorResponse ):Observable<any> {    
+  showErrors( error: HttpErrorResponse):Observable<any> {   
 
-    const errorMessage = new Error(error.error.msg);
-    return throwError(() => errorMessage);
+    this.alertService.error(error.error.error);
+    return throwError(() => 'Error');
 
   }
 

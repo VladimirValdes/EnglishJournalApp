@@ -179,7 +179,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title fs-4 fw-bolder" id="exampleModalLabel">
-          Add Verb
+          {{ modalTitle }}
         </h5>
         <button
           type="button"
@@ -187,8 +187,8 @@
           data-bs-dismiss="modal"
           aria-label="Close"
           #closebtn
-          (click)="close()"
-        ></button>
+          (click)="close()">
+        </button>
       </div>
       <div class="modal-body">
         <form
@@ -197,22 +197,21 @@
           (ngSubmit)="addVerb()">
           <div class="row mb-3">
             <div class="col">
-              <label for="verb" class="form-label fs-4 ls fw-bolder"
-                >Verb</label
-              >
+              <label for="verb" class="form-label fs-4 ls fw-bolder">
+                Verb
+              </label>
               <input
                 type="text"
                 [ngClass]="{ 'is-invalid': invalidField('baseForm')}"
                 class="form-control"
                 id="verb"
                 placeholder="verb"
-                formControlName="baseForm"
-              />
+                formControlName="baseForm"/>
             </div>
             <div class="col-5">
-              <label for="type" class="form-label fs-4 ls fw-bolder"
-                >Type</label
-              >
+              <label for="type" class="form-label fs-4 ls fw-bolder">
+                Type
+              </label>
               <select
                 id="type"
                 [ngClass]="{ 'is-invalid': invalidField('type') }"
@@ -283,8 +282,7 @@
               <img
                 src="/assets/icons/add.svg"
                 alt="add"
-                style="padding-right: 15px"
-              />
+                style="padding-right: 15px"/>
               Save
             </button>
           </div>

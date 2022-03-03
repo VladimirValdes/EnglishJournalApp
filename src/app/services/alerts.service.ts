@@ -37,7 +37,6 @@ export class AlertsService {
 
   error( msg: any ) {
     
-    console.log(msg);
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
@@ -55,8 +54,5 @@ export class AlertsService {
 
   }
 
-  // loading( msg: string ) {
-
-  // }
 
 }

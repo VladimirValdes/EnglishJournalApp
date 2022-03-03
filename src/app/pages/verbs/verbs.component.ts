@@ -93,10 +93,9 @@ export class VerbsComponent implements OnInit, OnDestroy {
       desc: 'K ( Know Word )',
     }];
 
-  
-
   verbs$!:Observable<Verbs>;
 
+  modalTitle =  'Add Verb';
 
 
   public verbForm = this.fb.group({
@@ -175,6 +174,7 @@ export class VerbsComponent implements OnInit, OnDestroy {
     if ( this.verbForm.invalid) { return; }
 
     if ( this.updateV ) {
+
       this.subscription.add(
         this.verbService.updateVerb( this.verbForm.value, this.idVerb ).subscribe( () => {
           this.alertService.success('Updated', 'Your verb has been updated');
@@ -183,10 +183,12 @@ export class VerbsComponent implements OnInit, OnDestroy {
       );
     } else {
       this.subscription.add(
-        this.verbService.addVerb(this.verbForm.value).subscribe( () => {
-          this.alertService.success('Created', 'Your verb has been created');
-          this.allVerbs = false;
-          this.getVerbs();
+        this.verbService.addVerb(this.verbForm.value).subscribe({
+          complete: () => {
+            this.alertService.success('Created', 'Your verb has been created');
+            this.allVerbs = false;
+            this.getVerbs();
+          },
         }));
     }
 
@@ -216,6 +218,7 @@ export class VerbsComponent implements OnInit, OnDestroy {
       nik: verb.nik,
     });
 
+    this.modalTitle = 'Update Verb';
     this.idVerb = verb._id;
     this.updateV = true;
     this.openModal.nativeElement.click();

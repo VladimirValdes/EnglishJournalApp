@@ -53,7 +53,7 @@ export class VerbsService {
   }
 
   addVerb( formData: VerbForm ):Observable<Verb> { 
-    return this.http.post<Verb>(`${ BASE_URL }/verbs`, formData ); 
+    return this.http.post<Verb>(`${ BASE_URL }/verbs`, formData );
   }
 
   updateVerb( formData: VerbForm, id: string ) {

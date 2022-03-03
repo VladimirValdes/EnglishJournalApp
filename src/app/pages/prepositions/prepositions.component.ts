@@ -33,6 +33,8 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
 
   total = 0;
 
+  modalTitle = 'Add Preposition';
+
 
   private subscriptions: Subscription = new Subscription();
 
@@ -134,6 +136,7 @@ export class PrepositionsComponent implements OnInit, OnDestroy {
       preposition: preposition.preposition,
     });
 
+    this.modalTitle = 'Update Preposition';
     this.idPreposition = preposition._id;
     this.updatePreposition = true;
     this.openModal.nativeElement.click();

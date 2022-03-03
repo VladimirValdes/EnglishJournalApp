@@ -35,6 +35,8 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
 
   connectors$!:Observable<Connectors>;
 
+  modalTitle = 'Add Connector';
+
   private subscriptions: Subscription = new Subscription();
 
 
@@ -129,6 +131,7 @@ export class ConnectorsComponent implements OnInit, OnDestroy {
       connector: connector.connector,
     });
 
+    this.modalTitle = 'Update Connector';
     this.idConnector = connector._id;
     this.updateConnector = true;
     this.openModal.nativeElement.click();

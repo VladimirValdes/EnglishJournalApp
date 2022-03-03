@@ -32,6 +32,8 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
 
   total = 0;
 
+  modalTitle = 'Add Phrasal Verb';
+
 
   phrasalVerbs$!:Observable<PhrasalVerbs>;
 
@@ -129,6 +131,7 @@ export class PhrasalVerbsComponent implements OnInit, OnDestroy {
       phrasalVerb: phrasalVerb.phrasalVerb,
     });
 
+    this.modalTitle = 'Update Pharasal Verb';
     this.idPhrasalVerb = phrasalVerb._id;
     this.updateFv = true;
     this.openModal.nativeElement.click();
