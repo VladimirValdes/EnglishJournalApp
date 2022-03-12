@@ -58,9 +58,9 @@ export class AuthService {
       .get<RenewToken>(`${BASE_URL}/auth/renew`)
       .pipe(
         map((resp: RenewToken) => {
-          const { name, email, role, uid } = resp.user;
+          const { name, email, role, uid, img } = resp.user;
 
-          this.user = new User(uid, name, email, role, resp.token, resp.refreshToken);
+          this.user = new User(uid, img, name, email, role, resp.token, resp.refreshToken);
           this.saveToken(resp.token);
           this.saveRefreshToken(resp.refreshToken);
           

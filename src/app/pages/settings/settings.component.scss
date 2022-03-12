@@ -1,0 +1,36 @@
+.button__profile {
+    height: auto;
+    border: 1px solid #4f46e5;
+    background-color: transparent;
+    color: #4f46e5;
+
+    &:hover {
+        color: white;
+        background-color: #4f46e5;
+    }
+}
+
+.user__image {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #94a3b8;
+
+    cursor: pointer;
+}
+
+.modal__image {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    object-fit: cover;
+}
+
+input {
+    background-color: transparent;
+    border: 1px solid #94a3b8;
+}
+
+// forms
+

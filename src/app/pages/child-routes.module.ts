@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'connectors', loadChildren: () => 
       import('./connectors/connectors.module').then( m => m.ConnectorsModule ),
   },
+  {
+    path: 'settings', loadChildren: () => 
+      import('./settings/settings.module').then( m => m.SettingsModule ),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
    
 ];

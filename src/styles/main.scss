@@ -72,6 +72,20 @@ main {
   border-radius: 5px;
 }
 
+.oculto {
+  display: none;
+}
+
+.fondo-modal-imagen {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 

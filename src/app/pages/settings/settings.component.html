@@ -1,0 +1,144 @@
+<div class="container-fluid row mb-4">
+    <div class="col d-flex align-items-center">
+      <h2 class="fw-bolder me-5  fs-1">Settings</h2>
+    </div>
+</div>
+
+<div class=" container-fluid row align-items-lg-center px-4 gy-2">
+
+    <div class="col-12 col-lg-7  p-4 ">
+        
+        <div class="card shadow p-4">
+            <div class="card-body">
+              <h5 class="card-title fs-4 fw-bolder">Profile Details</h5>
+                <div class="row align-items-center mt-4">
+                    <div class="text-center">
+                        <img [src]="user.img | image" alt="userImage" class="user__image cursor" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        name="add new verb"
+                        #openModal>
+                    </div>
+                    
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                              <label for="inputUsername" class="form-label fs-5 fw-bolder">Username</label>
+                              <input type="text" class="form-control" id="inputUsername" [value]="user.name" disabled="true">
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputEmail" class="form-label fs-5 fw-bolder">Email</label>
+                              <input type="email" class="form-control" id="inputEmail" [value]="user.email"  disabled="true">
+                            </div>   
+                          </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-lg-5" >
+        <div class="row gy-2 gx-md-3">
+            <div class="col-12 col-md-6 col-lg-12 p-4 ">
+                
+                <div class="card shadow p-4">
+                    <div class="card-body">
+                      <h5 class="card-title fs-4 fw-bolder">Change Password</h5>
+                      <p class="card-text fs-5">You can change your password </p>
+                      <button type="submit" class="custombtn button__profile fs-5 fw-bolder w-100">Change Password</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-12  p-4 ">
+               
+                <div class="card shadow p-4">
+                    <div class="card-body">
+                      <h5 class="card-title fs-4 fw-bolder">Close Account</h5>
+                      <p class="card-text fs-5">You can permanently delete your account</p>
+                      <button type="submit" class="custombtn button__profile fs-5 fw-bolder w-100">Close account</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+   
+
+</div>
+
+<!--===============================================-->
+                <!-- MODAL -->
+<!--===============================================-->
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fs-4 fw-bolder" id="exampleModalLabel">
+          Profile Image
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          #closebtn
+          (click)="close()">
+        </button>
+      </div>
+      <div class="modal-body m-auto">
+          <img *ngIf="!imageTemp" [src]=" user.img | image" alt="user-image" class="modal__image">
+          <img *ngIf="imageTemp" [src]="imageTemp" alt="user-image" class="modal__image">
+
+    </div>
+    <div class="modal-footer">
+      <button
+              type="button"
+              class="custombtn-close fw-bolder fs-4"
+              data-bs-dismiss="modal"
+              (click)="close()">
+              Close
+            </button>
+            <input
+            #fileInput
+            style="display: none"
+            type="file"
+            (change)="onFileInput( fileInput.files )">
+            <button
+            *ngIf="!imageTemp"
+              type="submit"
+              class="custombtn custombtn--add fw-bolder d-flex align-items-center fs-4"
+              (click)="fileInput.click()">
+              <img
+                src="/assets/icons/add.svg"
+                alt="add"
+                style="padding-right: 15px"/>
+              Add Photo
+            </button>
+            <button
+            *ngIf="imageTemp"
+            type="submit"
+            class="custombtn custombtn--add fw-bolder d-flex align-items-center fs-4"
+            (click)="uploadImg()">
+            Save Photo
+          </button>
+    </div>
+  </div>
+</div>
+</div>
+
+      
+    
+       
+  
+
+
+

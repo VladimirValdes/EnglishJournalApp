@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { SearchbarModule } from '../components/searchbar/searchbar.module';
+import { PipesModule } from '../pipes/pipes.module';
 
 
 
@@ -16,6 +17,7 @@ import { SearchbarModule } from '../components/searchbar/searchbar.module';
     CommonModule,
     RouterModule,
     SearchbarModule,
+    PipesModule,
   ],
   exports: [
     SidebarComponent,

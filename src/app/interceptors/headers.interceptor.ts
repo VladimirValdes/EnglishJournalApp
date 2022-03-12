@@ -50,7 +50,10 @@ export class HeadersInterceptor implements HttpInterceptor{
 
   showErrors( error: HttpErrorResponse):Observable<any> {   
 
-    this.alertService.error(error.error.error);
+    if ( error.status !== 401) {
+      this.alertService.error(error.error.error);
+      
+    }
     return throwError(() => 'Error');
 
   }
