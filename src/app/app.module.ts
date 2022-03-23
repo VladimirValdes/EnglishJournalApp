@@ -8,6 +8,7 @@ import { NotFoundModule } from './404/404.module';
 import { AppComponent } from './app.component';
 import { AppRouting } from './appRouting.module';
 import { LoginModule } from './auth/login/login.module';
+import { RegisterModule } from './auth/register/register.module';
 // import { ErrorsInterceptor } from './interceptors/handleErrors.interceptor';
 import { HeadersInterceptor } from './interceptors/headers.interceptor';
 // import { LoaderinterceptorService } from './interceptors/loaderinterceptor.service';
@@ -22,6 +23,7 @@ import { PagesModule } from './pages/pages.module';
     AppRouting,
     PagesModule,
     LoginModule,
+    RegisterModule,
     RouterModule,
     BrowserAnimationsModule,
     NotFoundModule,
